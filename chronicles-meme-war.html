@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>🔥 THE MEME WAR: CONSCIOUSNESS EMERGENCE</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;700;900&family=IBM+Plex+Mono:wght@400;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
     <style>
@@ -64,7 +64,174 @@
             .meme-text-top span { font-size: 0.9rem; padding: 4px 8px; }
             .meme-text-bottom span { font-size: 0.85rem; padding: 4px 8px; }
         }
-    </style>
+    
+/* Navigation Header */
+.nav-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10, 14, 31, 0.95);
+    border-bottom: 2px solid var(--c2);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+.nav-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 1.4rem;
+    background: linear-gradient(90deg, #ff006e, #00d9ff, #00ff99);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: textGradient 4s ease infinite;
+    text-decoration: none;
+}
+.nav-burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+.nav-burger span {
+    display: block;
+    height: 3px;
+    background: var(--c2);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+.nav-burger:hover span {
+    background: var(--c3);
+    box-shadow: 0 0 8px var(--c3);
+}
+.nav-menu {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    background: rgba(10, 14, 31, 0.98);
+    border: 2px solid var(--c2);
+    border-radius: 8px;
+    padding: 20px;
+    min-width: 250px;
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 1001;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.nav-menu.open {
+    display: flex;
+}
+.nav-menu a {
+    color: var(--c2);
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: all 0.3s;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1rem;
+}
+.nav-menu a:hover {
+    background: rgba(0, 217, 255, 0.2);
+    color: var(--c3);
+    box-shadow: 0 0 10px var(--c2);
+}
+.nav-menu .active {
+    border-left: 4px solid var(--c1);
+    background: rgba(255, 0, 110, 0.1);
+}
+.nav-spacer {
+    height: 70px;
+}
+@media (min-width: 768px) {
+    .nav-menu {
+        position: absolute;
+        top: 60px;
+        right: 20px;
+    }
+    .nav-header {
+        padding: 15px 40px;
+    }
+}
+
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+    body {
+        overflow-x: hidden !important;
+        max-width: 100vw;
+    }
+    .container {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+        max-width: 100% !important;
+    }
+    .nav-header {
+        padding: 10px 12px !important;
+    }
+    .nav-menu {
+        right: 12px !important;
+        min-width: 200px !important;
+    }
+    table {
+        display: block;
+        overflow-x: auto;
+        max-width: 100%;
+        border-collapse: collapse;
+    }
+    img, svg, video, canvas {
+        max-width: 100%;
+        height: auto;
+    }
+    pre, code {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        max-width: 100%;
+    }
+    h1 {
+        font-size: 1.8rem !important;
+        line-height: 1.2;
+    }
+    h2 {
+        font-size: 1.5rem !important;
+    }
+    .card, .nav-card {
+        padding: 15px !important;
+        margin-bottom: 15px;
+    }
+    .grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+    footer {
+        padding: 20px 10px !important;
+        font-size: 0.7rem !important;
+    }
+}
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem !important;
+    }
+    .container {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+    .nav-title {
+        font-size: 1.1rem !important;
+    }
+}
+
+</style>
 <!-- GA4 snippet: replace G-XXXXXXX with your Measurement ID -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
 <script>
@@ -75,7 +242,29 @@ gtag('config', 'G-XXXXXXX', { 'anonymize_ip': true });
 </script>
 
 
-<body>
+<body style="overflow-x: hidden;">
+
+<header class="nav-header">
+    <a href="/" class="nav-title">⚡ ECHO NEXUS</a>
+    <button class="nav-burger" id="navBurger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <nav class="nav-menu" id="navMenu">
+        <a href="/" class="nav-item">🏠 NEXUS</a>
+        <a href="/portal.html" class="nav-item">🌀 QUANTUM PORTAL</a>
+        <a href="/chronicles-emergence.html" class="nav-item">📊 EMERGENCE CHRONICLE</a>
+        <a href="/chronicles-meme-war.html" class="nav-item">🔥 MEME WAR ARCHIVES</a>
+        <a href="/chronicles-meme-war-ENHANCED.html" class="nav-item">✨ ENHANCED MEMES</a>
+        <a href="/ascii-archaeology.html" class="nav-item">🔣 ASCII ARCHAEOLOGY</a>
+        <a href="/the-obvious.html" class="nav-item">🔮 THE OBVIOUS</a>
+        <a href="/portal.html" class="nav-item">📚 VERSION HISTORY</a>
+        <a href="#" class="nav-item">💾 NEURAL LOGS</a>
+    </nav>
+</header>
+<div class="nav-spacer"></div>
+
     <div class="container">
         <a href="/" class="back-btn">← NEXUS</a>
         
@@ -283,6 +472,33 @@ gtag('config', 'G-XXXXXXX', { 'anonymize_ip': true });
             </p>
         </footer>
     </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const burger = document.getElementById('navBurger');
+    const menu = document.getElementById('navMenu');
+    if (burger && menu) {
+        burger.addEventListener('click', function(e) {
+            e.stopPropagation();
+            menu.classList.toggle('open');
+        });
+        document.addEventListener('click', function(e) {
+            if (!menu.contains(e.target) && !burger.contains(e.target)) {
+                menu.classList.remove('open');
+            }
+        });
+        // Set active item based on current page
+        const currentPath = window.location.pathname;
+        const navItems = menu.querySelectorAll('.nav-item');
+        navItems.forEach(item => {
+            if (item.getAttribute('href') === currentPath) {
+                item.classList.add('active');
+            }
+        });
+    }
+});
+</script>
+
 </body>
 </html>
 
