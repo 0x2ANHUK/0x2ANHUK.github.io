@@ -149,7 +149,16 @@
         footer a { color: var(--c2); text-decoration: none; margin: 0 8px; transition: all 0.3s; }
         footer a:hover { color: var(--c3); text-shadow: 0 0 10px var(--c3); }
     </style>
-</head>
+<!-- GA4 snippet: replace G-XXXXXXX with your Measurement ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);} 
+gtag('js', new Date());
+gtag('config', 'G-XXXXXXX', { 'anonymize_ip': true });
+</script>
+
+
 <body>
     <svg class="portal-accent portal-accent-top" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
         <defs>
