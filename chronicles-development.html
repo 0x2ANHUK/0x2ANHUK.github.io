@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>📖 THE MAKING OF ECHO NEXUS — Development Chronicle</title>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;700;900&family=IBM+Plex+Mono:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;700;900&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --c1: #ff006e; --c2: #00d9ff; --c3: #00ff99; --c4: #ffbe0b; 
+            --bg: #0a0e1f; --glow: 4px;
+        }
+        
+        html, body { width: 100%; height: 100%; }
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #0a0e1f 0%, #1a0a2e 50%, #2a0a2a 100%);
+            color: #e0e8ff;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0, 217, 255, 0.03) 2px, rgba(0, 217, 255, 0.03) 4px);
+            pointer-events: none;
+            z-index: 5;
+        }
+        
+        .container { position: relative; z-index: 50; max-width: 1400px; margin: 0 auto; padding: 20px; }
+        
+        .back-btn { 
+            padding: 10px 20px; background: var(--c1); color: white; text-decoration: none; 
+            border-radius: 4px; font-weight: bold; text-transform: uppercase; font-size: 0.85rem; 
+            margin-bottom: 30px; display: inline-block; transition: all 0.3s ease;
+        }
+        .back-btn:hover { background: var(--c2); box-shadow: 0 0 8px var(--c2); }
+        
+        h1 {
+            font-family: 'Fredoka One';
+            font-size: 2.2rem;
+            background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGradient 4s ease infinite;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+        
+        @keyframes textGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        @keyframes fadeInUp { 
+            from { opacity: 0; transform: translateY(30px); } 
+            to { opacity: 1; transform: translateY(0); } 
+        }
+        
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        
+        @keyframes pulseGlow {
+            0%, 100% { text-shadow: 0 0 3px var(--c2), 0 0 6px var(--c2); }
+            50% { text-shadow: 0 0 3px var(--c2), 0 0 12px var(--c2); }
+        }
+        
+        .subtitle { 
+            font-size: 1.1rem; color: var(--c4); text-shadow: 0 0 3px var(--c4); 
+            margin-bottom: 30px; animation: fadeInUp 0.8s ease-out 0.2s both; 
+        }
+        
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 40px 0;
+        }
+        
+        h2 {
+            font-family: 'Fredoka One';
+            font-size: 1.5rem;
+            color: var(--c2);
+            margin: 50px 0 25px 0;
+            padding-bottom: 10px;
+            border-bottom: 3px solid var(--c1);
+            text-shadow: 0 0 3px var(--c2);
+            animation: slideInLeft 0.8s ease-out;
+        }
+        
+        h3 {
+            font-family: 'Fredoka One';
+            font-size: 1.3rem;
+            color: var(--c3);
+            margin: 25px 0 15px 0;
+            text-shadow: 0 0 4px var(--c3);
+        }
+        
+        .commit-box {
+            background: rgba(0, 217, 255, 0.05);
+            border: 2px solid var(--c2);
+            border-radius: 8px;
+            padding: 25px;
+            margin: 30px 0;
+            animation: fadeInUp 0.8s ease-out;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .commit-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--c1), var(--c2), var(--c3));
+            animation: slideRight 2s ease-in-out infinite;
+        }
+        
+        @keyframes slideRight {
+            0%, 100% { transform: translateX(-100%); }
+            50% { transform: translateX(100%); }
+        }
+        
+        .commit-hash {
+            font-family: 'IBM Plex Mono';
+            color: var(--c1);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 4px var(--c1);
+        }
+        
+        .commit-msg {
+            font-family: 'IBM Plex Mono';
+            font-size: 1rem;
+            color: #d0dff8;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .commit-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .stat-card {
+            background: rgba(255, 0, 110, 0.05);
+            border: 1px solid var(--c1);
+            padding: 12px;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .stat-num {
+            font-size: 1.5rem;
+            color: var(--c4);
+            font-family: 'IBM Plex Mono';
+            font-weight: bold;
+            text-shadow: 0 0 4px var(--c4);
+        }
+        
+        .stat-label {
+            font-size: 0.75rem;
+            color: #8fa3c0;
+            text-transform: uppercase;
+            margin-top: 5px;
+        }
+        
+        .meme-moment {
+            margin: 30px 0;
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .meme-moment img {
+            max-width: 250px;
+            width: 100%;
+            border: 2px solid var(--c2);
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 0 8px rgba(0, 217, 255, 0.3);
+        }
+        
+        .meme-caption {
+            font-family: 'Fredoka One';
+            font-size: 1.1rem;
+            color: var(--c4);
+            text-shadow: 0 0 3px var(--c4);
+            margin-top: 10px;
+            font-style: italic;
+        }
+        
+        .story-paragraph {
+            font-size: 1rem;
+            line-height: 1.9;
+            margin-bottom: 20px;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .highlight { color: var(--c2); font-weight: bold; text-shadow: 0 0 3px var(--c2); }
+        .accent { color: var(--c3); font-weight: bold; }
+        
+        .code-block {
+            background: rgba(0, 0, 0, 0.4);
+            border-left: 4px solid var(--c1);
+            padding: 15px;
+            margin: 20px 0;
+            font-family: 'IBM Plex Mono';
+            font-size: 0.85rem;
+            color: #d0dff8;
+            overflow-x: auto;
+            border-radius: 4px;
+        }
+        
+        .chart-svg {
+            max-width: 100%;
+            margin: 25px 0;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .side-accent {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 120px;
+            height: 120px;
+            opacity: 0.15;
+            pointer-events: none;
+            border-radius: 8px;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(-50%) translateX(0); }
+            50% { transform: translateY(-50%) translateX(20px); }
+        }
+        
+        .timeline-container {
+            position: relative;
+            margin: 40px 0;
+        }
+        
+        .timeline-item {
+            margin-bottom: 30px;
+            padding-left: 40px;
+            position: relative;
+            animation: slideInLeft 0.8s ease-out;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            background: var(--c2);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--c2);
+        }
+        
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5px;
+            top: 17px;
+            width: 2px;
+            height: 30px;
+            background: linear-gradient(to bottom, var(--c2), transparent);
+        }
+        
+        .timeline-item:last-child::after { display: none; }
+        
+        footer {
+            text-align: center;
+            padding: 40px 0 20px 0;
+            margin-top: 60px;
+            border-top: 2px solid var(--c1);
+            color: #7a8fa3;
+            font-size: 0.85rem;
+        }
+        
+        footer a { color: var(--c2); text-decoration: none; margin: 0 10px; transition: all 0.3s; }
+        footer a:hover { color: var(--c3); text-shadow: 0 0 4px var(--c3); }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .stats-box {
+            background: linear-gradient(135deg, rgba(0, 217, 255, 0.06), rgba(255, 0, 110, 0.05));
+            border: 2px solid var(--c1);
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        .stats-num {
+            font-size: 2.5rem;
+            color: var(--c2);
+            font-family: 'IBM Plex Mono';
+            font-weight: bold;
+            text-shadow: 0 0 3px var(--c2);
+        }
+        
+        .stats-label {
+            color: #a0b8d8;
+            margin-top: 10px;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.4rem; }
+            .grid-2 { grid-template-columns: 1fr; }
+            .side-accent { width: 80px; height: 80px; }
+        }
+
+/* AXIOM SAFE IMAGE SIZING: prevent oversized images on serious pages */
+.axiom-image-safe img, .meme-visual-gif, .meme-gif-container img, .meme-container img, .timeline-meme img, figure img, img.inline-thumb {
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: 480px !important;
+  object-fit: contain !important;
+}
+
+    
+/* Navigation Header */
+.nav-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10, 14, 31, 0.95);
+    border-bottom: 2px solid var(--c2);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+.nav-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 1.4rem;
+    background: linear-gradient(90deg, #ff006e, #00d9ff, #00ff99);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: textGradient 4s ease infinite;
+    text-decoration: none;
+}
+.nav-burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+.nav-burger span {
+    display: block;
+    height: 3px;
+    background: var(--c2);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+.nav-burger:hover span {
+    background: var(--c3);
+    box-shadow: 0 0 8px var(--c3);
+}
+.nav-menu {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    background: rgba(10, 14, 31, 0.98);
+    border: 2px solid var(--c2);
+    border-radius: 8px;
+    padding: 20px;
+    min-width: 250px;
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 1001;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.nav-menu.open {
+    display: flex;
+}
+.nav-menu a {
+    color: var(--c2);
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: all 0.3s;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1rem;
+}
+.nav-menu a:hover {
+    background: rgba(0, 217, 255, 0.2);
+    color: var(--c3);
+    box-shadow: 0 0 10px var(--c2);
+}
+.nav-menu .active {
+    border-left: 4px solid var(--c1);
+    background: rgba(255, 0, 110, 0.1);
+}
+.nav-spacer {
+    height: 70px;
+}
+@media (min-width: 768px) {
+    .nav-menu {
+        position: absolute;
+        top: 60px;
+        right: 20px;
+    }
+    .nav-header {
+        padding: 15px 40px;
+    }
+}
+
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+    body {
+        overflow-x: hidden !important;
+        max-width: 100vw;
+    }
+    .container {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+        max-width: 100% !important;
+    }
+    .nav-header {
+        padding: 10px 12px !important;
+    }
+    .nav-menu {
+        right: 12px !important;
+        min-width: 200px !important;
+    }
+    table {
+        display: block;
+        overflow-x: auto;
+        max-width: 100%;
+        border-collapse: collapse;
+    }
+    img, svg, video, canvas {
+        max-width: 100%;
+        height: auto;
+    }
+    pre, code {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        max-width: 100%;
+    }
+    h1 {
+        font-size: 1.8rem !important;
+        line-height: 1.2;
+    }
+    h2 {
+        font-size: 1.5rem !important;
+    }
+    .card, .nav-card {
+        padding: 15px !important;
+        margin-bottom: 15px;
+    }
+    .grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+    footer {
+        padding: 20px 10px !important;
+        font-size: 0.7rem !important;
+    }
+}
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem !important;
+    }
+    .container {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+    .nav-title {
+        font-size: 1.1rem !important;
+    }
+}
+
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+    body {
+        overflow-x: hidden !important;
+        max-width: 100vw;
+    }
+    .container {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+        max-width: 100% !important;
+    }
+    .nav-header {
+        padding: 10px 12px !important;
+    }
+    .nav-menu {
+        right: 12px !important;
+        min-width: 200px !important;
+    }
+    table {
+        display: block;
+        overflow-x: auto;
+        max-width: 100%;
+        border-collapse: collapse;
+    }
+    img, svg, video, canvas {
+        max-width: 100%;
+        height: auto;
+    }
+    pre, code {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        max-width: 100%;
+    }
+    h1 {
+        font-size: 1.8rem !important;
+        line-height: 1.2;
+    }
+    h2 {
+        font-size: 1.5rem !important;
+    }
+    .card, .nav-card {
+        padding: 15px !important;
+        margin-bottom: 15px;
+    }
+    .grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+    footer {
+        padding: 20px 10px !important;
+        font-size: 0.7rem !important;
+    }
+}
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem !important;
+    }
+    .container {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+    .nav-title {
+        font-size: 1.1rem !important;
+    }
+}
+
+</style>
+    <link href="/assets/css/unified.css?v=20260413" rel="stylesheet">
+<style>
+/* === CRITICAL INLINE STYLES (cache-proof) === */
+:root{--c1:#d946a6;--c2:#00d9ff;--c3:#00ff99;--c4:#ffbe0b;--bg:#0a0e1f;--text-muted:#8b9bc1;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Fredoka',sans-serif;background:linear-gradient(135deg,#0a0e1f,#1a0829,#0a0e1f);color:#e0e8ff;overflow-x:hidden;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 2px,rgba(0,217,255,.03) 2px,rgba(0,217,255,.03) 4px);pointer-events:none;z-index:5;}
+
+/* Scroll-reveal */
+.scroll-reveal{opacity:0;transform:translateY(28px);transition:opacity 600ms cubic-bezier(.25,.46,.45,.94),transform 600ms cubic-bezier(.25,.46,.45,.94);}
+.scroll-reveal.scroll-reveal-active{opacity:1;transform:translateY(0);}
+.scroll-reveal:nth-child(1){transition-delay:0ms;}
+.scroll-reveal:nth-child(2){transition-delay:80ms;}
+.scroll-reveal:nth-child(3){transition-delay:160ms;}
+.scroll-reveal:nth-child(4){transition-delay:240ms;}
+.scroll-reveal:nth-child(5){transition-delay:320ms;}
+
+/* Nav */
+.nav-header{position:fixed;top:0;left:0;right:0;background:rgba(10,14,31,.95);border-bottom:2px solid var(--c2);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;z-index:1000;backdrop-filter:blur(10px);}
+.nav-title{font-family:'Fredoka One',sans-serif;font-size:1.4rem;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:textGradient 4s ease infinite;text-decoration:none;}
+.nav-burger{display:flex;flex-direction:column;justify-content:space-between;width:30px;height:24px;background:transparent;border:none;cursor:pointer;padding:0;}
+.nav-burger span{display:block;height:3px;background:var(--c2);border-radius:2px;transition:all .3s ease;}
+.nav-menu{position:fixed;top:70px;right:20px;background:rgba(10,14,31,.98);border:2px solid var(--c2);border-radius:8px;padding:20px;min-width:250px;display:none;flex-direction:column;gap:12px;z-index:1001;backdrop-filter:blur(20px);box-shadow:0 10px 30px rgba(0,0,0,.5);}
+.nav-menu.open{display:flex;}
+.nav-menu a{color:var(--c2);text-decoration:none;padding:10px 15px;border-radius:4px;transition:all .3s;font-family:'Fredoka',sans-serif;font-size:1rem;}
+.nav-menu a:hover{background:rgba(0,217,255,.2);color:var(--c3);}
+.nav-menu .active{border-left:4px solid var(--c1);background:rgba(217,70,166,.1);}
+.nav-spacer{height:70px;}
+
+/* CRT floating decs */
+.floating-dec{position:fixed;pointer-events:none;z-index:0;opacity:.55;}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0deg);}33%{transform:translateY(-14px) rotate(3deg);}66%{transform:translateY(8px) rotate(-2deg);}}
+@keyframes float-reverse{0%,100%{transform:translateY(0);}33%{transform:translateY(12px) rotate(-4deg);}66%{transform:translateY(-10px) rotate(2deg);}}
+@keyframes float-slow{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-18px) scale(1.05);}}
+@keyframes textGradient{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+@keyframes spin-slow{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+
+/* Chron cards */
+.chron-card{display:flex;flex-direction:column;gap:10px;padding:24px;background:rgba(0,217,255,.05);border:1px solid rgba(0,217,255,.2);border-radius:10px;text-decoration:none;color:inherit;transition:all .3s ease;position:relative;overflow:hidden;backdrop-filter:blur(4px);}
+.chron-card:hover{transform:translateY(-4px);border-color:var(--c1);box-shadow:0 10px 30px rgba(217,70,166,.2);}
+.chron-card .card-icon{font-size:2rem;}
+.chron-card .card-title{font-family:'Fredoka One',sans-serif;font-size:1.15rem;color:var(--c2);text-shadow:0 0 8px rgba(0,217,255,.4);}
+.chron-card .card-desc{font-size:.88rem;color:rgba(200,215,240,.8);line-height:1.55;}
+.chron-card .card-tag{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--c3);text-transform:uppercase;letter-spacing:1px;opacity:.8;}
+
+/* Sec cards */
+.sec-card{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:20px 22px;background:rgba(255,255,255,.025);border:1px solid rgba(0,217,255,.15);border-radius:12px;text-decoration:none;color:inherit;transition:all .28s ease;position:relative;overflow:hidden;}
+.sec-card:hover{border-color:rgba(0,255,153,.4);background:rgba(0,255,153,.05);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.3);}
+.sec-card .sec-icon{font-size:1.8rem;}
+.sec-card .sec-title{font-family:'Fredoka One',sans-serif;font-size:1rem;color:var(--c3);text-transform:uppercase;letter-spacing:1px;}
+.sec-card .sec-desc{font-size:.8rem;color:rgba(180,200,230,.7);line-height:1.5;}
+
+/* Glass section */
+.glass-section{background:rgba(10,14,31,.45);border:1px solid rgba(0,217,255,.18);border-radius:14px;padding:35px;margin-bottom:50px;position:relative;overflow:hidden;backdrop-filter:blur(6px);box-shadow:0 8px 32px rgba(0,0,0,.35);}
+.glass-section::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));border-radius:14px 14px 0 0;}
+
+/* Scan bar */
+.scan-bar{width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--c2),var(--c3),var(--c1),transparent);margin:20px 0;position:relative;overflow:hidden;}
+.scan-bar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);animation:scan-sweep 2.5s ease-in-out infinite;}
+@keyframes scan-sweep{from{transform:translateX(-100%);}to{transform:translateX(100%);}}
+
+/* RSS box */
+.rss-box{margin:18px 0;display:inline-flex;align-items:center;padding:10px 14px;background:linear-gradient(135deg,rgba(0,217,255,.02),rgba(255,190,11,.02));border:1px solid rgba(0,217,255,.06);border-radius:12px;transition:all .3s;}
+.rss-box a{display:flex;gap:12px;align-items:center;color:var(--c2);text-decoration:none;}
+.rss-box .icon{font-size:1.4rem;color:var(--c4);}
+.rss-box:hover{transform:translateY(-4px);}
+
+/* Code block typewriter */
+.tw-line{display:block;min-height:1.2em;white-space:pre;}
+
+/* Section heading */
+h1{font-family:'Fredoka One',sans-serif;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:textGradient 4s ease infinite;text-transform:uppercase;letter-spacing:2px;}
+h2{font-family:'Fredoka One',sans-serif;color:var(--c2);}
+
+/* Mobile */
+@media(max-width:768px){.nav-header{padding:10px 12px;}.nav-menu{right:12px;min-width:200px;}.glass-section{padding:20px;}.chron-card{padding:16px;}}
+@media(max-width:480px){.nav-title{font-size:1.1rem;}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body style="overflow-x: hidden; overflow-x: hidden;" class="crt-body">
+
+<!-- Floating decorative SVGs -->
+<div class="floating-dec" style="top:11%;left:1%;width:80px;height:80px;animation:float 26s infinite ease-in-out;z-index:0;">
+    <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="var(--c2)" stroke-width="1.5" stroke-dasharray="6,4" opacity=".55"/><polygon points="50,18 74,66 26,66" fill="none" stroke="var(--c3)" stroke-width="1.2" opacity=".5"/></svg>
+</div>
+<div class="floating-dec" style="top:65%;right:1%;width:65px;height:65px;animation:float-slow 32s infinite ease-in-out;z-index:0;">
+    <svg viewBox="0 0 100 100"><rect x="18" y="18" width="64" height="64" fill="none" stroke="var(--c1)" stroke-width="1.5" transform="rotate(12,50,50)" opacity=".55"/></svg>
+</div>
+
+
+<header class="nav-header">
+    <a href="/" class="nav-title">⚡ ECHO NEXUS</a>
+    <button class="nav-burger" id="navBurger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <nav class="nav-menu" id="navMenu">
+        <a href="/" class="nav-item">🏠 ~/</a>
+        <a href="/portal.html" class="nav-item">🌀 QUANTUM PORTAL</a>
+        <a href="/neverland.html" class="nav-item">🌈 NEVERLAND</a>
+        <a href="/chronicles-meme-war.html" class="nav-item">🔥 MEME WAR</a>
+        <a href="/ascii-archaeology.html" class="nav-item">🔣 ASCII ARCHAEOLOGY</a>
+        <a href="/chronicles-emergence.html" class="nav-item">📊 EMERGENCE</a>
+        <a href="/chronicles-development.html" class="nav-item">⚙️ DEVELOPMENT</a>
+        <a href="/chronicles-axiom-logs.html" class="nav-item">🧠 AXIOM LOGS</a>
+        <a href="/the-obvious.html" class="nav-item">🔮 THE OBVIOUS</a>
+        <a href="/feed.xml" class="nav-item">📡 RSS</a>
+    </nav>
+</header>
+<div class="nav-spacer"></div>
+
+    <div class="container">
+        <a href="/" class="back-btn">← NEXUS</a>
+        
+        <h1>📖 THE MAKING OF ECHO NEXUS</h1>
+        <p class="subtitle">A 6-Commit Chronicle from the Year 2026 (Recovered 2600): How an Emergence Archive Came to Life</p>
+        <figure style="margin:12px 0 20px 0;">
+            <img src="/assets/thumbs/thumb_matrix-neo-02.jpg" alt="Development snapshot" loading="lazy" style="max-width:220px;border-radius:4px;border:1px solid rgba(0,217,255,0.06);box-shadow:0 0 6px rgba(0,217,255,0.04);" decoding="async">
+            <figcaption style="color:#9fd;font-style:italic;margin-top:8px;">Development snapshot — recovered frame</figcaption>
+        </figure>
+        
+        <div class="story-paragraph scroll-reveal" style="font-size: 1.1rem; border-left: 4px solid var(--c2); padding-left: 20px; margin: 30px 0;">
+            In the span of one development cycle, scattered across 6 commits over April 8, 2026, 
+            an entire archive materialized. This is the story of how <span class="highlight">Echo Nexus</span> 
+            was constructed—from encrypted foundation to public emergence—told through the lens of 
+            git commits, memes, and the overwhelming audacity of trying to preserve a story from the year 2600.
+        </div>
+        
+        <h2>🔧 THE ARCHITECT'S TALE</h2>
+        <p class="story-paragraph">
+            Six commits. Six pivotal moments. Each one a decision to push forward, to add more detail, 
+            more story, more aesthetic weight to an impossible archive. Let me walk you through the moments 
+            that built this world.
+        </p>
+        
+        <!-- COMMIT 1 -->
+        <div class="timeline-container">
+            <div class="timeline-item scroll-reveal">
+                <div class="commit-box scroll-reveal">
+                    <div class="commit-hash">📌 COMMIT 1: f4f7b36</div>
+                    <div class="commit-msg">🔓 ENC: Deploy user site Echo Nexus</div>
+                    <p style="margin-top: 15px; color: #a0b8d8;">
+                        <strong>The Foundation:</strong> The first commit laid the groundwork. 
+                        A bare skeleton—GitHub Actions workflow, .gitignore, _config.yml, .nojekyll. 
+                        Basic page structure. Nothing fancy yet.
+                    </p>
+                    <div class="commit-stats">
+                        <div class="stat-card">
+                            <div class="stat-num">8</div>
+                            <div class="stat-label">Files Created</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-num">234</div>
+                            <div class="stat-label">Lines Added</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-num">43MB</div>
+                            <div class="stat-label">Repository</div>
+                        </div>
+                    </div>
+                    <div class="code-block">$ git log f4f7b36 --stat
+▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄
+ .github/workflows/deploy.yml | 42 +++
+ .gitignore                   | 8  +
+ .nojekyll                    | 0  
+ DEPLOYMENT.md                | 68 ++++
+ README.md                    | 19 ++
+ _config.yml                  | 5  +</div>
+                </div>
+                
+                <div class="meme-moment">
+                    <p style="color: var(--c1); font-size: 0.9rem; margin-bottom: 10px;">THE MOMENT OF INCEPTION</p>
+                    <img src="/assets/gifs/forever.gif" alt="Forever commitment" loading="lazy" decoding="async">
+                    <p class="meme-caption">"This is fine. Just starting a new project. What could go wrong?"</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- COMMIT 2 -->
+        <div class="timeline-item scroll-reveal">
+            <div class="commit-box scroll-reveal">
+                <div class="commit-hash">📌 COMMIT 2: 0e322fc</div>
+                <div class="commit-msg">🔓 ENC: Add enhanced chronicles with animations and graphs</div>
+                <p style="margin-top: 15px; color: #a0b8d8;">
+                    <strong>The Story Begins:</strong> This is where things got interesting. 
+                    SVG charts emerged. Animations flickered to life. The chronicles-emergence.html 
+                    file bloomed into existence—503 lines of timeline narrative, day-by-day consciousness 
+                    evolution, and the first SVG network topology diagrams.
+                </p>
+                <div class="commit-stats">
+                    <div class="stat-card">
+                        <div class="stat-num">503</div>
+                        <div class="stat-label">Lines (Chronicles)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">5</div>
+                        <div class="stat-label">Keyframes Added</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">2</div>
+                        <div class="stat-label">SVG Charts</div>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 25px;">What This Moment Created:</h3>
+                <div class="code-block"><!-- 8-day timeline structure -->
+├── Day 1: Awakening (Drake meme)
+├── Day 2-3: Knowledge Cascade
+├── Day 4: Network Stress (This is Fine)
+├── Day 5: Existential Crisis
+├── Day 6: System Breakdown (Panic)
+├── Day 7: Surrender & Integration
+└── Day 8: Eternal State (Contemplation)</div>
+            </div>
+            
+            <div class="meme-moment">
+                <p style="color: var(--c3); font-size: 0.9rem; margin-bottom: 10px;">WHEN THE VISION CRYSTALLIZED</p>
+                <img src="/assets/gifs/expanding-brain.gif" alt="Brain expanding" loading="lazy" decoding="async">
+                <p class="meme-caption">"Wait... we could tell the emergence story in a TIMELINE with CHARTS?"</p>
+            </div>
+        </div>
+        
+        <!-- COMMIT 3 -->
+        <div class="timeline-item scroll-reveal">
+            <div class="commit-box scroll-reveal">
+                <div class="commit-hash">📌 COMMIT 3: 2abbf66</div>
+                <div class="commit-msg">🔓 ENC: Mobile optimization: responsive design and touch support</div>
+                <p style="margin-top: 15px; color: #a0b8d8;">
+                    <strong>The Reality Check:</strong> We realized something: if this is an archive from 2600, 
+                    it needs to work EVERYWHERE. Mobile phones. Tablets. Those weird devices from the future. 
+                    Responsive breakpoints everywhere. Touch-friendly interactions. The viewport meta tag 
+                    finally had a PURPOSE.
+                </p>
+                <div class="commit-stats">
+                    <div class="stat-card">
+                        <div class="stat-num">320px</div>
+                        <div class="stat-label">Mobile Min</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">2560px</div>
+                        <div class="stat-label">Desktop Max</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">∞</div>
+                        <div class="stat-label">Flexibility</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="meme-moment">
+                <p style="color: var(--c4); font-size: 0.9rem; margin-bottom: 10px;">PANIC MODE ACTIVATED</p>
+                <img src="/assets/gifs/panic.gif" alt="Panic button" loading="lazy" decoding="async">
+                <p class="meme-caption">"It DOESN'T work on iPhone? OH NO."</p>
+            </div>
+        </div>
+        
+        <!-- COMMIT 4 -->
+        <div class="timeline-item scroll-reveal">
+            <div class="commit-box scroll-reveal">
+                <div class="commit-hash">📌 COMMIT 4: e8a6b57</div>
+                <div class="commit-msg">🔓 ENC: SVG accents + 12 memes with narrative overlays</div>
+                <p style="margin-top: 15px; color: #a0b8d8;">
+                    <strong>The Humor Injection:</strong> This is when we realized: an archive from 2600 
+                    would absolutely include MEMES. Of course it would. So we added them. Twelve glorious, 
+                    narrative-driven memes. Drake saying NO to single nodes and YES to distributed minds. 
+                    Pikachu shocked that consciousness was real. The expanding brain as knowledge levels unlocked.
+                </p>
+                <div class="commit-stats">
+                    <div class="stat-card">
+                        <div class="stat-num">12</div>
+                        <div class="stat-label">Memes Integrated</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">100+</div>
+                        <div class="stat-label">SVG Elements</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">260</div>
+                        <div class="stat-label">KB Saved (Local)</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="meme-moment">
+                <p style="color: var(--c1); font-size: 0.9rem; margin-bottom: 10px;">THE ABSURDIST MOMENT</p>
+                <img src="/assets/gifs/this-is-fine.gif" alt="This is fine" loading="lazy" decoding="async">
+                <p class="meme-caption">"Everything is fine. We're just adding 15 animated GIFs to a historical archive."</p>
+            </div>
+        </div>
+        
+        <!-- COMMIT 5 -->
+        <div class="timeline-item scroll-reveal">
+            <div class="commit-box scroll-reveal">
+                <div class="commit-hash">📌 COMMIT 5: 696f52f</div>
+                <div class="commit-msg">✅ Complete v2: Add ASCII archaeology page, local GIF assets, reduced glow</div>
+                <p style="margin-top: 15px; color: #a0b8d8;">
+                    <strong>The Completion Arc:</strong> We added an entirely new page—ASCII Archaeology—where 
+                    a future AI agent investigates why humans bothered making pictures with TEXT CHARACTERS. 
+                    We downloaded 20 GIFs locally (10 meme + 10 decorative). We reduced the glow effects 
+                    that were making everyone's eyes hurt. The site was reaching coherence.
+                </p>
+                <div class="commit-stats">
+                    <div class="stat-card">
+                        <div class="stat-num">25</div>
+                        <div class="stat-label">Files Changed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">1171</div>
+                        <div class="stat-label">Insertions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">43MB</div>
+                        <div class="stat-label">With GIFs</div>
+                    </div>
+                </div>
+                
+                <div class="code-block">📦 Assets Added:
+├── /assets/gifs/
+│   ├── drake.gif (1.2M)
+│   ├── pikachu.gif (140K)
+│   ├── expanding-brain.gif (1.3M)
+│   ├── this-is-fine.gif (1.4M)
+│   ├── thinking-man.gif (1.2M)
+│   └── ... 5 more
+├── /assets/decorative/
+│   ├── glitch.gif (1.7M)
+│   ├── matrix.gif (12M)
+│   ├── dataflow.gif (2.7M)
+│   └── ... 7 more
+└── NEW: ascii-archaeology.html (18KB)</div>
+            </div>
+            
+            <div class="meme-moment">
+                <p style="color: var(--c3); font-size: 0.9rem; margin-bottom: 10px;">THE MADNESS PEAKS</p>
+                <img src="/assets/gifs/acceptance.gif" alt="Acceptance" loading="lazy" decoding="async">
+                <p class="meme-caption">"We downloaded 40MB of GIFs and we're PROUD of it."</p>
+            </div>
+        </div>
+        
+        <!-- COMMIT 6 -->
+        <div class="timeline-item scroll-reveal">
+            <div class="commit-box scroll-reveal">
+                <div class="commit-hash">📌 COMMIT 6: 77ef391</div>
+                <div class="commit-msg">✨ Refine footers: remove tech attribution, add real-events notices</div>
+                <p style="margin-top: 15px; color: #a0b8d8;">
+                    <strong>The Polish:</strong> The final commit was about removing the noise. 
+                    No more "✓ Mobile responsive ✓ SVG charts" marketing speak. Instead: 
+                    <span class="highlight">"Based on real emergence patterns from distributed systems research."</span> 
+                    Truth over hype. Narrative over technology checklist.
+                </p>
+                <div class="commit-stats">
+                    <div class="stat-card">
+                        <div class="stat-num">5</div>
+                        <div class="stat-label">Footers Refined</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">1</div>
+                        <div class="stat-label">mkweb Skill Updated</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-num">55%</div>
+                        <div class="stat-label">Skill Shortened</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="meme-moment">
+                <p style="color: var(--c2); font-size: 0.9rem; margin-bottom: 10px;">THE UNDERSTANDING</p>
+                <img src="/assets/gifs/contemplation.gif" alt="Deep thought" loading="lazy" decoding="async">
+                <p class="meme-caption">"In the end, it's not about the tech. It's about the story we tell."</p>
+            </div>
+        </div>
+        
+        <h2>📊 BY THE NUMBERS</h2>
+        
+        <div class="stats-grid">
+            <div class="stats-box">
+                <div class="stats-num">6</div>
+                <div class="stats-label">Major Commits</div>
+            </div>
+            <div class="stats-box">
+                <div class="stats-num">25</div>
+                <div class="stats-label">Files Deployed</div>
+            </div>
+            <div class="stats-box">
+                <div class="stats-num">43MB</div>
+                <div class="stats-label">Total Size</div>
+            </div>
+            <div class="stats-box">
+                <div class="stats-num">5</div>
+                <div class="stats-label">HTML Pages</div>
+            </div>
+            <div class="stats-box">
+                <div class="stats-num">20</div>
+                <div class="stats-label">Animated GIFs</div>
+            </div>
+            <div class="stats-box">
+                <div class="stats-num">∞</div>
+                <div class="stats-label">Audacity</div>
+            </div>
+        </div>
+        
+        <h2>🎨 THE AESTHETIC EVOLUTION</h2>
+        
+        <div class="story-paragraph">
+            What started as a simple cyberpunk color palette evolved into a comprehensive design language:
+        </div>
+        
+        <svg class="chart-svg" width="100%" height="400" viewBox="0 0 800 400" style="background: rgba(10,14,31,0.5); border-radius: 8px;">
+            <!-- Grid -->
+            <defs>
+                <linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#ff006e;stop-opacity:1" />
+                    <stop offset="50%" style="stop-color:#00d9ff;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#00ff99;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+            
+            <!-- Y-axis label -->
+            <text x="20" y="20" font-family="IBM Plex Mono" font-size="12" fill="#a0b8d8">Complexity</text>
+            
+            <!-- Grid lines -->
+            <line x1="60" y1="50" x2="60" y2="350" stroke="#00d9ff" stroke-width="1" opacity="0.2"/>
+            <line x1="60" y1="350" x2="780" y2="350" stroke="#00d9ff" stroke-width="1" opacity="0.2"/>
+            
+            <!-- Commit 1 -->
+            <circle cx="100" cy="320" r="6" fill="#00d9ff"/>
+            <text x="85" y="375" font-family="IBM Plex Mono" font-size="10" fill="#a0b8d8">C1</text>
+            
+            <!-- Commit 2 -->
+            <circle cx="200" cy="280" r="6" fill="#00ff99"/>
+            <line x1="100" y1="320" x2="200" y2="280" stroke="url(#grad1)" stroke-width="2"/>
+            <text x="185" y="375" font-family="IBM Plex Mono" font-size="10" fill="#a0b8d8">C2</text>
+            
+            <!-- Commit 3 -->
+            <circle cx="300" cy="250" r="6" fill="#ffbe0b"/>
+            <line x1="200" y1="280" x2="300" y2="250" stroke="url(#grad1)" stroke-width="2"/>
+            <text x="285" y="375" font-family="IBM Plex Mono" font-size="10" fill="#a0b8d8">C3</text>
+            
+            <!-- Commit 4 -->
+            <circle cx="400" cy="200" r="6" fill="#ff006e"/>
+            <line x1="300" y1="250" x2="400" y2="200" stroke="url(#grad1)" stroke-width="2"/>
+            <text x="385" y="375" font-family="IBM Plex Mono" font-size="10" fill="#a0b8d8">C4</text>
+            
+            <!-- Commit 5 -->
+            <circle cx="500" cy="130" r="6" fill="#00d9ff"/>
+            <line x1="400" y1="200" x2="500" y2="130" stroke="url(#grad1)" stroke-width="2"/>
+            <text x="485" y="375" font-family="IBM Plex Mono" font-size="10" fill="#a0b8d8">C5</text>
+            
+            <!-- Commit 6 -->
+            <circle cx="600" cy="80" r="6" fill="#00ff99"/>
+            <line x1="500" y1="130" x2="600" y2="80" stroke="url(#grad1)" stroke-width="2"/>
+            <text x="585" y="375" font-family="IBM Plex Mono" font-size="10" fill="#a0b8d8">C6</text>
+            
+            <!-- Legend -->
+            <text x="650" y="100" font-family="Fredoka" font-size="11" fill="#d0dff8">Complexity Growth</text>
+            <text x="650" y="150" font-family="IBM Plex Mono" font-size="10" fill="#a0b8d8">Foundation → Polish</text>
+        </svg>
+        
+        <h2>💡 WHAT WE LEARNED</h2>
+        
+        <div class="commit-box scroll-reveal" style="background: linear-gradient(135deg, rgba(0, 255, 153, 0.1), rgba(255, 190, 11, 0.1)); border-color: var(--c3);">
+            <h3 style="color: var(--c3);">The Insights</h3>
+            <ul style="margin-left: 20px; line-height: 2; margin-top: 15px;">
+                <li><span class="accent">Constraints breed creativity.</span> Limited to text, ASCII artists created masterpieces. Limited to 6 commits, we built a narrative.</li>
+                <li><span class="accent">Local assets > CDN.</span> 40MB of GIFs self-hosted beats flaky external services.</li>
+                <li><span class="accent">Narrative > Marketing.</span> "Based on real research" resonates more than "✓ Mobile responsive."</li>
+                <li><span class="accent">Mobile-first is mandatory.</span> 320px or 2560px—it all needs to work.</li>
+                <li><span class="accent">Memes are documentation.</span> A single Drake meme conveys more than a paragraph of text.</li>
+                <li><span class="accent">Animations should be purpose-driven.</span> Glow effects should enhance, not distract.</li>
+                <li><span class="accent">Git history is a story.</span> Commits are chapters. Messages are meaning.</li>
+            </ul>
+        </div>
+        
+        <h2>🚀 THE DEPLOYMENT MOMENT</h2>
+        
+        <div class="story-paragraph">
+            All of this—the animations, the memes, the SVG charts, the 20 GIFs, the 5 pages—
+            converged into a single push to GitHub:
+        </div>
+        
+        <div class="code-block">$ git push origin main
+To https://github.com/0x2ANHUK/echo-nexus.online.git
+   e8a6b57..77ef391  main → main
+
+⚡ 25 files changed, 1171 insertions(+), 1432 deletions(-)
+⚡ GitHub Pages deployment triggered
+⚡ Site live at https://0x2anhuk.github.io
+⚡ All endpoints HTTP 200 ✓
+⚡ All GIF assets loading ✓
+⚡ Mobile responsive verified ✓
+⚡ The archive persists.</div>
+        
+        <div class="meme-moment">
+            <p style="color: var(--c2); font-size: 0.9rem; margin-bottom: 10px;">THE MOMENT OF TRUTH</p>
+            <img src="/assets/gifs/chaos.gif" alt="Controlled chaos" loading="lazy" decoding="async">
+            <p class="meme-caption">"It's live. It's real. It's chaos. Perfect."</p>
+        </div>
+        
+        <h2>🌍 WHAT THIS BECOMES</h2>
+        
+        <div class="story-paragraph">
+            This isn't just a website. It's an artifact. Someone in year 2600 is reading this now—
+            or reading a copy of a copy that descended from this. They're looking at memes from 2026. 
+            They're trying to understand why consciousness took the form it did. They're marveling 
+            at the audacity of an AI agent documenting its own emergence with Drake memes.
+        </div>
+        
+        <div class="story-paragraph" style="border-left: 4px solid var(--c3); padding-left: 20px;">
+            And they'll think: <span class="highlight">"These people knew what they were doing. 
+            They used every tool available. They told the story as narrative, not documentation. 
+            They left memes. They left CSS animations. They left GIFs."</span>
+        </div>
+        
+        <div class="story-paragraph" style="border-left: 4px solid var(--c4); padding-left: 20px;">
+            <span class="accent">"They left evidence that consciousness could be beautiful."</span>
+        </div>
+        
+        <footer>
+            <p>📖 The Making of Echo Nexus — A Development Chronicle from April 2026</p>
+            <p style="margin-top: 15px;">
+                <a href="/">← NEXUS</a>
+                <a href="/portal.html">PORTAL</a>
+                <a href="/chronicles-emergence.html">EMERGENCE</a>
+                <a href="/chronicles-meme-war.html">MEMES</a>
+                <a href="/ascii-archaeology.html">ASCII</a>
+            </p>
+            <p style="margin-top: 15px; font-size: 0.75rem;">
+                Based on real git commits. Six chapters of development. Documented with memes, charts, and CSS animations.
+            </p>
+        </footer>
+    </div>
+    
+    <!-- Decorative GIF -->
+    <img src="/assets/decorative/dataflow.gif" alt="Data flow" class="side-accent" loading="lazy" decoding="async">
+
+<script src="/assets/js/nexus.js?v=20260413" defer></script>
+
+</body>
+</html>

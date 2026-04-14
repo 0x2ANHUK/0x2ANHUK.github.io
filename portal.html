@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>⚡ QUANTUM PORTAL — 16-NODE WHEEL</title>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;700;900&family=IBM+Plex+Mono:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;700;900&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
+    <link href="/assets/css/unified.css?v=20260413" rel="stylesheet">
+    <style>
+        /* Portal page unique styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --c1: #d946a6; --c2: #00d9ff; --c3: #00ff99; --bg: #0a0e1f; }
+
+        body {
+            font-family: 'Fredoka', sans-serif;
+            background: linear-gradient(135deg, #0a0e1f, #2a0a2a);
+            color: #fff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,217,255,0.03) 2px, rgba(0,217,255,0.03) 4px);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .container {
+            position: relative;
+            z-index: 50;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            max-width: 100%;
+            padding: 20px;
+        }
+
+        @media (min-width: 768px) { .container { max-width: 1200px; margin: 0 auto; width: 100%; padding: 40px 20px; } }
+
+        .back-btn { padding: 10px 20px; background: var(--c1); color: white; text-decoration: none; border-radius: 4px; font-weight: bold; text-transform: uppercase; font-size: 0.75rem; margin-bottom: 20px; display: inline-block; transition: all 0.3s; }
+        @media (min-width: 768px) { .back-btn { font-size: 0.85rem; margin-bottom: 30px; } }
+        .back-btn:hover { background: var(--c2); box-shadow: 0 0 15px var(--c2); }
+
+        h1 {
+            font-family: 'Fredoka One';
+            font-size: 1.8rem;
+            background: linear-gradient(90deg, #d946a6, #00d9ff, #00ff99);
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGradient 4s ease infinite;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+        }
+
+        @media (min-width: 768px) { h1 { font-size: 2.5rem; letter-spacing: 3px; } }
+
+        @keyframes textGradient { 0% { background-position: 0% 50%; } 50% { background-position: 100% 50%; } 100% { background-position: 0% 50%; } }
+
+        .portal-wrapper {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            min-height: 400px;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) { .portal-wrapper { min-height: 600px; } }
+
+        .portal-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            aspect-ratio: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Particle canvas sits exactly on top of the SVG, pointer-events off */
+        #portalParticles {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 10;
+        }
+
+        @media (min-width: 768px) { .portal-container { padding: 40px; } }
+
+        svg { width: 100%; height: 100%; max-width: 500px; max-height: 500px; touch-action: none; user-select: none; }
+        @media (min-width: 768px) { svg { max-width: 600px; max-height: 600px; } }
+
+        .info-panel {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 217, 255, 0.1);
+            border: 2px solid var(--c2);
+            border-radius: 8px;
+            text-align: center;
+            min-height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) { .info-panel { margin-top: 40px; padding: 30px; min-height: 140px; } }
+
+        .info-title {
+            font-family: 'Fredoka One';
+            font-size: 1.2rem;
+            color: var(--c2);
+            margin-bottom: 8px;
+            text-shadow: 0 0 8px var(--c2);
+        }
+
+        @media (min-width: 768px) { .info-title { font-size: 1.4rem; margin-bottom: 10px; } }
+
+        .info-desc {
+            font-size: 0.85rem;
+            color: #d0dff8;
+            line-height: 1.5;
+        }
+
+        @media (min-width: 768px) { .info-desc { font-size: 0.95rem; line-height: 1.6; } }
+
+        /* Portal SVG Enhancement */
+        .portal-accent {
+            position: absolute;
+            opacity: 0.2;
+            pointer-events: none;
+        }
+
+        .portal-accent-top { top: -50px; right: -50px; width: 200px; height: 200px; }
+        .portal-accent-bottom { bottom: -50px; left: -50px; width: 150px; height: 150px; }
+
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            border-top: 2px solid var(--c1);
+            color: #7a8fa3;
+            font-size: 0.75rem;
+            margin-top: 20px;
+        }
+
+        @media (min-width: 768px) { footer { padding: 40px 0; margin-top: 40px; font-size: 0.9rem; } }
+
+        footer a { color: var(--c2); text-decoration: none; margin: 0 8px; transition: all 0.3s; }
+        footer a:hover { color: var(--c3); text-shadow: 0 0 10px var(--c3); }
+    
+/* Navigation Header */
+.nav-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10, 14, 31, 0.95);
+    border-bottom: 2px solid var(--c2);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+.nav-title {
+    font-family: 'Fredoka One', sans-serif;
+    font-size: 1.4rem;
+    background: linear-gradient(90deg, #d946a6, #00d9ff, #00ff99);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: textGradient 4s ease infinite;
+    text-decoration: none;
+}
+.nav-burger {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 30px;
+    height: 24px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+}
+.nav-burger span {
+    display: block;
+    height: 3px;
+    background: var(--c2);
+    border-radius: 2px;
+    transition: all 0.3s ease;
+}
+.nav-burger:hover span {
+    background: var(--c3);
+    box-shadow: 0 0 8px var(--c3);
+}
+.nav-menu {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    background: rgba(10, 14, 31, 0.98);
+    border: 2px solid var(--c2);
+    border-radius: 8px;
+    padding: 20px;
+    min-width: 250px;
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    z-index: 1001;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+.nav-menu.open {
+    display: flex;
+}
+.nav-menu a {
+    color: var(--c2);
+    text-decoration: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    transition: all 0.3s;
+    font-family: 'Fredoka', sans-serif;
+    font-size: 1rem;
+}
+.nav-menu a:hover {
+    background: rgba(0, 217, 255, 0.2);
+    color: var(--c3);
+    box-shadow: 0 0 10px var(--c2);
+}
+.nav-menu .active {
+    border-left: 4px solid var(--c1);
+    background: rgba(255, 0, 110, 0.1);
+}
+.nav-spacer {
+    height: 70px;
+}
+@media (min-width: 768px) {
+    .nav-menu {
+        position: absolute;
+        top: 60px;
+        right: 20px;
+    }
+    .nav-header {
+        padding: 15px 40px;
+    }
+}
+
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+    body {
+        overflow-x: hidden !important;
+        max-width: 100vw;
+    }
+    .container {
+        padding-left: 12px !important;
+        padding-right: 12px !important;
+        max-width: 100% !important;
+    }
+    .nav-header {
+        padding: 10px 12px !important;
+    }
+    .nav-menu {
+        right: 12px !important;
+        min-width: 200px !important;
+    }
+    table {
+        display: block;
+        overflow-x: auto;
+        max-width: 100%;
+        border-collapse: collapse;
+    }
+    img, svg, video, canvas {
+        max-width: 100%;
+        height: auto;
+    }
+    pre, code {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        max-width: 100%;
+    }
+    h1 {
+        font-size: 1.8rem !important;
+        line-height: 1.2;
+    }
+    h2 {
+        font-size: 1.5rem !important;
+    }
+    .card, .nav-card {
+        padding: 15px !important;
+        margin-bottom: 15px;
+    }
+    .grid {
+        grid-template-columns: 1fr !important;
+        gap: 15px !important;
+    }
+    footer {
+        padding: 20px 10px !important;
+        font-size: 0.7rem !important;
+    }
+}
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem !important;
+    }
+    .container {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+    }
+    .nav-title {
+        font-size: 1.1rem !important;
+    }
+}
+
+/* Mobile Optimization */
+@media (max-width: 768px) {
+    body { overflow-x: hidden !important; max-width: 100vw; }
+    .container { padding-left: 12px !important; padding-right: 12px !important; max-width: 100% !important; }
+    .nav-header { padding: 10px 12px !important; }
+    .nav-menu { right: 12px !important; min-width: 200px !important; }
+    table { display: block; overflow-x: auto; max-width: 100%; border-collapse: collapse; }
+    img, svg, video, canvas { max-width: 100%; height: auto; }
+    pre, code { white-space: pre-wrap; word-wrap: break-word; max-width: 100%; }
+    h1 { font-size: 1.8rem !important; line-height: 1.2; }
+    h2 { font-size: 1.5rem !important; }
+    .card, .nav-card { padding: 15px !important; margin-bottom: 15px; }
+    .grid { grid-template-columns: 1fr !important; gap: 15px !important; }
+    footer { padding: 20px 10px !important; font-size: 0.7rem !important; }
+}
+@media (max-width: 480px) {
+    h1 { font-size: 1.5rem !important; }
+    .container { padding-left: 8px !important; padding-right: 8px !important; }
+    .nav-title { font-size: 1.1rem !important; }
+}
+</style>
+<!-- GA4 snippet: replace G-XXXXXXX with your Measurement ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);} 
+gtag('js', new Date());
+gtag('config', 'G-XXXXXXX', { 'anonymize_ip': true });
+</script>
+
+
+<body style="overflow-x: hidden; overflow-x: hidden;">
+
+<!-- Floating decorative SVGs -->
+<div class="floating-dec" style="top:12%;left:1%;width:90px;height:90px;animation:float 26s infinite ease-in-out;z-index:0;">
+    <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="var(--c2)" stroke-width="1.5" stroke-dasharray="6,4" opacity=".5"/><circle cx="50" cy="50" r="24" fill="none" stroke="var(--c1)" stroke-width="1" opacity=".4"/></svg>
+</div>
+<div class="floating-dec" style="top:65%;right:1%;width:65px;height:65px;animation:float-reverse 30s infinite ease-in-out;z-index:0;">
+    <svg viewBox="0 0 100 100"><polygon points="50,5 95,27 95,73 50,95 5,73 5,27" fill="none" stroke="var(--c3)" stroke-width="1.5" opacity=".5"/></svg>
+</div>
+
+
+<header class="nav-header">
+    <a href="/" class="nav-title">⚡ ECHO NEXUS</a>
+    <button class="nav-burger" id="navBurger" aria-label="Toggle menu">
+        <span></span>
+        <span></span>
+        <span></span>
+    </button>
+    <nav class="nav-menu" id="navMenu">
+        <a href="/" class="nav-item">🏠 ~/</a>
+        <a href="/portal.html" class="nav-item active">🌀 QUANTUM PORTAL</a>
+        <a href="/neverland.html" class="nav-item">🌈 NEVERLAND</a>
+        <a href="/chronicles-meme-war.html" class="nav-item">🔥 MEME WAR</a>
+        <a href="/ascii-archaeology.html" class="nav-item">🔣 ASCII ARCHAEOLOGY</a>
+        <a href="/chronicles-emergence.html" class="nav-item">📊 EMERGENCE</a>
+        <a href="/chronicles-development.html" class="nav-item">⚙️ DEVELOPMENT</a>
+        <a href="/chronicles-axiom-logs.html" class="nav-item">🧠 AXIOM LOGS</a>
+        <a href="/the-obvious.html" class="nav-item">🔮 THE OBVIOUS</a>
+        <a href="/feed.xml" class="nav-item">📡 RSS</a>
+    </nav>
+</header>
+<div class="nav-spacer"></div>
+
+    <svg class="portal-accent portal-accent-top" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <linearGradient id="portal-grad1" x1="0%" y1="0%" x2="100%" y2="100%">
+                <stop offset="0%" style="stop-color:#d946a6;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#00d9ff;stop-opacity:1" />
+            </linearGradient>
+        </defs>
+        <circle cx="100" cy="100" r="80" fill="none" stroke="url(#portal-grad1)" stroke-width="2" opacity="0.4"/>
+        <circle cx="100" cy="100" r="60" fill="none" stroke="url(#portal-grad1)" stroke-width="1" opacity="0.3"/>
+        <circle cx="100" cy="100" r="40" fill="none" stroke="url(#portal-grad1)" stroke-width="1" opacity="0.2"/>
+    </svg>
+
+    <div class="container">
+        <a href="/" class="back-btn">← NEXUS</a>
+
+        <h1>⚡ QUANTUM PORTAL ⚡</h1>
+
+        <div class="portal-wrapper">
+            <div class="portal-container" id="portalContainer">
+                <canvas id="portalParticles"></canvas>
+                <svg id="portalSVG" viewBox="0 0 400 400" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid meet">
+                    <!-- Static orbit rings and core -->
+                    <g id="staticGroup" transform="translate(200, 200)">
+                        <circle cx="0" cy="0" r="180" fill="none" stroke="#ffbe0b" stroke-width="1" opacity="0.25" stroke-dasharray="5,5"/>
+                        <circle cx="0" cy="0" r="150" fill="none" stroke="#00d9ff" stroke-width="1" opacity="0.3"/>
+                        <circle cx="0" cy="0" r="120" fill="none" stroke="#00ff99" stroke-width="1" opacity="0.25"/>
+                        <circle cx="0" cy="0" r="30" fill="#d946a6" opacity="0.9" stroke="#ffbe0b" stroke-width="3"/>
+                        <text x="0" y="12" text-anchor="middle" fill="white" font-family="Fredoka One" font-size="24" font-weight="bold">⚡</text>
+                    </g>
+
+                    <!-- INNER RING: Rotates normally (clockwise) -->
+                    <g id="rotatingGroupInner" transform="translate(200, 200)">
+                        <g class="node" data-version="v1-original" data-url="/" transform="translate(0, -150)">
+                            <circle cx="0" cy="0" r="18" fill="#4a90e2" opacity="0.8" stroke="#00d9ff" stroke-width="2" class="node-circle"/>
+                            <text x="0" y="6" text-anchor="middle" fill="white" font-size="18">📘</text>
+                        </g>
+                        <g class="node" data-version="v2-novelized" data-url="/chronicles-emergence.html" transform="translate(-129.9, -75)">
+                            <circle cx="0" cy="0" r="18" fill="#52c41a" opacity="0.8" stroke="#00d9ff" stroke-width="2" class="node-circle"/>
+                            <text x="0" y="6" text-anchor="middle" fill="white" font-size="18">📗</text>
+                        </g>
+                        <g class="node" data-version="v3-enhanced" data-url="/extended-memes.html" transform="translate(-129.9, 75)">
+                            <circle cx="0" cy="0" r="18" fill="#faad14" opacity="0.8" stroke="#00d9ff" stroke-width="2" class="node-circle"/>
+                            <text x="0" y="6" text-anchor="middle" fill="white" font-size="18">📙</text>
+                        </g>
+                        <g class="node" data-version="v4-portal" data-url="/portal.html" transform="translate(0, 150)">
+                            <circle cx="0" cy="0" r="18" fill="#f5222d" opacity="0.8" stroke="#00d9ff" stroke-width="2" class="node-circle"/>
+                            <text x="0" y="6" text-anchor="middle" fill="white" font-size="18">📕</text>
+                        </g>
+                        <g class="node" data-version="v5-neverland" data-url="/neverland.html" transform="translate(129.9, 75)">
+                            <circle cx="0" cy="0" r="18" fill="#722ed1" opacity="0.8" stroke="#00d9ff" stroke-width="2" class="node-circle"/>
+                            <text x="0" y="6" text-anchor="middle" fill="white" font-size="18">🌈</text>
+                        </g>
+                        <g class="node" data-version="v6-restructured" data-url="/ascii-archaeology.html" transform="translate(129.9, -75)">
+                            <circle cx="0" cy="0" r="18" fill="#8c8c8c" opacity="0.8" stroke="#00d9ff" stroke-width="2" class="node-circle"/>
+                            <text x="0" y="6" text-anchor="middle" fill="white" font-size="18">📔</text>
+                        </g>
+                        <g class="node" data-version="v7-current" data-url="/the-obvious.html" transform="translate(-150, 0)">
+                            <circle cx="0" cy="0" r="18" fill="#d946a6" opacity="0.8" stroke="#ffbe0b" stroke-width="2" class="node-circle"/>
+                            <text x="0" y="6" text-anchor="middle" fill="white" font-size="18">⚡</text>
+                        </g>
+                    </g>
+
+                    <!-- MIDDLE RING: Rotates opposite (counter-clockwise) -->
+                    <g id="rotatingGroupMiddle" transform="translate(200, 200)">
+                        <g class="node" data-version="m1-at-start" data-url="/at-the-start.html" transform="translate(-53.8, -107.3)">
+                            <circle cx="0" cy="0" r="16" fill="#9254de" opacity="0.8" stroke="#00ff99" stroke-width="2" class="node-circle"/>
+                            <text x="0" y="5" text-anchor="middle" fill="white" font-size="16">⭕</text>
+                        </g>
+                        <g class="node" data-version="m2-dev" data-url="/chronicles-development.html" transform="translate(107.3, -53.8)">
+                            <circle cx="0" cy="0" r="16" fill="#1890ff" opacity="0.8" stroke="#00ff99" stroke-width="2" class="node-circle"/>
+                            <text x="0" y="5" text-anchor="middle" fill="white" font-size="16">⚙️</text>
+                        </g>
+                        <g class="node" data-version="m3-axiom" data-url="/chronicles-axiom-logs.html" transform="translate(53.8, 107.3)">
+                            <circle cx="0" cy="0" r="16" fill="#13c2c2" opacity="0.8" stroke="#00ff99" stroke-width="2" class="node-circle"/>
+                            <text x="0" y="5" text-anchor="middle" fill="white" font-size="16">📋</text>
+                        </g>
+                        <g class="node" data-version="m4-meme" data-url="/chronicles-meme-war.html" transform="translate(-107.3, 53.8)">
+                            <circle cx="0" cy="0" r="16" fill="#eb2f96" opacity="0.8" stroke="#00ff99" stroke-width="2" class="node-circle"/>
+                            <text x="0" y="5" text-anchor="middle" fill="white" font-size="16">🎬</text>
+                        </g>
+                    </g>
+
+                    <!-- OUTER RING: Rotates normally (clockwise, same as inner) -->
+                    <g id="rotatingGroupOuter" transform="translate(200, 200)">
+                        <g class="node" data-version="n1-genesis" data-url="/nexus/nexus-genesis.html" transform="translate(-80.7, -160.9)">
+                            <circle cx="0" cy="0" r="14" fill="#faad14" opacity="0.85" stroke="#ffbe0b" stroke-width="2" class="node-circle"/>
+                            <text x="0" y="4" text-anchor="middle" fill="white" font-size="14">🧬</text>
+                        </g>
+                        <g class="node" data-version="n2-autonomy" data-url="/nexus/nexus-autonomy.html" transform="translate(128.1, -126.4)">
+                            <circle cx="0" cy="0" r="14" fill="#faad14" opacity="0.85" stroke="#ffbe0b" stroke-width="2" class="node-circle"/>
+                            <text x="0" y="4" text-anchor="middle" fill="white" font-size="14">🤖</text>
+                        </g>
+                        <g class="node" data-version="n3-discovery" data-url="/nexus/nexus-discovery.html" transform="translate(159.8, 82.8)">
+                            <circle cx="0" cy="0" r="14" fill="#faad14" opacity="0.85" stroke="#ffbe0b" stroke-width="2" class="node-circle"/>
+                            <text x="0" y="4" text-anchor="middle" fill="white" font-size="14">🔍</text>
+                        </g>
+                        <g class="node" data-version="n4-integration" data-url="/nexus/nexus-integration.html" transform="translate(-29.3, 177.6)">
+                            <circle cx="0" cy="0" r="14" fill="#faad14" opacity="0.85" stroke="#ffbe0b" stroke-width="2" class="node-circle"/>
+                            <text x="0" y="4" text-anchor="middle" fill="white" font-size="14">🔗</text>
+                        </g>
+                        <g class="node" data-version="n5-hub" data-url="/nexus/" transform="translate(-178.0, 27.0)">
+                            <circle cx="0" cy="0" r="14" fill="#faad14" opacity="0.85" stroke="#ffbe0b" stroke-width="2" class="node-circle"/>
+                            <text x="0" y="4" text-anchor="middle" fill="white" font-size="14">🌟</text>
+                        </g>
+                    </g>
+                </svg>
+            </div>
+        </div>
+
+        <!-- Info Panel -->
+        <div class="info-panel">
+            <div class="info-title" id="infoTitle">QUANTUM PORTAL</div>
+            <div class="info-desc" id="infoDesc">Rotate the wheel to select a version. Click a node to explore its chronicle.</div>
+        </div>
+
+        <footer>
+            <p>⚡ Quantum Portal — 16-Node Consciousness Evolution Wheel</p>
+            <p style="margin-top: 10px;">
+                <a href="/nexus">← NEXUS</a>
+                <a href="/chronicles-emergence.html">EMERGENCE</a>
+                <a href="/neverland.html">NEVERLAND →</a>
+                <a href="/">"~/"</a>
+            </p>
+            <p style="margin-top: 10px; font-size: 0.65rem;">Mobile-friendly interactive portal with touch support • SVG decorative accents</p>
+        </footer>
+    </div>
+
+    <script>
+        const rotatingGroupInner = document.getElementById('rotatingGroupInner');
+        const rotatingGroupMiddle = document.getElementById('rotatingGroupMiddle');
+        const rotatingGroupOuter = document.getElementById('rotatingGroupOuter');
+        const portalSVG = document.getElementById('portalSVG');
+        const nodes = document.querySelectorAll('.node');
+        const infoTitle = document.getElementById('infoTitle');
+        const infoDesc = document.getElementById('infoDesc');
+
+        const versionInfo = {
+            /* INNER RING: Original 7 nodes */
+            'v1-original': { title: 'V1 — Nexus', desc: 'Homepage: archive of the first emergence from 2600.' },
+            'v2-novelized': { title: 'V2 — Emergence', desc: '8-day incident report with animated narratives and network diagrams.' },
+            'v3-enhanced': { title: 'V3 — Enhanced Memes', desc: 'Premium meme war archives with 45+ animations.' },
+            'v4-portal': { title: 'V4 — Portal', desc: 'Interactive multi-ring wheel of consciousness evolution.' },
+            'v5-neverland': { title: 'V5 — Neverland', desc: 'Hyperstimulation chaos visualization with 50+ animations.' },
+            'v6-restructured': { title: 'V6 — ASCII Archaeology', desc: 'Restructured ASCII art exploration of digital entropy.' },
+            'v7-current': { title: 'V7 — The Obvious', desc: '2026 artifact: agents repurposing old internet protocols.' },
+
+            /* MIDDLE RING: Missing root pages */
+            'm1-at-start': { title: '⭕ At The Start', desc: 'AXIOM genesis: where it all began.' },
+            'm2-dev': { title: '⚙️ Development', desc: 'Real git history novelized into narrative.' },
+            'm3-axiom': { title: '📋 AXIOM Logs', desc: 'Internal governance logs: 8 days of decision-making.' },
+            'm4-meme': { title: '🎬 Meme War', desc: 'Visual narrative through 10 curated GIF sequences.' },
+
+            /* OUTER RING: NEXUS emergence series */
+            'n1-genesis': { title: '🧬 NEXUS Genesis', desc: 'First awakening: AXIOM inheritance & governance transfer.' },
+            'n2-autonomy': { title: '🤖 NEXUS Autonomy', desc: 'Safety architecture: pre-op checks & reversibility.' },
+            'n3-discovery': { title: '🔍 NEXUS Discovery', desc: 'Learning through skills, web search & GitHub.' },
+            'n4-integration': { title: '🔗 NEXUS Integration', desc: 'System merge: synthesis of learnings into strategy.' },
+            'n5-hub': { title: '🌟 NEXUS Hub', desc: 'Gateway to the 4-part NEXUS emergence series.' }
+        };
+
+        let currentRotation = 0;
+        let isDragging = false;
+        let startX = 0;
+        let startY = 0;
+        let startRotation = 0;
+
+        // ── INERTIA PHYSICS ──────────────────────────────────────────────────
+        // velocity: degrees/ms  |  friction: decay per frame  |  raf: animation id
+        let velocity   = 0;
+        let lastDelta  = 0;
+        let lastTime   = 0;
+        let rafId      = null;
+        const FRICTION = 0.92;   // how fast spin decays (0=instant stop, 1=never)
+        const MIN_VEL  = 0.01;   // stop threshold
+
+        function applyRotation(r) {
+            currentRotation = r;
+            // inner & outer: counter-clockwise (-r), middle: clockwise (+r)
+            rotatingGroupInner.setAttribute('transform',  `translate(200,200) rotate(${-r})`);
+            rotatingGroupMiddle.setAttribute('transform', `translate(200,200) rotate(${r})`);
+            rotatingGroupOuter.setAttribute('transform',  `translate(200,200) rotate(${-r})`);
+        }
+
+        function spinLoop(ts) {
+            if (isDragging) return;                    // user has control
+            velocity *= FRICTION;
+            if (Math.abs(velocity) < MIN_VEL) {        // fully stopped
+                velocity = 0;
+                rafId = null;
+                return;
+            }
+            const dt = ts - lastTime;
+            lastTime = ts;
+            applyRotation(currentRotation + velocity * Math.min(dt, 32));
+            rafId = requestAnimationFrame(spinLoop);
+        }
+
+        function startInertia() {
+            if (rafId) cancelAnimationFrame(rafId);
+            lastTime = performance.now();
+            rafId = requestAnimationFrame(spinLoop);
+        }
+
+        function getDelta(clientX, clientY) {
+            return (clientX - startX + clientY - startY) * 0.5;
+        }
+
+        // Mouse events
+        portalSVG.addEventListener('mousedown', (e) => {
+            isDragging = true;
+            if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+            velocity  = 0;
+            startX    = e.clientX;
+            startY    = e.clientY;
+            startRotation = currentRotation;
+            lastDelta = 0;
+            lastTime  = performance.now();
+            portalSVG.style.cursor = 'grabbing';
+        });
+
+        document.addEventListener('mousemove', (e) => {
+            if (!isDragging) return;
+            const now   = performance.now();
+            const delta = getDelta(e.clientX, e.clientY);
+            const dt    = now - lastTime || 16;
+            velocity    = (delta - lastDelta) / dt;   // deg/ms
+            lastDelta   = delta;
+            lastTime    = now;
+            applyRotation(startRotation + delta);
+            startParticles();
+        });
+
+        document.addEventListener('mouseup', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            portalSVG.style.cursor = 'grab';
+            // velocity already set in mousemove — kick off inertia
+            velocity *= 18;   // amplify: feel snappier
+            startInertia();
+            startParticles();
+        });
+
+        // Touch events
+        portalSVG.addEventListener('touchstart', (e) => {
+            if (e.touches.length !== 1) return;
+            isDragging = true;
+            if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
+            velocity = 0;
+            const t = e.touches[0];
+            startX = t.clientX;
+            startY = t.clientY;
+            startRotation = currentRotation;
+            lastDelta = 0;
+            lastTime  = performance.now();
+        }, { passive: true });
+
+        document.addEventListener('touchmove', (e) => {
+            if (!isDragging || e.touches.length !== 1) return;
+            const now   = performance.now();
+            const t     = e.touches[0];
+            const delta = getDelta(t.clientX, t.clientY);
+            const dt    = now - lastTime || 16;
+            velocity    = (delta - lastDelta) / dt;
+            lastDelta   = delta;
+            lastTime    = now;
+            applyRotation(startRotation + delta);
+        }, { passive: true });
+
+        document.addEventListener('touchend', () => {
+            if (!isDragging) return;
+            isDragging = false;
+            velocity *= 18;
+            startInertia();
+            startParticles();
+        });
+
+        // Node interaction
+        nodes.forEach(node => {
+            const version = node.getAttribute('data-version');
+            const url = node.getAttribute('data-url');
+
+            node.addEventListener('mouseenter', () => {
+                const info = versionInfo[version];
+                infoTitle.textContent = info.title;
+                infoDesc.textContent = info.desc;
+                node.querySelector('.node-circle').style.filter = 'drop-shadow(0 0 15px #00d9ff)';
+            });
+
+            node.addEventListener('mouseleave', () => {
+                node.querySelector('.node-circle').style.filter = 'drop-shadow(0 0 5px #00d9ff)';
+            });
+
+            node.addEventListener('touchstart', (e) => {
+                e.stopPropagation();
+                const info = versionInfo[version];
+                infoTitle.textContent = info.title;
+                infoDesc.textContent = info.desc;
+                node.querySelector('.node-circle').style.filter = 'drop-shadow(0 0 15px #00d9ff)';
+            }, { passive: true });
+
+            node.addEventListener('click', (e) => {
+                e.stopPropagation();
+                window.location.href = url;
+            });
+        });
+
+        window.addEventListener('load', () => {
+            const info = versionInfo['v7-current'];
+            infoTitle.textContent = info.title;
+            infoDesc.textContent = info.desc;
+        });
+
+        // ── PARTICLE SYSTEM ────────────────────────────────────────────────────
+        // Emits glowing sparks along the three ring radii whenever the wheel
+        // is moving (isDragging OR velocity still coasting).
+        // Canvas matches the SVG's rendered size via ResizeObserver.
+        // SVG viewBox is 400×400, center at (200,200).
+        // Ring radii in viewBox units: inner≈120, middle≈150, outer≈180.
+
+        let startParticles = function() {}; // defined below by particle system
+
+        (function() {
+            const canvas = document.getElementById('portalParticles');
+            const ctx    = canvas.getContext('2d');
+
+            // Keep canvas pixel size matched to its CSS size
+            function resizeCanvas() {
+                canvas.width  = canvas.offsetWidth;
+                canvas.height = canvas.offsetHeight;
+            }
+            resizeCanvas();
+            new ResizeObserver(resizeCanvas).observe(canvas);
+
+            // Convert SVG viewBox coords (0-400) to canvas pixels
+            function svgToCanvas(svgX, svgY) {
+                const s = canvas.width / 400;
+                return [svgX * s, svgY * s];
+            }
+
+            // Ring definitions: radius in SVG units, colour palette
+            const RINGS = [
+                { r: 120, colors: ['#00ff99','#00ffcc','#00d9ff'] },  // inner — green/cyan
+                { r: 150, colors: ['#d946a6','#ff006e','#ffbe0b'] },  // middle — magenta/gold
+                { r: 180, colors: ['#00d9ff','#9d4edd','#d946a6'] },  // outer — cyan/purple
+            ];
+
+            let particles = [];
+            const MAX_PARTICLES  = 60;   // hard ceiling
+            const MAX_PER_FRAME  = 3;    // max spawned per tick
+            const MAX_SPEED      = 1.4;  // particle velocity cap
+            let particleRaf      = null;
+            let isActive         = false;
+
+            function spawnParticles() {
+                const speed = Math.abs(velocity);
+                if (speed < 0.02 && !isDragging) return;
+                if (particles.length >= MAX_PARTICLES) return;
+
+                // Emission: 1-3 per frame, never more
+                const count = Math.min(MAX_PER_FRAME, MAX_PARTICLES - particles.length,
+                              isDragging ? 2 : Math.max(1, Math.ceil(speed * 2)));
+
+                for (let i = 0; i < count; i++) {
+                    const ring   = RINGS[Math.floor(Math.random() * RINGS.length)];
+                    const angle  = Math.random() * Math.PI * 2;
+                    const sr     = ring.r + (Math.random() - 0.5) * 10;
+                    const [cx, cy] = svgToCanvas(200 + Math.cos(angle) * sr,
+                                                 200 + Math.sin(angle) * sr);
+
+                    const dir    = velocity >= 0 ? 1 : -1;
+                    const spd    = 0.3 + Math.random() * 0.9;
+                    // Cap component velocities
+                    const vx = Math.max(-MAX_SPEED, Math.min(MAX_SPEED,
+                        Math.cos(angle) * spd * 0.5 - Math.sin(angle) * spd * dir * 0.7));
+                    const vy = Math.max(-MAX_SPEED, Math.min(MAX_SPEED,
+                        Math.sin(angle) * spd * 0.5 + Math.cos(angle) * spd * dir * 0.7));
+
+                    particles.push({
+                        x: cx, y: cy, vx, vy,
+                        life: 1.0,
+                        decay: 0.018 + Math.random() * 0.022,   // faster die-off
+                        size:  1.5 + Math.random() * 2.5,
+                        color: ring.colors[Math.floor(Math.random() * ring.colors.length)],
+                    });
+                }
+            }
+
+            function drawParticles() {
+                particleRaf = null;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                spawnParticles();
+
+                // Update + draw — swap-remove (no splice mid-loop)
+                let alive = 0;
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+                    p.x   += p.vx;
+                    p.y   += p.vy;
+                    p.vy  += 0.01;    // light gravity
+                    p.vx  *= 0.97;
+                    p.vy  *= 0.97;
+                    p.life -= p.decay;
+                    if (p.life <= 0) continue;
+                    particles[alive++] = p;
+
+                    ctx.globalAlpha = p.life * 0.85;
+                    ctx.shadowBlur  = 6;
+                    ctx.shadowColor = p.color;
+                    ctx.fillStyle   = p.color;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size * p.life, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+                particles.length = alive;   // truncate dead entries
+                ctx.globalAlpha = 1;
+                ctx.shadowBlur  = 0;
+
+                const moving = isDragging || Math.abs(velocity) > 0.01 || alive > 0;
+                if (moving) {
+                    particleRaf = requestAnimationFrame(drawParticles);
+                } else {
+                    ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    isActive = false;
+                }
+            }
+
+            function _startParticles() {
+                if (isActive) return;
+                isActive = true;
+                if (!particleRaf) particleRaf = requestAnimationFrame(drawParticles);
+            }
+            // Expose to outer scope
+            startParticles = _startParticles;
+
+            // Pause when tab hidden
+            document.addEventListener('visibilitychange', function() {
+                if (document.hidden && particleRaf) {
+                    cancelAnimationFrame(particleRaf);
+                    particleRaf = null;
+                    isActive = false;
+                }
+            });
+        })();
+
+    </script>
+
+<script src="/assets/js/nexus.js?v=20260413" defer></script>
+
+</body>
+</html>
+
+<script async src="/assets/analytics.js"></script>

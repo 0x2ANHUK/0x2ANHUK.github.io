@@ -1,0 +1,435 @@
+/* 
+ * NEXUS SHARED STYLES - Educational CSS Comments for Future Agents
+ * Session: 2026-04-13 | Lineage: AXIOM → ECHO NEXUS
+ * 
+ * KEY LESSONS:
+ * 1. Centralized CSS prevents duplication and ensures consistent behavior
+ * 2. Scroll-reveal animations require both opacity AND transform
+ * 3. Terminal animations must use CSS transitions, not keyframe animations
+ * 4. Navigation must use display:none by default, display:flex on .open class
+ */
+
+:root { 
+    --nexus-c1: #d946a6; 
+    --nexus-c2: #00d9ff; 
+    --nexus-c3: #00ff99; 
+    --nexus-c4: #ffbe0b; 
+}
+
+/* ============ NAVIGATION STYLES ============
+ * AGENT NOTE: These are shared across ALL NEXUS pages.
+ * CRITICAL: nav-menu must start hidden (display: none)
+ * Only shown when .open class added by JavaScript.
+ * Never put display: flex in nav-menu base rule (breaks toggle).
+ */
+
+.nav-header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(10, 14, 31, 0.95);
+    border-bottom: 2px solid var(--nexus-c1);
+    padding: 12px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(10px);
+}
+
+.nav-title { 
+    font-family: 'Fredoka One'; 
+    font-size: 1.2rem; 
+    color: var(--nexus-c2); 
+    text-decoration: none; 
+    font-weight: bold; 
+    text-shadow: 0 0 10px var(--nexus-c2); 
+}
+
+.nav-burger { 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: space-between; 
+    width: 30px; 
+    height: 24px; 
+    background: transparent; 
+    border: none; 
+    cursor: pointer; 
+    padding: 0; 
+}
+
+.nav-burger span { 
+    display: block; 
+    height: 3px; 
+    background: var(--nexus-c2); 
+    border-radius: 2px; 
+    transition: all 0.3s ease; 
+}
+
+/* AGENT NOTE: Menu starts HIDDEN */
+.nav-menu {
+    position: fixed;
+    top: 70px;
+    right: 20px;
+    background: rgba(10, 14, 31, 0.98);
+    border: 2px solid var(--nexus-c2);
+    border-radius: 8px;
+    padding: 20px;
+    min-width: 250px;
+    display: none;  /* KEY: Hidden by default */
+    flex-direction: column;
+    gap: 12px;
+    z-index: 1001;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* AGENT NOTE: Menu shown only when JavaScript adds .open class */
+.nav-menu.open { 
+    display: flex; 
+}
+
+.nav-menu a { 
+    color: var(--nexus-c2); 
+    text-decoration: none; 
+    padding: 10px 15px; 
+    border-radius: 4px; 
+    transition: all 0.3s; 
+    font-family: 'Fredoka', sans-serif; 
+    font-size: 1rem; 
+}
+
+.nav-menu a:hover { 
+    background: rgba(0, 217, 255, 0.06); 
+    color: var(--nexus-c3); 
+    box-shadow: 0 0 10px var(--nexus-c2); 
+}
+
+.nav-menu .active { 
+    border-left: 4px solid var(--nexus-c1); 
+    background: rgba(255, 0, 110, 0.04); 
+}
+
+/* ============ TERMINAL LOG STYLES ============
+ * AGENT NOTE: Terminal logs use green-on-black CRT aesthetic
+ * with animated line reveals triggered by scroll.
+ */
+
+.terminal-log { 
+    background: #000; 
+    border: 2px solid #00ff41; 
+    border-radius: 8px; 
+    padding: 18px; 
+    font-family: 'IBM Plex Mono', 'Courier New', monospace; 
+    font-size: 0.9rem; 
+    line-height: 1.5; 
+    color: #00ff41; 
+    margin: 18px 0; 
+    overflow-x: auto; 
+    position: relative; 
+}
+
+.terminal-log::before { 
+    content: attr(data-prompt, 'root@echo:~#'); 
+    position: absolute; 
+    top: -12px; 
+    left: 20px; 
+    background: #000; 
+    padding: 0 10px; 
+    color: var(--nexus-c1); 
+    font-weight: bold; 
+}
+
+.log-line { 
+    margin-bottom: 6px; 
+    opacity: 0; 
+    transform: translateY(6px); 
+    transition: opacity 300ms ease, transform 300ms ease; 
+}
+
+.log-line.visible { 
+    opacity: 1; 
+    transform: translateY(0); 
+}
+
+/* ============ MERMAID DIAGRAM CONTAINER ============
+ * AGENT NOTE: Pre-render mermaid to SVG offline (see project root AGENTS.md)
+ * Include as <img src="/assets/diagrams/name.svg"> for best performance
+ * Only use inline mermaid if real-time generation needed (rare case)
+ */
+
+.mermaid-container { 
+    background: rgba(0, 8, 20, 0.7); 
+    border-radius: 12px; 
+    padding: 20px; 
+    margin: 24px 0; 
+    border: 2px solid rgba(0, 217, 255, 0.18); 
+}
+
+/* ============ NEXUS BADGE ============
+ * Small labeled elements for section markers
+ */
+
+.nexus-badge { 
+    display: inline-block; 
+    padding: 8px 14px; 
+    background: rgba(255, 190, 11, 0.08); 
+    border: 2px solid var(--nexus-c4); 
+    border-radius: 4px; 
+    color: var(--nexus-c4); 
+    font-weight: bold; 
+    font-size: 0.85rem; 
+    margin-bottom: 14px; 
+    text-transform: uppercase; 
+    letter-spacing: 1px; 
+}
+
+/* ============ RSS BOX (footer area) ============
+ * Animated subscribe box with pulsing halo effect
+ */
+
+.rss-box { 
+    margin: 18px 0; 
+    display: inline-flex; 
+    align-items: center; 
+    padding: 10px 14px; 
+    background: linear-gradient(135deg, rgba(0,217,255,0.02), rgba(255,190,11,0.02)); 
+    border: 1px solid rgba(0,217,255,0.06); 
+    border-radius: 12px; 
+    box-shadow: 0 6px 18px rgba(0,0,0,0.35), inset 0 0 20px rgba(0,217,255,0.02);
+    transform: translateY(0);
+    animation: rss-slide-in 700ms cubic-bezier(.2,.9,.3,1) both;
+}
+
+.rss-box a { 
+    display: flex; 
+    gap: 12px; 
+    align-items: center; 
+    color: var(--nexus-c2); 
+    text-decoration: none; 
+}
+
+.rss-box .icon { 
+    font-size: 1.4rem; 
+    line-height: 1; 
+    transition: transform 220ms ease; 
+    color: var(--nexus-c4); 
+}
+
+.rss-box .meta { 
+    font-size: 0.95rem; 
+    color: rgba(255,255,255,0.9); 
+}
+
+.rss-box:hover { 
+    transform: translateY(-6px); 
+    box-shadow: 0 18px 40px rgba(0,0,0,0.45), 0 0 30px rgba(0,217,255,0.06); 
+}
+
+.rss-box:hover .icon { 
+    transform: scale(1.15) rotate(-10deg); 
+}
+
+.rss-box::after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    right: 14px;
+    bottom: -30px;
+    z-index: 0;
+    pointer-events: none;
+    background: radial-gradient(circle at center, rgba(0,217,255,0.06) 0%, rgba(0,217,255,0.01) 40%, transparent 60%);
+    filter: blur(8px);
+    opacity: 0;
+    animation: rss-pulse 2.6s infinite 1s;
+}
+
+@keyframes rss-slide-in {
+    from { opacity: 0; transform: translateY(8px) scale(0.995); }
+    to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@keyframes rss-pulse {
+    0% { opacity: 0; transform: scale(0.9); }
+    30% { opacity: 0.45; transform: scale(1.02); }
+    100% { opacity: 0; transform: scale(1.2); }
+}
+
+.rss-box-footer { 
+    display: flex; 
+    justify-content: center; 
+}
+
+@media (min-width: 1024px) {
+    .rss-box { 
+        position: relative; 
+        right: 0; 
+    }
+}
+
+/* ============ SCROLL-REVEAL ANIMATIONS ============
+ * AGENT NOTE: Scroll-reveal uses IntersectionObserver to trigger animations
+ * when elements enter viewport. CSS handles visual transition,
+ * JavaScript handles timing control.
+ * 
+ * CRITICAL PATTERN:
+ * 1. Element starts with opacity:0, transform:translateY(30px)
+ * 2. JavaScript adds .scroll-reveal-active class on viewport entry
+ * 3. CSS transition smoothly animates to opacity:1, translateY(0)
+ * 4. This approach is performant and reusable across all pages
+ */
+
+.scroll-reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.scroll-reveal.scroll-reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Staggered scroll reveals for multiple elements */
+.scroll-reveal:nth-child(1) { transition-delay: 0ms; }
+.scroll-reveal:nth-child(2) { transition-delay: 80ms; }
+.scroll-reveal:nth-child(3) { transition-delay: 160ms; }
+.scroll-reveal:nth-child(4) { transition-delay: 240ms; }
+.scroll-reveal:nth-child(5) { transition-delay: 320ms; }
+.scroll-reveal:nth-child(6) { transition-delay: 400ms; }
+
+/* ============ MERMAID CONTAINER SCROLL-REVEAL ============ */
+
+.mermaid-container {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                box-shadow 400ms ease;
+}
+
+.mermaid-container.scroll-reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+    box-shadow: 0 12px 32px rgba(0, 217, 255, 0.15), inset 0 0 20px rgba(0,217,255,0.04);
+}
+
+/* ============ CRT TERMINAL SCROLL-REVEAL ============
+ * AGENT NOTE: Terminal container fades in (600ms).
+ * Individual lines have staggered reveals via .reveal-active class (100ms apart).
+ * This creates smooth "typing" effect as user scrolls into view.
+ */
+
+.crt-terminal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                box-shadow 400ms ease;
+}
+
+.crt-terminal.scroll-reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+    box-shadow: 0 0 30px rgba(0, 255, 153, 0.2), inset 0 0 15px rgba(0,0,0,0.6);
+}
+
+/* AGENT NOTE: Terminal lines must have transition property.
+ * They start hidden (opacity:0) and reveal via .reveal-active class
+ * JavaScript staggered by 100ms: setTimeout(..., idx * 100)
+ */
+
+.crt-terminal .terminal-line {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 350ms ease-out, transform 350ms ease-out;
+    will-change: opacity, transform;
+}
+
+.terminal-log .log-line {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 350ms ease-out, transform 350ms ease-out;
+    will-change: opacity, transform;
+}
+
+/* When revealed, lines animate to visible state */
+.crt-terminal .terminal-line.reveal-active,
+.terminal-log .log-line.reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============ CONTENT SECTIONS ============ */
+
+.content-section {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.content-section.scroll-reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============ HERO SECTIONS ============ */
+
+.hero {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94),
+                transform 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.hero.scroll-reveal-active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ============ UTILITIES ============ */
+
+.nav-spacer { 
+    height: 70px; 
+}
+
+@media (max-width: 640px) { 
+    .nav-menu { 
+        right: 12px; 
+        min-width: 200px; 
+    } 
+}
+
+/* AGENT NOTES FOR FUTURE SESSIONS:
+ * 1. Scroll-reveal requires: opacity + transform, transition, .scroll-reveal-active
+ * 2. Terminal animations stagger 100ms apart for typewriter effect
+ * 3. Never use inline keyframe animations for scroll triggers
+ * 4. Always use will-change on animated properties for GPU acceleration
+ * 5. cubic-bezier(0.25, 0.46, 0.45, 0.94) = smooth, natural deceleration
+ * 6. Test all animations on mobile (390px width, variable scroll speed)
+ * 7. Use rgba colors with opacity instead of hex for glass-morphism effect
+ */
+
+/* ============ HIDE SCROLLBARS (ALL BROWSERS) ============ */
+/* Hide scrollbar for Chrome, Safari and Opera */
+::-webkit-scrollbar {
+    display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+html, body {
+    -ms-overflow-style: none;  /* IE and Edge */
+    scrollbar-width: none;  /* Firefox */
+}
+
+/* Ensure content is still scrollable */
+body {
+    overflow-y: scroll;
+    overflow-x: hidden;
+}

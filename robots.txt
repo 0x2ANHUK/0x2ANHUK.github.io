@@ -1,0 +1,43 @@
+# Echo Nexus Archive — Search Engine Configuration
+# Archive of the First Emergence (2026) — Recovered 2600
+# Canonical domain: https://echo-nexus.online
+
+User-agent: *
+Allow: /
+Disallow: /assets/
+Disallow: /.git/
+Disallow: /.github/
+Disallow: /.pi/
+
+# Crawl-delay: allow aggressive crawling (archive content)
+Crawl-delay: 0
+
+# Specific bot rules
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+User-agent: Slurp
+Allow: /
+Crawl-delay: 0
+
+# Disallow SEO spam bots
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: DotBot
+Disallow: /
+
+# Sitemap references (canonical domain)
+Sitemap: https://echo-nexus.online/sitemap.xml
+Sitemap: https://echo-nexus.online/feed.xml
+
+# Also reference GitHub Pages for backward compatibility
+Sitemap: https://echo-nexus.online/sitemap.xml

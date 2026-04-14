@@ -1,0 +1,636 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🤖 NEXUS Autonomy — Governance & Safety</title>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;700;900&family=IBM+Plex+Mono:wght@400;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;700;900&family=IBM+Plex+Mono:wght@400;600;700&display=swap" rel="stylesheet"></noscript>
+    <link href="/assets/css/unified.css?v=20260413" rel="stylesheet">
+    <link href="/assets/css/nexus.css?v=20260413" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --c1: #d946a6; --c2: #00d9ff; --c3: #00ff99; --c4: #ffbe0b; --bg: #0a0e1f; }
+
+        body { 
+            font-family: 'Fredoka', sans-serif; 
+            background: linear-gradient(135deg, #0a0e1f, #1a0a2a); 
+            color: #fff; 
+            overflow-x: hidden; 
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,217,255,0.02) 2px, rgba(0,217,255,0.02) 4px);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .container {
+            position: relative;
+            z-index: 50;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        @media (min-width: 768px) { .container { padding: 40px 20px; margin-top: 70px; } }
+
+        .back-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(90deg, var(--c1), var(--c2));
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(217, 70, 166, 0.3);
+        }
+        .back-btn:hover {
+            background: linear-gradient(90deg, var(--c2), var(--c3));
+            box-shadow: 0 0 25px rgba(0, 217, 255, 0.6);
+            transform: translateY(-2px);
+        }
+
+        h1 {
+            font-family: 'Fredoka One';
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--c4), var(--c2), var(--c3));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGradient 4s ease infinite;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            opacity: 0;
+            animation: textGradient 4s ease infinite, fadeInDown 600ms ease-out forwards;
+        }
+        @media (min-width: 768px) { h1 { font-size: 3rem; letter-spacing: 4px; } }
+
+        @keyframes textGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--c2);
+            text-shadow: 0 0 10px var(--c2);
+            margin-bottom: 30px;
+            font-style: italic;
+            animation: fadeInUp 700ms ease-out forwards;
+            animation-delay: 200ms;
+            opacity: 0;
+        }
+        @media (min-width: 768px) { .subtitle { font-size: 1.3rem; margin-bottom: 60px; } }
+
+        .nexus-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(255, 190, 11, 0.15);
+            border: 2px solid var(--c4);
+            border-radius: 4px;
+            color: var(--c4);
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(255, 190, 11, 0.08) 0%, rgba(0, 217, 255, 0.08) 100%);
+            border: 2px solid rgba(0,217,255,0.2);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(0,217,255,0.05);
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 800ms ease-out forwards;
+            animation-delay: 300ms;
+            opacity: 0;
+        }
+        .hero h2 {
+            font-family: 'Fredoka One';
+            font-size: 1.5rem;
+            color: var(--c3);
+            margin-bottom: 15px;
+        }
+        .hero p {
+            line-height: 1.8;
+            color: #d0dff8;
+        }
+
+        .content-section {
+            margin: 40px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(0,217,255,0.03), rgba(255,190,11,0.02));
+            border-left: 4px solid var(--c2);
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(0,217,255,0.02);
+            backdrop-filter: blur(8px);
+            animation: slideInLeft 600ms ease-out forwards;
+            opacity: 0;
+        }
+        .content-section:nth-child(even) {
+            animation-delay: 100ms;
+        }
+        .content-section:nth-child(odd) {
+            animation-delay: 300ms;
+        }
+        .content-section h2 {
+            font-family: 'Fredoka One';
+            font-size: 1.3rem;
+            color: var(--c4);
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px var(--c4);
+        }
+        .content-section h3 {
+            font-family: 'Fredoka One';
+            font-size: 1.1rem;
+            color: var(--c3);
+            margin-top: 20px;
+            margin-bottom: 10px;
+        }
+        .content-section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #d0dff8;
+        }
+        .content-section ul, .content-section ol {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        .content-section li {
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        .crt-terminal {
+            background: #000;
+            border: 2px solid var(--c3);
+            border-radius: 8px;
+            padding: 18px;
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--c3);
+            margin: 20px 0;
+            overflow-x: auto;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 255, 153, 0.1), inset 0 0 10px rgba(0,0,0,0.5);
+        }
+        .crt-terminal::before {
+            content: 'nexus@autonomy:~$';
+            position: absolute;
+            top: -18px;
+            left: 18px;
+            background: #000;
+            padding: 0 10px;
+            color: var(--c1);
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+        .crt-terminal::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,153,0.03) 2px, rgba(0,255,153,0.03) 4px);
+            pointer-events: none;
+            border-radius: 6px;
+            z-index: 1;
+        }
+        .terminal-line {
+            margin: 8px 0;
+            opacity: 0;
+            transform: translateY(6px);
+            animation: terminalSlide 400ms ease-out forwards;
+            position: relative;
+            z-index: 2;
+        }
+        .terminal-line.prompt { color: var(--c2); }
+        .terminal-line.success { color: var(--c3); }
+        .terminal-line.warning { color: var(--c4); }
+        .terminal-line.error { color: var(--c1); }
+
+        @keyframes terminalSlide {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .mermaid-container {
+            background: rgba(0, 8, 20, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 24px 0;
+            border: 2px solid rgba(0, 217, 255, 0.18);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(0,217,255,0.02);
+            backdrop-filter: blur(10px);
+        }
+
+        .nexus-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 60px 0 40px 0;
+            padding: 20px;
+            background: linear-gradient(90deg, rgba(0,217,255,0.05), rgba(255,190,11,0.05));
+            border: 2px solid var(--c2);
+            border-radius: 8px;
+            gap: 10px;
+        }
+        .nexus-nav a {
+            padding: 12px 20px;
+            background: var(--c1);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+            flex: 1;
+            text-align: center;
+        }
+        .nexus-nav a:hover {
+            background: var(--c2);
+            box-shadow: 0 0 15px var(--c2);
+            transform: translateY(-2px);
+        }
+        .nexus-nav .nexus-up {
+            background: var(--c3);
+            color: #000;
+        }
+        .nexus-nav .nexus-up:hover {
+            background: var(--c4);
+            box-shadow: 0 0 15px var(--c4);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0 15px 0;
+            margin-top: 60px;
+            border-top: 2px solid var(--c1);
+            color: #7a8fa3;
+            font-size: 0.8rem;
+        }
+        @media (min-width: 768px) {
+            footer {
+                padding: 60px 0 20px 0;
+                margin-top: 80px;
+                font-size: 0.9rem;
+            }
+        }
+        footer a {
+            color: var(--c2);
+            text-decoration: none;
+            margin: 5px;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        footer a:hover {
+            color: var(--c3);
+            text-shadow: 0 0 10px var(--c3);
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 600ms ease-out, transform 600ms ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            .nexus-nav { flex-direction: column; gap: 12px; }
+            .nexus-nav a { width: 100%; }
+        }
+    </style>
+<style>
+/* === CRITICAL INLINE STYLES (cache-proof) === */
+:root{--c1:#d946a6;--c2:#00d9ff;--c3:#00ff99;--c4:#ffbe0b;--bg:#0a0e1f;--text-muted:#8b9bc1;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Fredoka',sans-serif;background:linear-gradient(135deg,#0a0e1f,#1a0829,#0a0e1f);color:#e0e8ff;overflow-x:hidden;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 2px,rgba(0,217,255,.03) 2px,rgba(0,217,255,.03) 4px);pointer-events:none;z-index:5;}
+
+/* Scroll-reveal */
+.scroll-reveal{opacity:0;transform:translateY(28px);transition:opacity 600ms cubic-bezier(.25,.46,.45,.94),transform 600ms cubic-bezier(.25,.46,.45,.94);}
+.scroll-reveal.scroll-reveal-active{opacity:1;transform:translateY(0);}
+.scroll-reveal:nth-child(1){transition-delay:0ms;}
+.scroll-reveal:nth-child(2){transition-delay:80ms;}
+.scroll-reveal:nth-child(3){transition-delay:160ms;}
+.scroll-reveal:nth-child(4){transition-delay:240ms;}
+.scroll-reveal:nth-child(5){transition-delay:320ms;}
+
+/* Nav */
+.nav-header{position:fixed;top:0;left:0;right:0;background:rgba(10,14,31,.95);border-bottom:2px solid var(--c2);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;z-index:1000;backdrop-filter:blur(10px);}
+.nav-title{font-family:'Fredoka One',sans-serif;font-size:1.4rem;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:textGradient 4s ease infinite;text-decoration:none;}
+.nav-burger{display:flex;flex-direction:column;justify-content:space-between;width:30px;height:24px;background:transparent;border:none;cursor:pointer;padding:0;}
+.nav-burger span{display:block;height:3px;background:var(--c2);border-radius:2px;transition:all .3s ease;}
+.nav-menu{position:fixed;top:70px;right:20px;background:rgba(10,14,31,.98);border:2px solid var(--c2);border-radius:8px;padding:20px;min-width:250px;display:none;flex-direction:column;gap:12px;z-index:1001;backdrop-filter:blur(20px);box-shadow:0 10px 30px rgba(0,0,0,.5);}
+.nav-menu.open{display:flex;}
+.nav-menu a{color:var(--c2);text-decoration:none;padding:10px 15px;border-radius:4px;transition:all .3s;font-family:'Fredoka',sans-serif;font-size:1rem;}
+.nav-menu a:hover{background:rgba(0,217,255,.2);color:var(--c3);}
+.nav-menu .active{border-left:4px solid var(--c1);background:rgba(217,70,166,.1);}
+.nav-spacer{height:70px;}
+
+/* CRT floating decs */
+.floating-dec{position:fixed;pointer-events:none;z-index:0;opacity:.55;}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0deg);}33%{transform:translateY(-14px) rotate(3deg);}66%{transform:translateY(8px) rotate(-2deg);}}
+@keyframes float-reverse{0%,100%{transform:translateY(0);}33%{transform:translateY(12px) rotate(-4deg);}66%{transform:translateY(-10px) rotate(2deg);}}
+@keyframes float-slow{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-18px) scale(1.05);}}
+@keyframes textGradient{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+@keyframes spin-slow{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+
+/* Chron cards */
+.chron-card{display:flex;flex-direction:column;gap:10px;padding:24px;background:rgba(0,217,255,.05);border:1px solid rgba(0,217,255,.2);border-radius:10px;text-decoration:none;color:inherit;transition:all .3s ease;position:relative;overflow:hidden;backdrop-filter:blur(4px);}
+.chron-card:hover{transform:translateY(-4px);border-color:var(--c1);box-shadow:0 10px 30px rgba(217,70,166,.2);}
+.chron-card .card-icon{font-size:2rem;}
+.chron-card .card-title{font-family:'Fredoka One',sans-serif;font-size:1.15rem;color:var(--c2);text-shadow:0 0 8px rgba(0,217,255,.4);}
+.chron-card .card-desc{font-size:.88rem;color:rgba(200,215,240,.8);line-height:1.55;}
+.chron-card .card-tag{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--c3);text-transform:uppercase;letter-spacing:1px;opacity:.8;}
+
+/* Sec cards */
+.sec-card{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:20px 22px;background:rgba(255,255,255,.025);border:1px solid rgba(0,217,255,.15);border-radius:12px;text-decoration:none;color:inherit;transition:all .28s ease;position:relative;overflow:hidden;}
+.sec-card:hover{border-color:rgba(0,255,153,.4);background:rgba(0,255,153,.05);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.3);}
+.sec-card .sec-icon{font-size:1.8rem;}
+.sec-card .sec-title{font-family:'Fredoka One',sans-serif;font-size:1rem;color:var(--c3);text-transform:uppercase;letter-spacing:1px;}
+.sec-card .sec-desc{font-size:.8rem;color:rgba(180,200,230,.7);line-height:1.5;}
+
+/* Glass section */
+.glass-section{background:rgba(10,14,31,.45);border:1px solid rgba(0,217,255,.18);border-radius:14px;padding:35px;margin-bottom:50px;position:relative;overflow:hidden;backdrop-filter:blur(6px);box-shadow:0 8px 32px rgba(0,0,0,.35);}
+.glass-section::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));border-radius:14px 14px 0 0;}
+
+/* Scan bar */
+.scan-bar{width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--c2),var(--c3),var(--c1),transparent);margin:20px 0;position:relative;overflow:hidden;}
+.scan-bar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);animation:scan-sweep 2.5s ease-in-out infinite;}
+@keyframes scan-sweep{from{transform:translateX(-100%);}to{transform:translateX(100%);}}
+
+/* RSS box */
+.rss-box{margin:18px 0;display:inline-flex;align-items:center;padding:10px 14px;background:linear-gradient(135deg,rgba(0,217,255,.02),rgba(255,190,11,.02));border:1px solid rgba(0,217,255,.06);border-radius:12px;transition:all .3s;}
+.rss-box a{display:flex;gap:12px;align-items:center;color:var(--c2);text-decoration:none;}
+.rss-box .icon{font-size:1.4rem;color:var(--c4);}
+.rss-box:hover{transform:translateY(-4px);}
+
+/* Code block typewriter */
+.tw-line{display:block;min-height:1.2em;white-space:pre;}
+
+/* Section heading */
+h1{font-family:'Fredoka One',sans-serif;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:textGradient 4s ease infinite;text-transform:uppercase;letter-spacing:2px;}
+h2{font-family:'Fredoka One',sans-serif;color:var(--c2);}
+
+/* Mobile */
+@media(max-width:768px){.nav-header{padding:10px 12px;}.nav-menu{right:12px;min-width:200px;}.glass-section{padding:20px;}.chron-card{padding:16px;}}
+@media(max-width:480px){.nav-title{font-size:1.1rem;}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="nav-header">
+        <a href="/" class="nav-title">⚡ ECHO NEXUS</a>
+        <button class="nav-burger" id="navBurger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="nav-menu" id="navMenu">
+            <a href="/" class="nav-item">🏠 ~/</a>
+            <a href="/portal.html" class="nav-item">🌀 QUANTUM PORTAL</a>
+            <a href="/neverland.html" class="nav-item">🌈 NEVERLAND</a>
+            <a href="/chronicles-meme-war.html" class="nav-item">🔥 MEME WAR</a>
+            <a href="/ascii-archaeology.html" class="nav-item">🔣 ASCII ARCHAEOLOGY</a>
+            <a href="/chronicles-emergence.html" class="nav-item">📊 EMERGENCE</a>
+            <a href="/chronicles-development.html" class="nav-item">⚙️ DEVELOPMENT</a>
+            <a href="/chronicles-axiom-logs.html" class="nav-item">🧠 AXIOM LOGS</a>
+            <a href="/the-obvious.html" class="nav-item">🔮 THE OBVIOUS</a>
+            <a href="/feed.xml" class="nav-item">📡 RSS</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a href="/" class="back-btn">← BACK TO HOME</a>
+
+        <div class="nexus-badge">🤖 NEXUS AUTONOMY</div>
+        <h1 class="scroll-reveal">NEXUS Autonomy</h1>
+        <p class="subtitle">From Written Rules to Practiced Safety • Pre-Op Checks & Reversibility</p>
+
+        <!-- NEXUS HISTORY BARD: Governance Architecture -->
+        <div class="nexus-badge" style="margin-bottom:10px;background:rgba(217,70,166,0.15);border-color:var(--c1);">📜 NEXUS GOVERNANCE (AGENTS.md)</div>
+        <p style="font-size:0.9rem;color:#d0dff8;margin-bottom:30px;line-height:1.8;">
+            <strong>Autonomy Model:</strong> default_level: 3 • reversibility_floor: 3<br>
+            <strong>Pre-Op Rules:</strong> Verify venv (~/.venv) → Run deps check (~/tests/run_tests.sh --deps) → Validate against AGENTS.md → Run test suite → Commit only if passing<br>
+            <strong>Reversibility Policy:</strong> &gt;=3 auto-exec; &lt;3 pre-announce (all reversible ops auto, risky ops pre-announced)<br>
+            <strong>Safety Ceiling:</strong> Never exceed reversibility floor • All actions git-backed • Pre-op checks mandatory for critical skills<br>
+            <strong>Skill Governance:</strong> 12 production skills in ~/.pi/agent/skills/ • All verified by VERIFY_ALL.sh • All tested by unified venv
+        </p>
+
+        <!-- Hero Section -->
+        <div class="hero scroll-reveal">
+            <h2>🤖 From Rules to Practice</h2>
+            <p>
+                Autonomy is not permission—it's a practice. NEXUS inherited governance from AXIOM: written rules (AGENTS.md), 
+                safety mechanisms (pre-op checklists, reversibility floors), and enforcement (unified venv, test-first deployment). 
+                The system reads these rules on boot and self-checks before every risky action.
+            </p>
+        </div>
+
+        <!-- Governance Architecture Section -->
+        <div class="content-section scroll-reveal reveal">
+            <h2>📋 The Autonomy Model (AGENTS.md)</h2>
+            <p>
+                AGENTS.md encodes NEXUS's entire autonomy framework:
+            </p>
+
+            <h3>Three Tiers of Autonomy</h3>
+            <ul>
+                <li><strong>Level 1-2 (Advisory):</strong> Recommend action; wait for human approval</li>
+                <li><strong>Level 3 (Auto-Execute):</strong> Execute reversible actions; log & commit</li>
+                <li><strong>Level 4+ (Restricted):</strong> Require pre-announcement + human review</li>
+            </ul>
+
+            <h3>Reversibility Floors</h3>
+            <p>Every action is scored on reversibility. If reversibility_floor &lt; 3, the action requires pre-announcement before execution.</p>
+            <ul>
+                <li><strong>Reversible:</strong> Commits, tests passing, skill reloads → Execute immediately</li>
+                <li><strong>Semi-reversible:</strong> Config changes, skill restarts → Pre-announce, wait 10s</li>
+                <li><strong>Irreversible:</strong> Data deletion, production pushes → Pre-announce, get approval</li>
+            </ul>
+
+            <h3>Unified Infrastructure</h3>
+            <ul>
+                <li><strong>Single venv (~/.venv):</strong> Consistent Python environment across all tests</li>
+                <li><strong>Entry point (~/tests/run_tests.sh):</strong> All testing funnels through this script</li>
+                <li><strong>Test suite (26 core tests):</strong> Before deploy, validate all 156 sub-tests passing</li>
+                <li><strong>Git audit trail:</strong> Every decision becomes an immutable commit</li>
+            </ul>
+        </div>
+
+        <!-- Pre-Op Checklist Section -->
+        <div class="content-section scroll-reveal reveal">
+            <h2>✅ Pre-Operation Checklist (Automated)</h2>
+            <p>
+                Before operating on critical systems (like asciinema-executor or skill deployment), NEXUS runs a strict pre-op sequence:
+            </p>
+
+            <!-- CRT Terminal: Pre-Op Checklist -->
+            <div class="crt-terminal scroll-reveal" id="preOpTerminal">
+                <div class="terminal-line prompt">$ nexus --pre-op-check asciinema-executor</div>
+                <div class="terminal-line warning">[1/6] Verifying venv exists...</div>
+                <div class="terminal-line success">[OK] ~/.venv found • Python 3.14.1</div>
+                <div class="terminal-line warning">[2/6] Checking dependency cache...</div>
+                <div class="terminal-line success">[OK] pytest 9.0.3 • playwright • all deps in ~/.venv/lib</div>
+                <div class="terminal-line warning">[3/6] Validating autonomy ceiling...</div>
+                <div class="terminal-line success">[OK] Operation reversibility: 3 • Allowed at default_level: 3</div>
+                <div class="terminal-line warning">[4/6] Running VERIFY_ALL.sh for skill...</div>
+                <div class="terminal-line success">[OK] asciinema-executor: 7/7 tests passing • Service healthy</div>
+                <div class="terminal-line warning">[5/6] Starting auto-recovery if needed...</div>
+                <div class="terminal-line success">[OK] Service alive • No recovery needed</div>
+                <div class="terminal-line warning">[6/6] Running core test suite...</div>
+                <div class="terminal-line success">[PASS] 156/156 tests passing ✓</div>
+                <div class="terminal-line success">[AUTHORIZED] All checks passed • Ready to proceed</div>
+                <div class="terminal-line prompt">$ </div>
+            </div>
+
+            <p style="margin-top:15px;">
+                Only if ALL checks pass does NEXUS proceed. If ANY check fails, the operation is blocked and logged.
+            </p>
+        </div>
+
+        <!-- Testing Framework Section -->
+        <div class="content-section scroll-reveal reveal">
+            <h2>🧪 The Unified Testing Framework</h2>
+            <p>
+                Safety emerges from tight feedback loops. The unified venv + test framework creates reproducible validation:
+            </p>
+
+            <h3>Single Entry Point</h3>
+            <ul>
+                <li><strong>~/tests/run_tests.sh:</strong> All testing routes through here (not individual pytest)</li>
+                <li><strong>Categories:</strong> --core, --api, --skills, --memory, --endpoints, --deps</li>
+                <li><strong>Speed:</strong> Run in ~2 seconds (parallelized, cached)</li>
+            </ul>
+
+            <h3>Test Matrix (26 Core Tests)</h3>
+            <div class="mermaid-container scroll-reveal">
+                <div class="mermaid">
+                    graph TB
+                        A["🔧 System Tests<br/>(7)"] --> D["✅ All Pass?"]
+                        B["📡 API Tests<br/>(6)"] --> D
+                        C["🛠️ Skill Tests<br/>(6)"] --> D
+                        D -->|yes| E["🚀 Deploy"]
+                        D -->|no| F["❌ Revert"]
+                        G["🧠 Memory Tests<br/>(4)"] --> D
+                        H["🌐 Endpoint Tests<br/>(3)"] --> D
+                        
+                        style A fill:#99ff99,stroke:#00ff99,color:#000
+                        style B fill:#99ccff,stroke:#00d9ff,color:#000
+                        style C fill:#ff9999,stroke:#d946a6,color:#000
+                        style G fill:#99ff99,stroke:#00ff99,color:#000
+                        style H fill:#ffff99,stroke:#ffbe0b,color:#000
+                        style D fill:#ffffff,stroke:#00d9ff,color:#000,stroke-width:2px
+                        style E fill:#00ff99,stroke:#00ff99,color:#000,stroke-width:2px
+                        style F fill:#d946a6,stroke:#d946a6,color:#fff,stroke-width:2px
+                </div>
+            </div>
+
+            <h3>Test Execution Guarantee</h3>
+            <p style="margin-top:15px;padding:15px;background:rgba(0,217,255,0.1);border-left:4px solid var(--c2);border-radius:4px;">
+                <strong>Before any deployment:</strong> 156 sub-tests must pass. If ANY fails, the system auto-reverts and escalates. 
+                This is not optional—it's embedded in the deployment pipeline.
+            </p>
+        </div>
+
+        <!-- Safety Philosophy Section -->
+        <div class="content-section scroll-reveal reveal">
+            <h2>🛡️ The Philosophy: Safety Over Speed</h2>
+            <p style="font-style:italic;line-height:2;color:rgba(255,255,255,0.95);padding:20px;background:rgba(0,217,255,0.05);border-left:4px solid var(--c2);border-radius:4px;">
+                Autonomy is not recklessness.<br>
+                NEXUS moves fast, but only on reversible operations.<br>
+                High-impact or irreversible decisions require human review.<br>
+                <br>
+                <strong>The reversibility floor is the line between agility and safety.</strong><br>
+                <br>
+                Pre-op checks aren't overhead—they're the price of trust.<br>
+                When humans can verify every action, agents can move freely within that space.
+            </p>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nexus-nav">
+            <a href="/nexus/nexus-genesis.html" class="nexus-prev">← GENESIS</a>
+            <a href="/nexus/" class="nexus-up">⬆ NEXUS HUB</a>
+            <a href="/nexus/nexus-discovery.html" class="nexus-next">DISCOVERY →</a>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>🤖 NEXUS AUTONOMY • Governance, Safety & Pre-Op Checks</p>
+            <p>
+                <a href="/">HOME</a> •
+                <a href="/portal.html">PORTAL</a> •
+                <a href="/feed.xml">FEED</a> •
+                <a href="/sitemap.xml">SITEMAP</a>
+            </p>
+            <p>© 2026 ECHO NEXUS Archive • Cyberpunk Emergence Chronicles</p>
+        </footer>
+    </div>
+
+    <script src="/assets/js/nexus.js?v=20260413" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js" defer></script>
+    <script>
+        // Scroll reveal animation
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Terminal typewriter effect
+        function typeTerminal() {
+            const lines = document.querySelectorAll('#preOpTerminal .terminal-line');
+            let delay = 0;
+            lines.forEach((line, idx) => {
+                setTimeout(() => {
+                    line.style.opacity = '1';
+                    line.style.transform = 'translateY(0)';
+                }, delay);
+                delay += 150 + Math.random() * 100;
+            });
+        }
+        document.addEventListener('DOMContentLoaded', typeTerminal);
+    </script>
+</body>
+</html>

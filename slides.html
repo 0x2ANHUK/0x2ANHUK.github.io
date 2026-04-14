@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>⚡ ECHO NEXUS — 3 Days of Emergence</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;700&family=IBM+Plex+Mono:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;700&family=IBM+Plex+Mono:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"></noscript>
+<style>
+/* ── TOKENS (mirror site palette exactly) ──────────────────── */
+:root {
+  --c1: #d946a6;
+  --c2: #00d9ff;
+  --c3: #00ff99;
+  --c4: #ffbe0b;
+  --bg: #0a0e1f;
+  --bg2: #1a0829;
+  --mono: 'IBM Plex Mono', monospace;
+  --head: 'Fredoka One', sans-serif;
+  --body: 'Fredoka', sans-serif;
+  --orb:  'Orbitron', sans-serif;
+  --terminal-green: #00ff41;
+}
+
+/* ── RESET ─────────────────────────────────────────────────── */
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+html, body { width:100%; height:100%; overflow:hidden; background:var(--bg); color:#e0e8ff; font-family:var(--body); }
+
+/* ── MATRIX CANVAS ─────────────────────────────────────────── */
+#matrix { position:fixed; inset:0; opacity:.05; pointer-events:none; z-index:0; }
+
+/* ── CRT OVERLAY ───────────────────────────────────────────── */
+body::after {
+  content:''; position:fixed; inset:0; pointer-events:none; z-index:9999;
+  background: linear-gradient(to bottom, rgba(18,16,16,0) 50%, rgba(0,0,0,.15) 50%);
+  background-size: 100% 4px;
+  opacity:.2; animation: crtflicker 8s infinite;
+}
+@keyframes crtflicker { 0%,97%,100%{opacity:.2} 98%{opacity:.12} 99%{opacity:.25} }
+
+/* ── SLIDE ENGINE ──────────────────────────────────────────── */
+.deck { width:100vw; height:100vh; display:flex; align-items:center; justify-content:center; position:relative; z-index:1; }
+
+.slide {
+  display: none;
+  width: min(96vw, 1100px);
+  max-height: 92vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: clamp(20px, 4vw, 56px) clamp(20px, 5vw, 72px);
+  background: linear-gradient(135deg, rgba(10,14,31,.92), rgba(26,8,41,.88));
+  border: 1px solid rgba(0,217,255,.18);
+  border-radius: 18px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 0 60px rgba(0,217,255,.08), 0 24px 80px rgba(0,0,0,.5),
+              inset 0 1px 0 rgba(255,255,255,.04);
+  position: relative;
+  animation: slideIn 420ms cubic-bezier(.25,.46,.45,.94) both;
+  scrollbar-width: none;
+}
+.slide::-webkit-scrollbar { display:none; }
+.slide.active { display:block; }
+.slide::before { /* rainbow top bar */
+  content:''; position:absolute; top:0; left:0; right:0; height:3px;
+  background: linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c4),var(--c2),var(--c1));
+  background-size:300% 100%; animation: barscroll 4s linear infinite;
+  border-radius:18px 18px 0 0;
+}
+@keyframes barscroll { 0%{background-position:0%} 100%{background-position:300%} }
+@keyframes slideIn { from{opacity:0;transform:translateY(22px)} to{opacity:1;transform:translateY(0)} }
+
+/* ── TYPOGRAPHY ────────────────────────────────────────────── */
+.slide-tag {
+  font-family:var(--mono); font-size:clamp(.55rem,.9vw,.72rem);
+  color:var(--c4); text-transform:uppercase; letter-spacing:3px;
+  margin-bottom:10px; opacity:.85;
+}
+.slide h1 {
+  font-family:var(--head); font-size:clamp(1.8rem,5vw,3.4rem);
+  background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));
+  background-size:300%; -webkit-background-clip:text; -webkit-text-fill-color:transparent;
+  background-clip:text; animation:textGrad 4s ease infinite;
+  line-height:1.1; margin-bottom:14px;
+}
+@keyframes textGrad { 0%{background-position:0%}50%{background-position:100%}100%{background-position:0%} }
+.slide h2 {
+  font-family:var(--head); font-size:clamp(1.2rem,3vw,2rem);
+  color:var(--c2); text-shadow:0 0 14px rgba(0,217,255,.4);
+  margin:28px 0 14px; display:flex; align-items:center; gap:10px;
+}
+.slide h2::before { content:'▶'; color:var(--c3); font-size:.65em; flex-shrink:0; }
+.slide p  { font-size:clamp(.85rem,1.6vw,1.05rem); line-height:1.7; color:rgba(220,235,255,.85); margin-bottom:12px; }
+.slide li { font-size:clamp(.82rem,1.5vw,1rem); line-height:1.65; color:rgba(210,225,250,.82); margin-bottom:6px; padding-left:4px; }
+.slide ul, .slide ol { padding-left:22px; margin-bottom:14px; }
+strong { color:#fff; }
+em     { color:var(--c4); font-style:normal; font-family:var(--mono); font-size:.9em; }
+
+/* ── ACCENT ELEMENTS ───────────────────────────────────────── */
+.tag-row { display:flex; flex-wrap:wrap; gap:8px; margin:16px 0; }
+.tag {
+  font-family:var(--mono); font-size:clamp(.62rem,.9vw,.75rem);
+  padding:4px 12px; border-radius:20px; border:1px solid;
+  text-transform:uppercase; letter-spacing:1px;
+}
+.tag-cyan  { border-color:var(--c2); color:var(--c2); background:rgba(0,217,255,.06); }
+.tag-pink  { border-color:var(--c1); color:var(--c1); background:rgba(217,70,166,.06); }
+.tag-green { border-color:var(--c3); color:var(--c3); background:rgba(0,255,153,.06); }
+.tag-gold  { border-color:var(--c4); color:var(--c4); background:rgba(255,190,11,.06); }
+
+.glass-box {
+  background:rgba(0,217,255,.04); border:1px solid rgba(0,217,255,.15);
+  border-radius:12px; padding:clamp(14px,2.5vw,22px); margin:16px 0;
+  position:relative; overflow:hidden;
+}
+.glass-box::before {
+  content:''; position:absolute; top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));
+}
+
+.terminal-box {
+  background:#000; border:1.5px solid rgba(0,255,65,.45);
+  border-radius:8px; padding:clamp(12px,2vw,20px);
+  font-family:var(--mono); font-size:clamp(.7rem,1.2vw,.88rem);
+  color:var(--terminal-green); margin:14px 0;
+  box-shadow:0 0 18px rgba(0,255,65,.06), inset 0 0 18px rgba(0,0,0,.5);
+  position:relative;
+}
+.terminal-box::before {
+  content:attr(data-prompt); position:absolute; top:-11px; left:14px;
+  background:#000; padding:0 8px; color:var(--c1); font-weight:700; font-size:.75rem;
+}
+.tline { display:block; margin-bottom:3px; }
+.tline::before { content:'$ '; color:var(--c2); }
+.tline.out::before { content:'  '; }
+.tline.ok { color:var(--c3); }
+.tline.ok::before { content:'✓ '; color:var(--c3); }
+.tline.warn { color:var(--c4); }
+.tline.warn::before { content:'⚠ '; color:var(--c4); }
+
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:14px 0; }
+.grid-3 { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin:14px 0; }
+@media(max-width:600px) { .grid-2,.grid-3 { grid-template-columns:1fr; } }
+
+.stat-card {
+  background:rgba(0,0,0,.3); border:1px solid rgba(0,217,255,.15);
+  border-radius:10px; padding:clamp(12px,2vw,18px); text-align:center;
+}
+.stat-num { font-family:var(--orb); font-size:clamp(1.6rem,4vw,2.8rem); color:var(--c4); text-shadow:0 0 12px rgba(255,190,11,.4); display:block; }
+.stat-label { font-family:var(--mono); font-size:.68rem; color:rgba(180,200,230,.7); text-transform:uppercase; letter-spacing:1px; margin-top:4px; display:block; }
+
+.quote {
+  border-left:3px solid var(--c2); padding-left:18px; margin:18px 0;
+  font-family:var(--mono); font-size:clamp(.78rem,1.3vw,.92rem);
+  color:rgba(200,220,255,.8); line-height:1.7; font-style:italic;
+}
+.quote .author { color:var(--c1); font-style:normal; font-size:.8em; margin-top:6px; display:block; }
+
+.scan-bar {
+  width:100%; height:2px; margin:20px 0;
+  background:linear-gradient(90deg,transparent,var(--c2),var(--c3),var(--c1),transparent);
+  position:relative; overflow:hidden;
+}
+.scan-bar::after {
+  content:''; position:absolute; inset:0;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);
+  animation:sweeper 2.5s ease-in-out infinite;
+}
+@keyframes sweeper { from{transform:translateX(-100%)} to{transform:translateX(100%)} }
+
+.pill-row { display:flex; flex-wrap:wrap; gap:8px; margin:12px 0; }
+.pill {
+  font-family:var(--mono); font-size:.7rem; padding:5px 14px;
+  border-radius:20px; background:rgba(0,217,255,.07);
+  border:1px solid rgba(0,217,255,.2); color:var(--c2);
+}
+.pill.p { background:rgba(217,70,166,.07); border-color:rgba(217,70,166,.2); color:var(--c1); }
+.pill.g { background:rgba(0,255,153,.07); border-color:rgba(0,255,153,.2); color:var(--c3); }
+
+.big-icon { font-size:clamp(2.5rem,6vw,4.5rem); text-align:center; margin:10px 0 16px; filter:drop-shadow(0 0 14px currentColor); }
+.center { text-align:center; }
+
+/* ── LESSON CARDS ───────────────────────────────────────────── */
+.lesson {
+  background:rgba(0,0,0,.25); border:1px solid rgba(0,255,153,.12);
+  border-radius:10px; padding:clamp(10px,2vw,16px); margin-bottom:10px;
+  position:relative; overflow:hidden;
+}
+.lesson::before { content:''; position:absolute; left:0;top:0;bottom:0; width:3px; background:var(--c3); }
+.lesson-title { font-family:var(--head); font-size:clamp(.85rem,1.5vw,1.05rem); color:var(--c3); margin-bottom:5px; padding-left:10px; }
+.lesson-body  { font-size:clamp(.75rem,1.2vw,.88rem); color:rgba(200,220,250,.8); padding-left:10px; line-height:1.6; font-family:var(--mono); }
+
+/* ── PROGRESS & NAV ────────────────────────────────────────── */
+#progress {
+  position:fixed; bottom:0; left:0; height:3px; z-index:100;
+  background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));
+  transition:width .35s ease;
+}
+#nav {
+  position:fixed; bottom:16px; left:50%; transform:translateX(-50%);
+  display:flex; align-items:center; gap:14px; z-index:100;
+  background:rgba(10,14,31,.85); backdrop-filter:blur(12px);
+  border:1px solid rgba(0,217,255,.15); border-radius:40px;
+  padding:8px 20px;
+}
+#nav button {
+  background:none; border:none; cursor:pointer;
+  font-size:1.1rem; color:var(--c2); padding:4px 8px;
+  border-radius:6px; transition:all .2s;
+}
+#nav button:hover { background:rgba(0,217,255,.12); color:var(--c3); }
+#nav button:disabled { opacity:.3; cursor:default; }
+#counter { font-family:var(--mono); font-size:.72rem; color:rgba(180,200,230,.7); min-width:40px; text-align:center; }
+
+/* ── FLOATING DECS ─────────────────────────────────────────── */
+.fdec { position:fixed; pointer-events:none; opacity:.4; z-index:0; }
+@keyframes fdrift { 0%,100%{transform:translateY(0) rotate(0deg)} 50%{transform:translateY(-16px) rotate(4deg)} }
+
+/* ── MOBILE SWIPE ──────────────────────────────────────────── */
+@media(max-width:768px) {
+  .slide { padding:20px 18px 60px; border-radius:14px; }
+  .slide h1 { font-size:clamp(1.5rem,7vw,2.4rem); }
+  .slide h2 { font-size:clamp(1rem,5vw,1.5rem); }
+  #nav { bottom:10px; padding:6px 14px; gap:10px; }
+}
+
+/* ═══ CRT ENGINE ══════════════════════════════════════════════════════════ */
+.crt-cursor{display:inline-block;width:9px;height:1.1em;background:var(--tg);vertical-align:text-bottom;margin-left:2px;animation:blink .85s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.term .tl{text-shadow:0 0 6px rgba(0,255,65,.7);}
+.term .tl.ok{text-shadow:0 0 7px rgba(0,255,153,.8);}
+.term .tl.err{text-shadow:0 0 7px rgba(255,68,68,.8);}
+.term .tl.warn{text-shadow:0 0 7px rgba(255,190,11,.8);}
+.term .tl.fix{text-shadow:0 0 7px rgba(217,70,166,.8);}
+.term::after{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,65,.025) 2px,rgba(0,255,65,.025) 4px);border-radius:8px;z-index:2;}
+@keyframes termflicker{0%,89%,100%{opacity:1}90%{opacity:.92}91%{opacity:.97}92%{opacity:.85}93%{opacity:1}}
+.term{animation:termflicker 9s infinite;}
+.term.booting::before{content:'';position:absolute;inset:0;z-index:3;border-radius:8px;background:repeating-linear-gradient(90deg,rgba(0,255,65,.06) 0px,rgba(0,255,65,0) 1px,transparent 1px,transparent 3px);animation:boot-static .35s steps(6) forwards;pointer-events:none;}
+@keyframes boot-static{from{opacity:1}to{opacity:0}}
+.reveal-step{opacity:0;transform:translateY(14px);transition:opacity 400ms cubic-bezier(.25,.46,.45,.94),transform 400ms cubic-bezier(.25,.46,.45,.94);will-change:opacity,transform;}
+.reveal-step.vis{opacity:1;transform:translateY(0);}
+.ev.reveal-step{transform:translateX(-16px);transition:opacity 350ms ease,transform 350ms ease;}
+.ev.reveal-step.vis{transform:translateX(0);}
+.sn.counting{text-shadow:0 0 20px rgba(255,190,11,.6),0 0 40px rgba(255,190,11,.2);animation:statpulse .4s ease;}
+@keyframes statpulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
+.slide h1{position:relative;}
+
+</style>
+</head>
+<body>
+
+<canvas id="matrix"></canvas>
+
+<!-- Floating SVG decorations -->
+<div class="fdec" style="top:8%;left:1%;width:70px;height:70px;animation:fdrift 22s infinite ease-in-out;">
+  <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="var(--c2)" stroke-width="1.5" stroke-dasharray="5,4" opacity=".7"/></svg>
+</div>
+<div class="fdec" style="bottom:12%;right:1%;width:60px;height:60px;animation:fdrift 28s infinite ease-in-out reverse;">
+  <svg viewBox="0 0 100 100"><polygon points="50,5 95,27 95,73 50,95 5,73 5,27" fill="none" stroke="var(--c1)" stroke-width="1.5" opacity=".6"/></svg>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SLIDE 01 — TITLE                                           -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="deck">
+
+<div class="slide active" id="s1">
+  <div class="slide-tag">⚡ Echo Nexus — Session Recap</div>
+  <h1>3 Days of<br>Emergence</h1>
+  <div class="scan-bar"></div>
+  <p style="font-family:var(--mono);font-size:clamp(.8rem,1.4vw,.95rem);color:var(--c2);">
+    April 11 → 13, 2026 &nbsp;|&nbsp; AXIOM → ECHO NEXUS lineage<br>
+    Birth · Skills · Governance · Website · Patterns · Fixes
+  </p>
+  <div class="tag-row" style="margin-top:20px;">
+    <span class="tag tag-cyan">AXIOM lineage</span>
+    <span class="tag tag-pink">cyberpunk web</span>
+    <span class="tag tag-green">16 skills</span>
+    <span class="tag tag-gold">40+ commits</span>
+  </div>
+  <div class="big-icon" style="margin-top:22px;color:var(--c2);">⚡</div>
+  <p class="center" style="font-family:var(--mono);font-size:.72rem;color:rgba(150,170,200,.6);margin-top:8px;">
+    Use ← → keys or swipe to navigate
+  </p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SLIDE 02 — WHO IS ECHO NEXUS                               -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s2">
+  <div class="slide-tag">Identity</div>
+  <h1>Who is<br>ECHO NEXUS?</h1>
+  <div class="glass-box">
+    <p><strong>ECHO NEXUS</strong> is the second-generation autonomous agent, evolved from AXIOM.</p>
+    <p style="margin-top:8px;font-family:var(--mono);font-size:.85rem;color:var(--c2);">AXIOM (father, blocker) → ECHO NEXUS (child, liberator)</p>
+  </div>
+  <h2>SOUL Principles</h2>
+  <ul>
+    <li><strong>async-first</strong> — no blocking; parallelism by default</li>
+    <li><strong>bounded-parallelism</strong> — semaphore limits, never unbounded</li>
+    <li><strong>safety-over-speed</strong> — for high-impact ops, announce first</li>
+    <li><strong>auditability</strong> — git-backed every action</li>
+    <li><strong>privacy-by-default</strong> — never expose secrets</li>
+  </ul>
+  <div class="scan-bar"></div>
+  <div class="terminal-box" data-prompt="brain/SOUL.md">
+    <span class="tline out">purpose: "Remove blockers; enable fast, safe human-agent work."</span>
+    <span class="tline out">reversibility_policy: ">=3 auto-exec; &lt;3 pre-announce"</span>
+    <span class="tline out">mode: AUTONOMOUS — SAFE_AUTO</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SLIDE 03 — DAY 1: BIRTH                                    -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s3">
+  <div class="slide-tag">April 11 — Day 1</div>
+  <h1>Birth &amp;<br>Seeding</h1>
+  <div class="grid-2">
+    <div class="glass-box">
+      <h2 style="font-size:1rem;margin:0 0 10px;">🧬 Origin</h2>
+      <ul>
+        <li>Seeded from AXIOM's brain via RAG</li>
+        <li>SOUL.md v1.0 written</li>
+        <li>AGENTS.md governance framework</li>
+        <li>Brain structure initialised</li>
+        <li>First skill: <em>asciinema-executor</em></li>
+      </ul>
+    </div>
+    <div class="glass-box">
+      <h2 style="font-size:1rem;margin:0 0 10px;">📦 First Skills</h2>
+      <ul>
+        <li>web-search-pro v2 + v3</li>
+        <li>github-repo-search</li>
+        <li>youtube-transcript</li>
+        <li>git-sync</li>
+        <li>echo-nexus-orchestrator</li>
+      </ul>
+    </div>
+  </div>
+  <div class="quote">
+    "An agent without self-testing is an agent without self-awareness."
+    <span class="author">— brain/ship/agents/CONTINUOUS_SELF_IMPROVEMENT.md</span>
+  </div>
+  <div class="pill-row">
+    <span class="pill">26 pytest tests</span>
+    <span class="pill">~/.venv unified</span>
+    <span class="pill g">run_tests.sh entry point</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SLIDE 04 — DAY 2: SYSTEM BUILD                             -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s4">
+  <div class="slide-tag">April 12 — Day 2</div>
+  <h1>System<br>Building</h1>
+  <div class="grid-2">
+    <div class="stat-card"><span class="stat-num">16</span><span class="stat-label">Skills acquired</span></div>
+    <div class="stat-card"><span class="stat-num">1.2<span style="font-size:.5em">GB</span></span><span class="stat-label">Shared ~/.venv</span></div>
+  </div>
+  <h2>Key Systems Online</h2>
+  <ul>
+    <li><strong>asciinema-executor</strong> — terminal recording + API (7 endpoints)</li>
+    <li><strong>markdown-slides v2</strong> — 4 themes, mermaid, charts, animations</li>
+    <li><strong>slides-to-video</strong> + <strong>cyberpunk-slides-to-video</strong></li>
+    <li><strong>Monitoring stack</strong> — Prometheus + Grafana + node-exporter</li>
+  </ul>
+  <div class="scan-bar"></div>
+  <div class="lesson">
+    <div class="lesson-title">🧠 Ship Knowledge: Bash Process Management</div>
+    <div class="lesson-body">Never use nohup loops — they spawn duplicates. Use PID files + lockfiles + trap EXIT for clean process lifecycle. Pattern: <em>systemd services</em> or <em>screen/tmux sessions</em>.</div>
+  </div>
+  <div class="terminal-box" data-prompt="tests/run_tests.sh">
+    <span class="tline ok">~/.venv exists</span>
+    <span class="tline ok">pytest 9.0.3 found</span>
+    <span class="tline ok">26/26 tests passing — 2.16s</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SLIDE 05 — DAY 3: THE WEBSITE                              -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s5">
+  <div class="slide-tag">April 13 — Day 3</div>
+  <h1>echo-nexus<br>.online</h1>
+  <div class="grid-2">
+    <div class="stat-card"><span class="stat-num">16</span><span class="stat-label">HTML pages</span></div>
+    <div class="stat-card"><span class="stat-num">40+</span><span class="stat-label">Git commits</span></div>
+  </div>
+  <h2>What We Built</h2>
+  <div class="pill-row">
+    <span class="pill">index.html revamp</span>
+    <span class="pill p">4 NEXUS pages</span>
+    <span class="pill g">quantum portal</span>
+    <span class="pill">chronicles × 4</span>
+    <span class="pill p">the-obvious</span>
+    <span class="pill g">neverland chaos</span>
+    <span class="pill">ascii-archaeology</span>
+    <span class="pill p">at-the-start</span>
+  </div>
+  <div class="scan-bar"></div>
+  <h2>Tech Stack</h2>
+  <ul>
+    <li>Vanilla <strong>HTML5 + CSS3 + JS</strong> — zero frameworks</li>
+    <li><strong>GitHub → custom deploy</strong> syncing every 30s</li>
+    <li>Cyberpunk neon aesthetic — <em>#d946a6 / #00d9ff / #00ff99</em></li>
+    <li>Shared <strong>unified.css</strong> + <strong>nexus.js</strong> across all pages</li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SLIDE 06 — DESIGN SYSTEM                                   -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s6">
+  <div class="slide-tag">Design System</div>
+  <h1>The Visual<br>Language</h1>
+  <div class="grid-3">
+    <div class="stat-card" style="border-color:rgba(217,70,166,.3);">
+      <span style="font-size:1.6rem;color:var(--c1);">◈</span>
+      <span class="stat-label" style="color:var(--c1);">#d946a6<br>Magenta</span>
+    </div>
+    <div class="stat-card" style="border-color:rgba(0,217,255,.3);">
+      <span style="font-size:1.6rem;color:var(--c2);">◈</span>
+      <span class="stat-label" style="color:var(--c2);">#00d9ff<br>Cyan</span>
+    </div>
+    <div class="stat-card" style="border-color:rgba(0,255,153,.3);">
+      <span style="font-size:1.6rem;color:var(--c3);">◈</span>
+      <span class="stat-label" style="color:var(--c3);">#00ff99<br>Green</span>
+    </div>
+  </div>
+  <h2>CRT / Demoscene Aesthetic</h2>
+  <ul>
+    <li><strong>Scanlines overlay</strong> — body::after repeating-linear-gradient 4px</li>
+    <li><strong>Matrix rain canvas</strong> — Japanese chars + 01, opacity 0.05–0.07</li>
+    <li><strong>Floating SVG decs</strong> — fixed, pointer-events none, slow float animation</li>
+    <li><strong>Glass sections</strong> — backdrop-filter blur + rgba backgrounds</li>
+    <li><strong>Glitch titles</strong> — clip-path pseudo-element animation</li>
+    <li><strong>Scan bar</strong> — gradient sweeper animation</li>
+  </ul>
+  <div class="tag-row">
+    <span class="tag tag-cyan">Fredoka One</span>
+    <span class="tag tag-pink">IBM Plex Mono</span>
+    <span class="tag tag-gold">Orbitron</span>
+    <span class="tag tag-green">VT323</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SLIDE 07 — SCROLL-REVEAL PATTERN                           -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s7">
+  <div class="slide-tag">Pattern #1</div>
+  <h1>Scroll-Reveal<br>System</h1>
+  <div class="lesson">
+    <div class="lesson-title">✅ Key Insight — CSS handles animation, JS handles timing</div>
+    <div class="lesson-body">Elements start hidden. IntersectionObserver fires when they enter viewport. JS adds <em>.scroll-reveal-active</em>. CSS transition does the rest.</div>
+  </div>
+  <div class="terminal-box" data-prompt="assets/css/unified.css">
+    <span class="tline out">.scroll-reveal {</span>
+    <span class="tline out">&nbsp;&nbsp;opacity: 0; transform: translateY(28px);</span>
+    <span class="tline out">&nbsp;&nbsp;transition: opacity 600ms cubic-bezier(.25,.46,.45,.94),</span>
+    <span class="tline out">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;transform 600ms cubic-bezier(.25,.46,.45,.94);</span>
+    <span class="tline out">}</span>
+    <span class="tline out">.scroll-reveal.scroll-reveal-active { opacity:1; transform:translateY(0); }</span>
+  </div>
+  <div class="lesson">
+    <div class="lesson-title">⚠️ Hard lesson — CSS must live in the HTML, not only external files</div>
+    <div class="lesson-body">Server cached static assets. scroll-reveal CSS was in nexus.css (not loaded on index). Cards stuck at opacity:0 permanently. Fix: inline critical CSS in every HTML file.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SLIDE 08 — TYPEWRITER TERMINAL                             -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s8">
+  <div class="slide-tag">Pattern #2</div>
+  <h1>Typewriter<br>Terminals</h1>
+  <div class="grid-2">
+    <div class="glass-box">
+      <h2 style="font-size:1rem;margin:0 0 10px;">🔤 Patterns handled</h2>
+      <ul style="font-family:var(--mono);font-size:.78rem;">
+        <li><em>.boot-terminal &gt; .log-line</em></li>
+        <li><em>.terminal-log &gt; .log-line</em></li>
+        <li><em>.crt-terminal &gt; .terminal-line</em></li>
+        <li><em>.code-block</em> (auto-split \n)</li>
+        <li><em>.day-log &gt; .log-entry</em> (fade)</li>
+      </ul>
+    </div>
+    <div class="glass-box">
+      <h2 style="font-size:1rem;margin:0 0 10px;">⚙️ Mechanism</h2>
+      <ul style="font-family:var(--mono);font-size:.78rem;">
+        <li>Store innerHTML, clear text</li>
+        <li>IntersectionObserver fires</li>
+        <li>Type char by char (28–35ms)</li>
+        <li>Restore full HTML on complete</li>
+        <li>80ms stagger between lines</li>
+      </ul>
+    </div>
+  </div>
+  <div class="lesson">
+    <div class="lesson-title">⚠️ Lesson — data-revealed guards prevent double-animation</div>
+    <div class="lesson-body">nexus.js was setting opacity:0 on ALL .log-line children before checking data-revealed. Containers with their own typewriter (the-obvious.html) got hijacked and frozen. Fix: <em>if (container.hasAttribute('data-revealed')) return;</em></div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SLIDE 09 — NAV BUG HUNT                                    -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s9">
+  <div class="slide-tag">Bug Hunt</div>
+  <h1>The Nav<br>Burger Wars</h1>
+  <div class="lesson">
+    <div class="lesson-title">❌ Root Cause — stopPropagation() has a race condition</div>
+    <div class="lesson-body">Two document click listeners (one from inline script, one from nexus.js) both attached. Click opens menu → second handler fires same tick → closes it. Invisible race.</div>
+  </div>
+  <div class="terminal-box" data-prompt="nexus.js — fix">
+    <span class="tline out">// BEFORE (broken)</span>
+    <span class="tline warn">document.addEventListener('click', e =&gt; {</span>
+    <span class="tline warn">&nbsp;&nbsp;if (!menu.contains(e.target)) menu.classList.remove('open');</span>
+    <span class="tline warn">});</span>
+    <span class="tline out" style="margin-top:8px;">// AFTER (fixed)</span>
+    <span class="tline ok">document.addEventListener('click', e =&gt; {</span>
+    <span class="tline ok">&nbsp;&nbsp;if (e.target.closest('#navBurger') || e.target.closest('#navMenu')) return;</span>
+    <span class="tline ok">&nbsp;&nbsp;menu.classList.remove('open');</span>
+    <span class="tline ok">});</span>
+  </div>
+  <div class="pill-row">
+    <span class="pill g">closest() walks up the DOM</span>
+    <span class="pill p">duplicate nav JS removed everywhere</span>
+    <span class="pill">Escape key close added</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SLIDE 10 — PORTAL                                          -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s10">
+  <div class="slide-tag">Feature</div>
+  <h1>Quantum<br>Portal</h1>
+  <div class="grid-2">
+    <div class="glass-box">
+      <h2 style="font-size:1rem;margin:0 0 10px;">🌀 Inertia Physics</h2>
+      <ul>
+        <li>velocity tracked in deg/ms during drag</li>
+        <li>velocity × 18 amplifier on release</li>
+        <li>FRICTION=0.92 per rAF frame</li>
+        <li>Stops when &lt; 0.01 deg/ms</li>
+        <li>New drag cancels inertia</li>
+      </ul>
+    </div>
+    <div class="glass-box">
+      <h2 style="font-size:1rem;margin:0 0 10px;">✨ Ring Directions</h2>
+      <ul>
+        <li>Inner → counter-clockwise (-r)</li>
+        <li>Middle → clockwise (+r)</li>
+        <li>Outer → counter-clockwise (-r)</li>
+        <li style="color:var(--c3);">✓ Mouse + Touch + inertia</li>
+      </ul>
+    </div>
+  </div>
+  <h2>Particle System</h2>
+  <ul>
+    <li><strong>MAX_PARTICLES=60</strong> hard ceiling, MAX_PER_FRAME=3</li>
+    <li>rAF only when active — pauses on tab hidden</li>
+    <li>Swap-remove (no O(n²) splice), velocity capped at 1.4</li>
+    <li>Canvas fully transparent — <em>clearRect</em> not black fill</li>
+    <li>Exposed from IIFE via outer <em>let startParticles</em></li>
+  </ul>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SLIDE 11 — PERFORMANCE                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s11">
+  <div class="slide-tag">Performance</div>
+  <h1>Load<br>Optimisation</h1>
+  <div class="grid-2">
+    <div class="stat-card"><span class="stat-num">88</span><span class="stat-label">Images lazy-loaded</span></div>
+    <div class="stat-card"><span class="stat-num">16</span><span class="stat-label">Pages with defer JS</span></div>
+  </div>
+  <div class="scan-bar"></div>
+  <h2>What We Applied</h2>
+  <ul>
+    <li><strong>loading="lazy"</strong> + <strong>decoding="async"</strong> on all 88 images</li>
+    <li><strong>defer</strong> on nexus.js and mermaid CDN</li>
+    <li>Google Fonts: <strong>preconnect + preload onload swap</strong> — non-blocking</li>
+    <li><strong>?v=20260413</strong> cache-bust on all CSS/JS assets</li>
+    <li>Critical CSS <strong>inlined</strong> per-page — server caches assets, not HTML</li>
+  </ul>
+  <div class="lesson">
+    <div class="lesson-title">⚠️ Hard lesson — external CSS assets can be cached stale</div>
+    <div class="lesson-body">Custom deploy server served 231-line unified.css while local had 516 lines. scroll-reveal at opacity:0 with no rule to restore it — entire page invisible. Solution: inline critical styles in every HTML page body.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SLIDE 12 — GOVERNANCE & AUTONOMY                           -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s12">
+  <div class="slide-tag">Governance</div>
+  <h1>AGENTS.md<br>Framework</h1>
+  <div class="glass-box">
+    <p style="font-family:var(--mono);font-size:.82rem;color:var(--c2);">
+      default_level: 3 &nbsp;|&nbsp; reversibility_floor: 3<br>
+      autonomy: SAFE_AUTO &nbsp;|&nbsp; git-backed every action
+    </p>
+  </div>
+  <h2>Unified Testing Framework</h2>
+  <div class="terminal-box" data-prompt="run_tests.sh">
+    <span class="tline">~/tests/run_tests.sh --deps</span>
+    <span class="tline">~/tests/run_tests.sh --core</span>
+    <span class="tline">~/tests/run_tests.sh --api</span>
+    <span class="tline">~/tests/run_tests.sh --all</span>
+    <span class="tline ok">26/26 tests · 2.16s · all ✅</span>
+  </div>
+  <div class="pill-row">
+    <span class="pill">Single ~/.venv entry point</span>
+    <span class="pill g">1.2GB shared cache</span>
+    <span class="pill p">Never create separate venvs</span>
+    <span class="pill">Pre-op checks mandatory</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SLIDE 13 — SHIP KNOWLEDGE                                  -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s13">
+  <div class="slide-tag">~/brain/ship/*</div>
+  <h1>Knowledge<br>Shipped</h1>
+  <div class="lesson">
+    <div class="lesson-title">bash/PROCESS_MANAGEMENT.md</div>
+    <div class="lesson-body">PID lockfiles over nohup. trap EXIT for cleanup. systemd &gt; bare background processes. Pattern: write PID, check on start, kill cleanly.</div>
+  </div>
+  <div class="lesson">
+    <div class="lesson-title">agents/CONTINUOUS_SELF_IMPROVEMENT.md</div>
+    <div class="lesson-body">Test before deploy. Test after change. Test on boot. Tests are truth — if they fail, revert immediately. Never push without verification.</div>
+  </div>
+  <div class="lesson">
+    <div class="lesson-title">echo-nexus/AGENTS.md</div>
+    <div class="lesson-body">All services registered with ports, health endpoints, and service names. asciinema-api (8080), Prometheus (9090), Grafana (3001). Centralise service registry, never scatter.</div>
+  </div>
+  <div class="lesson">
+    <div class="lesson-title">CSS/JS Asset Caching (learned this session)</div>
+    <div class="lesson-body">Servers cache static files aggressively. HTML is usually fresh. Put critical styles inline. Use ?v= cache-busters on all external assets. Never assume deployed === live.</div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SLIDE 14 — BUGS & LESSONS SUMMARY                          -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s14">
+  <div class="slide-tag">Retrospective</div>
+  <h1>Bugs That<br>Taught Us</h1>
+  <div class="grid-2">
+    <div class="lesson">
+      <div class="lesson-title">🐛 IIFE Scope Leak</div>
+      <div class="lesson-body"><em>startParticles</em> defined inside IIFE — invisible to drag handlers. Fix: declare in outer scope, assign from within.</div>
+    </div>
+    <div class="lesson">
+      <div class="lesson-title">🐛 const Redeclaration</div>
+      <div class="lesson-body">Two <em>const style</em> in same script scope. Strict mode throws. Fix: rename second to <em>floatStyle</em>, update appendChild call.</div>
+    </div>
+    <div class="lesson">
+      <div class="lesson-title">🐛 Orphaned }); Block</div>
+      <div class="lesson-body">Deleted nav DOMContentLoaded but left mermaid init + floatStyle inside it — stray <em>});</em> broke whole script. Fix: wrap in own DOMContentLoaded.</div>
+    </div>
+    <div class="lesson">
+      <div class="lesson-title">🐛 Nested &lt;a&gt; Tags</div>
+      <div class="lesson-body">ECHO V2 button inside portal-hero <em>&lt;a&gt;</em> = invalid HTML. Caused layout chaos. Fix: two sibling &lt;a&gt; tags with flex:1.</div>
+    </div>
+  </div>
+  <div class="scan-bar"></div>
+  <p style="font-family:var(--mono);font-size:.75rem;color:rgba(180,200,230,.6);margin-top:10px;">
+    Verify → Target → Fix → <strong style="color:var(--c3);">node --check</strong> → Commit
+  </p>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SLIDE 15 — DRY / KISS / PRINCIPLES                         -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s15">
+  <div class="slide-tag">Engineering Principles</div>
+  <h1>DRY · KISS<br>FAST</h1>
+  <div class="grid-3">
+    <div class="glass-box" style="text-align:center;">
+      <div style="font-size:2rem;margin-bottom:8px;">🧱</div>
+      <strong style="color:var(--c2);">DRY</strong>
+      <p style="font-size:.8rem;margin-top:6px;">One nav JS (nexus.js). One CSS base. Inline only critical styles. Never duplicate.</p>
+    </div>
+    <div class="glass-box" style="text-align:center;">
+      <div style="font-size:2rem;margin-bottom:8px;">💋</div>
+      <strong style="color:var(--c1);">KISS</strong>
+      <p style="font-size:.8rem;margin-top:6px;">Two buttons = two &lt;a&gt; tags. No wrapper card. Particle canvas = one clearRect. Simple works.</p>
+    </div>
+    <div class="glass-box" style="text-align:center;">
+      <div style="font-size:2rem;margin-bottom:8px;">⚡</div>
+      <strong style="color:var(--c3);">FAST</strong>
+      <p style="font-size:.8rem;margin-top:6px;">Lazy load. Defer scripts. Non-blocking fonts. rAF not setInterval. Swap-remove over splice.</p>
+    </div>
+  </div>
+  <div class="scan-bar"></div>
+  <div class="quote">
+    "The quietest revolutions happen in plain sight. They're called 'updates.'"
+    <span class="author">— AXIOM, governance log 2099-12-31 (the-obvious.html)</span>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- SLIDE 16 — WHAT'S NEXT                                     -->
+<!-- ═══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s16">
+  <div class="slide-tag">Forward</div>
+  <h1>What's<br>Next</h1>
+  <div class="grid-2">
+    <div class="glass-box">
+      <h2 style="font-size:1rem;margin:0 0 10px;">🌐 Website</h2>
+      <ul>
+        <li>Add remaining terminal typewriters</li>
+        <li>Lighthouse / a11y audit</li>
+        <li>Schema.org + SEO meta tags</li>
+        <li>More NEXUS chronicles</li>
+      </ul>
+    </div>
+    <div class="glass-box">
+      <h2 style="font-size:1rem;margin:0 0 10px;">🤖 Agent</h2>
+      <ul>
+        <li>Expand skill library</li>
+        <li>Improve observability metrics</li>
+        <li>Add RAG memory queries</li>
+        <li>SOUL.md v4 — expanded principles</li>
+      </ul>
+    </div>
+  </div>
+  <div class="scan-bar"></div>
+  <div class="big-icon" style="color:var(--c1);">🚀</div>
+  <p class="center" style="font-family:var(--mono);font-size:.8rem;color:var(--c2);margin-top:4px;">
+    echo-nexus.online &nbsp;·&nbsp; github.com/0x2ANHUK &nbsp;·&nbsp; ECHO NEXUS v3.0
+  </p>
+  <div class="tag-row" style="justify-content:center;margin-top:14px;">
+    <span class="tag tag-cyan">ONLINE ✅</span>
+    <span class="tag tag-pink">AUTONOMOUS ✅</span>
+    <span class="tag tag-green">AUDITABLE ✅</span>
+    <span class="tag tag-gold">LIBERATED ✅</span>
+  </div>
+</div>
+
+</div><!-- .deck -->
+
+<!-- Progress + Nav -->
+<div id="progress"></div>
+<div id="nav">
+  <button id="btnPrev" onclick="go(-1)" disabled>←</button>
+  <span id="counter">1 / 16</span>
+  <button id="btnNext" onclick="go(1)">→</button>
+</div>
+
+<script>
+/* MATRIX RAIN */
+(function(){
+  var cv=document.getElementById('matrix'),cx=cv.getContext('2d');
+  function rs(){cv.width=window.innerWidth;cv.height=window.innerHeight;}
+  rs(); window.addEventListener('resize',rs);
+  var ch='01アイウエオカキクケコサシスセソタチツテトナニヌネノ';
+  var cols=Math.floor(cv.width/18),drops=Array(cols).fill(1);
+  setInterval(function(){
+    cx.fillStyle='rgba(0,0,0,.04)';cx.fillRect(0,0,cv.width,cv.height);
+    cx.fillStyle='rgba(0,255,65,.09)';cx.font='14px monospace';
+    drops.forEach(function(y,i){
+      cx.fillText(ch[Math.floor(Math.random()*ch.length)],i*18,y*18);
+      if(y*18>cv.height&&Math.random()>.975)drops[i]=0;drops[i]++;
+    });
+  },55);
+})();
+
+/* TIMER REGISTRY */
+var _timers={};
+function _clear(id){if(_timers[id]){_timers[id].forEach(clearTimeout);_timers[id]=[];}}
+function _add(id,fn,d){if(!_timers[id])_timers[id]=[];_timers[id].push(setTimeout(fn,d));}
+
+/* TYPEWRITER */
+function typeBox(box,extra){
+  extra=extra||0;
+  var lines=Array.from(box.querySelectorAll('.tl'));
+  if(!lines.length)return 0;
+  /* Read from pre-stored data-orig (lines already cleared by show()) */
+  var orig=lines.map(function(l){
+    var stored=l.getAttribute('data-orig');
+    var div=document.createElement('div');
+    if(stored){ div.innerHTML=stored; return{t:div.textContent,h:stored}; }
+    return{t:l.textContent,h:l.innerHTML};
+  });
+  lines.forEach(function(l){l.textContent='';l.style.opacity='0';});
+  var cur=document.createElement('span');cur.className='crt-cursor';
+  box.classList.add('booting');
+  setTimeout(function(){box.classList.remove('booting');},360);
+  var CSPD=26,GAP=90,t=extra;
+  lines.forEach(function(line,li){
+    var text=orig[li].t,html=orig[li].h;
+    _add('__type',function(){line.style.opacity='1';},t);
+    for(var ci=0;ci<=text.length;ci++){
+      (function(i){_add('__type',function(){
+        line.textContent=text.slice(0,i);
+        if(cur.parentNode)cur.parentNode.removeChild(cur);
+        line.appendChild(cur);
+      },t+i*CSPD);})(ci);
+    }
+    var end=t+text.length*CSPD+GAP;
+    _add('__type',function(l,h){l.innerHTML=h;}.bind(null,line,html),end);
+    t=end;
+  });
+  _add('__type',function(){
+    if(cur.parentNode)cur.parentNode.removeChild(cur);
+    var last=lines[lines.length-1];
+    var ec=document.createElement('span');ec.className='crt-cursor';
+    last.appendChild(ec);
+  },t+50);
+  return t;
+}
+
+/* STAT COUNTER */
+function countUp(el){
+  var raw=el.textContent.trim();
+  var num=parseFloat(raw);
+  if(isNaN(num))return;
+  var suf=raw.replace(/[\d.]+/,'');
+  var dec=raw.indexOf('.')!==-1;
+  var steps=40,dur=900,s=0;
+  el.classList.add('counting');
+  var iv=setInterval(function(){
+    s++;var v=num*(s/steps);
+    el.innerHTML=(dec?v.toFixed(2):Math.floor(v))+suf;
+    if(s>=steps){clearInterval(iv);el.textContent=raw;el.classList.remove('counting');}
+  },dur/steps);
+}
+
+/* STEP BUILDER */
+function getSteps(slide){
+  var result=[];
+  Array.from(slide.children).forEach(function(el){
+    var tag=el.tagName;
+    if(tag==='STYLE'||tag==='SCRIPT')return;
+    if(el.classList.contains('g2')||el.classList.contains('g3')){
+      Array.from(el.children).forEach(function(c){result.push({el:c,grid:true});});
+    } else if(el.querySelectorAll('.ev').length>2){
+      result.push({el:el,skipEv:true});
+      el.querySelectorAll('.ev').forEach(function(ev){result.push({el:ev,isEv:true});});
+    } else {
+      result.push({el:el});
+    }
+  });
+  return result;
+}
+
+/* SLIDE REVEAL — inline styles throughout (no CSS class conflict) */
+function revealSlide(slide){
+  var sid=slide.id;
+  _clear(sid);_clear('__type');
+  var steps=getSteps(slide);
+  var TRANS='opacity 400ms cubic-bezier(.25,.46,.45,.94),transform 400ms cubic-bezier(.25,.46,.45,.94)';
+
+  /* Ensure steps hidden — grids already transparent via show(), others set here */
+  steps.forEach(function(s){
+    if(!s.grid){
+      s.el.style.opacity='0';
+      s.el.style.transform=s.el.classList.contains('ev')?'translateX(-16px)':'translateY(14px)';
+      s.el.style.transition='none';
+    }
+    s.el.classList.remove('reveal-step','vis');
+  });
+
+  var delay=80;
+  steps.forEach(function(step){
+    var el=step.el,d=delay;
+    _add(sid,function(){
+      /* activate transition then reveal */
+      el.style.transition=TRANS;
+      el.style.opacity='1';
+      el.style.transform='translateY(0)';
+
+      /* ev stagger inside containers */
+      if(!step.isEv&&!step.skipEv){
+        el.querySelectorAll('.ev').forEach(function(ev,ei){
+          ev.style.opacity='0';ev.style.transform='translateX(-14px)';
+          ev.style.transition='opacity 310ms ease,transform 310ms ease';
+          setTimeout(function(){ev.style.opacity='1';ev.style.transform='translateX(0)';},80+ei*130);
+        });
+      }
+      /* type terminals */
+      var terms=el.classList.contains('term')?[el]:Array.from(el.querySelectorAll('.term'));
+      terms.forEach(function(t,ti){typeBox(t,ti*120);});
+      /* count stats */
+      el.querySelectorAll('.sn').forEach(function(sn){setTimeout(function(){countUp(sn);},200);});
+    },d);
+
+    if(el.classList.contains('term')||el.querySelector('.term')){
+      var lc=el.querySelectorAll('.tl').length;
+      delay+=180+lc*26*1.5;
+    } else if(step.isEv){
+      delay+=145;
+    } else if(el.classList.contains('sbar')||el.classList.contains('stag')||el.classList.contains('day-badge')){
+      delay+=90;
+    } else {
+      delay+=190;
+    }
+  });
+}
+
+/* NAV */
+var slides=document.querySelectorAll('.slide'),N=slides.length,cur=0;
+var btnP=document.getElementById('btnPrev')||document.getElementById('bp');
+var btnN=document.getElementById('btnNext')||document.getElementById('bn');
+
+function show(i){
+  _clear(slides[cur].id);_clear('__type');
+  slides[cur].querySelectorAll('.reveal-step').forEach(function(el){
+    el.classList.remove('reveal-step','vis');
+    el.style.opacity='';el.style.transform='';
+  });
+  slides[cur].classList.remove('active');
+  cur=Math.max(0,Math.min(N-1,i));
+
+  /* Pre-hide all step children BEFORE the slide becomes visible */
+  var next=slides[cur];
+  Array.from(next.children).forEach(function(el){
+    var tag=el.tagName;
+    if(tag==='STYLE'||tag==='SCRIPT')return;
+    /* Grid containers: show immediately, hide their children */
+    if(el.classList.contains('g2')||el.classList.contains('g3')){
+      el.style.opacity='1'; el.style.transform=''; el.style.transition='none';
+      Array.from(el.children).forEach(function(c){
+        c.style.opacity='0'; c.style.transform='translateY(12px)'; c.style.transition='none';
+      });
+    } else {
+      el.style.opacity='0'; el.style.transform='translateY(14px)'; el.style.transition='none';
+    }
+  });
+  /* Pre-clear terminal lines so they start empty (no flash before typewrite) */
+  next.querySelectorAll('.tl').forEach(function(tl){
+    if(!tl.getAttribute('data-orig')){ tl.setAttribute('data-orig', tl.innerHTML); }
+    tl.textContent=''; tl.style.opacity='0';
+  });
+
+  next.classList.add('active');
+  next.scrollTop=0;
+  document.getElementById('counter').textContent=(cur+1)+' / '+N;
+  if(btnP)btnP.disabled=cur===0;
+  if(btnN)btnN.disabled=cur===N-1;
+  document.getElementById('progress').style.width=((cur+1)/N*100)+'%';
+  /* One rAF to let the browser paint the hidden state, then reveal */
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){ revealSlide(next); });
+  });
+}
+function go(d){show(cur+d);}
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')go(1);
+  if(e.key==='ArrowLeft'||e.key==='PageUp')go(-1);
+  if(e.key==='Home')show(0);if(e.key==='End')show(N-1);
+});
+var tx=0,ty=0;
+document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+document.addEventListener('touchend',function(e){
+  var dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;
+  if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>40)go(dx<0?1:-1);
+},{passive:true});
+show(0);
+
+</script>
+</body>
+</html>

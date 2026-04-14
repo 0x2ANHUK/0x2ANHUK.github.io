@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>⚡ ECHO NEXUS — Activity Log: 3 Days</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;700&family=IBM+Plex+Mono:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;700&family=IBM+Plex+Mono:wght@400;600;700&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet"></noscript>
+<style>
+:root{--c1:#d946a6;--c2:#00d9ff;--c3:#00ff99;--c4:#ffbe0b;--bg:#0a0e1f;--tg:#00ff41;--mono:'IBM Plex Mono',monospace;--head:'Fredoka One',sans-serif;--body:'Fredoka',sans-serif;--orb:'Orbitron',sans-serif;}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--bg);color:#e0e8ff;font-family:var(--body);}
+#matrix{position:fixed;inset:0;opacity:.05;pointer-events:none;z-index:0;}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;background:linear-gradient(to bottom,rgba(18,16,16,0) 50%,rgba(0,0,0,.15) 50%);background-size:100% 4px;opacity:.2;animation:crt 8s infinite;}
+@keyframes crt{0%,97%,100%{opacity:.2}98%{opacity:.1}99%{opacity:.26}}
+.deck{width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;}
+.slide{display:none;width:min(96vw,1100px);max-height:92vh;overflow-y:auto;overflow-x:hidden;padding:clamp(18px,3.5vw,52px) clamp(18px,4.5vw,68px);background:linear-gradient(135deg,rgba(10,14,31,.93),rgba(26,8,41,.89));border:1px solid rgba(0,217,255,.17);border-radius:18px;backdrop-filter:blur(8px);box-shadow:0 0 60px rgba(0,217,255,.07),0 24px 80px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.04);position:relative;animation:sIn 420ms cubic-bezier(.25,.46,.45,.94) both;scrollbar-width:none;}
+.slide::-webkit-scrollbar{display:none;}
+.slide.active{display:block;}
+.slide::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3),var(--c4),var(--c2),var(--c1));background-size:300% 100%;animation:bar 4s linear infinite;border-radius:18px 18px 0 0;}
+@keyframes bar{0%{background-position:0%}100%{background-position:300%}}
+@keyframes sIn{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+.stag{font-family:var(--mono);font-size:clamp(.52rem,.85vw,.7rem);color:var(--c4);text-transform:uppercase;letter-spacing:3px;margin-bottom:10px;opacity:.85;}
+.slide h1{font-family:var(--head);font-size:clamp(1.7rem,4.5vw,3.2rem);background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));background-size:300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:tg 4s ease infinite;line-height:1.1;margin-bottom:12px;}
+@keyframes tg{0%{background-position:0%}50%{background-position:100%}100%{background-position:0%}}
+.slide h2{font-family:var(--head);font-size:clamp(1rem,2.5vw,1.7rem);color:var(--c2);text-shadow:0 0 14px rgba(0,217,255,.4);margin:22px 0 12px;display:flex;align-items:center;gap:8px;}
+.slide h2::before{content:'▶';color:var(--c3);font-size:.62em;flex-shrink:0;}
+.slide p{font-size:clamp(.82rem,1.5vw,1rem);line-height:1.7;color:rgba(220,235,255,.85);margin-bottom:10px;}
+.slide li{font-size:clamp(.78rem,1.4vw,.95rem);line-height:1.65;color:rgba(210,225,250,.82);margin-bottom:5px;padding-left:4px;}
+.slide ul,.slide ol{padding-left:20px;margin-bottom:12px;}
+strong{color:#fff;}em{color:var(--c4);font-style:normal;font-family:var(--mono);font-size:.88em;}
+/* Day badge */
+.day-badge{display:inline-flex;align-items:center;gap:8px;padding:5px 16px;border-radius:20px;font-family:var(--orb);font-size:clamp(.58rem,.9vw,.72rem);text-transform:uppercase;letter-spacing:2px;margin-bottom:14px;}
+.day-badge.d1{background:rgba(217,70,166,.1);border:1px solid var(--c1);color:var(--c1);}
+.day-badge.d2{background:rgba(0,217,255,.08);border:1px solid var(--c2);color:var(--c2);}
+.day-badge.d3{background:rgba(0,255,153,.07);border:1px solid var(--c3);color:var(--c3);}
+.day-badge.all{background:rgba(255,190,11,.07);border:1px solid var(--c4);color:var(--c4);}
+/* Scan bar */
+.sbar{width:100%;height:2px;margin:16px 0;background:linear-gradient(90deg,transparent,var(--c2),var(--c3),var(--c1),transparent);position:relative;overflow:hidden;}
+.sbar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);animation:sw 2.5s ease-in-out infinite;}
+@keyframes sw{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
+/* Terminal */
+.term{background:#000;border:1.5px solid rgba(0,255,65,.4);border-radius:8px;padding:clamp(10px,1.8vw,18px);font-family:var(--mono);font-size:clamp(.65rem,1.1vw,.82rem);color:var(--tg);margin:12px 0;box-shadow:0 0 16px rgba(0,255,65,.05),inset 0 0 16px rgba(0,0,0,.5);position:relative;}
+.term::before{content:attr(data-prompt);position:absolute;top:-11px;left:12px;background:#000;padding:0 8px;color:var(--c1);font-weight:700;font-size:.72rem;}
+.tl{display:block;margin-bottom:2px;}
+.tl::before{content:'$ ';color:var(--c2);}
+.tl.out::before{content:'  ';}
+.tl.ok{color:var(--c3);}.tl.ok::before{content:'✓ ';color:var(--c3);}
+.tl.err{color:#ff4444;}.tl.err::before{content:'✗ ';color:#ff4444;}
+.tl.warn{color:var(--c4);}.tl.warn::before{content:'⚠ ';color:var(--c4);}
+.tl.fix{color:var(--c1);}.tl.fix::before{content:'→ ';color:var(--c1);}
+/* Glass box */
+.gb{background:rgba(0,217,255,.04);border:1px solid rgba(0,217,255,.14);border-radius:12px;padding:clamp(12px,2vw,20px);margin:12px 0;position:relative;overflow:hidden;}
+.gb::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));}
+/* Grids */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0;}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:10px 0;}
+@media(max-width:600px){.g2,.g3{grid-template-columns:1fr;}}
+/* Stat card */
+.sc{background:rgba(0,0,0,.28);border:1px solid rgba(0,217,255,.14);border-radius:10px;padding:clamp(10px,1.8vw,16px);text-align:center;}
+.sn{font-family:var(--orb);font-size:clamp(1.4rem,3.5vw,2.5rem);color:var(--c4);text-shadow:0 0 10px rgba(255,190,11,.35);display:block;}
+.sl{font-family:var(--mono);font-size:.65rem;color:rgba(170,190,220,.7);text-transform:uppercase;letter-spacing:1px;margin-top:3px;display:block;}
+/* Lesson card */
+.lc{background:rgba(0,0,0,.22);border:1px solid rgba(0,255,153,.1);border-radius:10px;padding:clamp(10px,1.8vw,15px);margin-bottom:9px;position:relative;overflow:hidden;}
+.lc::before{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--c3);}
+.lc.red::before{background:var(--c1);}
+.lc.gold::before{background:var(--c4);}
+.lc.cyan::before{background:var(--c2);}
+.lt{font-family:var(--head);font-size:clamp(.82rem,1.4vw,1rem);color:var(--c3);margin-bottom:4px;padding-left:10px;}
+.lc.red .lt{color:var(--c1);}.lc.gold .lt{color:var(--c4);}.lc.cyan .lt{color:var(--c2);}
+.lb{font-size:clamp(.72rem,1.15vw,.84rem);color:rgba(195,215,245,.78);padding-left:10px;line-height:1.6;font-family:var(--mono);}
+/* Quote */
+.qt{border-left:3px solid var(--c2);padding-left:16px;margin:14px 0;font-family:var(--mono);font-size:clamp(.74rem,1.2vw,.88rem);color:rgba(195,215,255,.8);line-height:1.7;font-style:italic;}
+.qt .au{color:var(--c1);font-style:normal;font-size:.78em;margin-top:5px;display:block;}
+/* Pills */
+.pr{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0;}
+.pl{font-family:var(--mono);font-size:.66rem;padding:4px 12px;border-radius:20px;background:rgba(0,217,255,.07);border:1px solid rgba(0,217,255,.2);color:var(--c2);}
+.pl.p{background:rgba(217,70,166,.07);border-color:rgba(217,70,166,.2);color:var(--c1);}
+.pl.g{background:rgba(0,255,153,.07);border-color:rgba(0,255,153,.2);color:var(--c3);}
+.pl.y{background:rgba(255,190,11,.07);border-color:rgba(255,190,11,.2);color:var(--c4);}
+/* Timeline event */
+.ev{display:flex;gap:12px;margin-bottom:8px;align-items:flex-start;}
+.ev-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0;margin-top:5px;}
+.ev-dot.c1{background:var(--c1);box-shadow:0 0 6px var(--c1);}
+.ev-dot.c2{background:var(--c2);box-shadow:0 0 6px var(--c2);}
+.ev-dot.c3{background:var(--c3);box-shadow:0 0 6px var(--c3);}
+.ev-dot.c4{background:var(--c4);box-shadow:0 0 6px var(--c4);}
+.ev-text{font-size:clamp(.76rem,1.3vw,.88rem);color:rgba(210,225,245,.82);line-height:1.55;font-family:var(--mono);}
+.ev-text strong{color:#fff;}
+/* Progress / Nav */
+#progress{position:fixed;bottom:0;left:0;height:3px;z-index:100;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));transition:width .35s ease;}
+#nav{position:fixed;bottom:14px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;z-index:100;background:rgba(10,14,31,.88);backdrop-filter:blur(12px);border:1px solid rgba(0,217,255,.14);border-radius:40px;padding:7px 18px;}
+#nav button{background:none;border:none;cursor:pointer;font-size:1rem;color:var(--c2);padding:3px 7px;border-radius:6px;transition:all .2s;}
+#nav button:hover{background:rgba(0,217,255,.12);color:var(--c3);}
+#nav button:disabled{opacity:.25;cursor:default;}
+#counter{font-family:var(--mono);font-size:.68rem;color:rgba(170,190,220,.7);min-width:44px;text-align:center;}
+/* Floating decs */
+.fd{position:fixed;pointer-events:none;opacity:.38;z-index:0;}
+@keyframes fd1{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-14px) rotate(3deg)}}
+/* Mobile */
+@media(max-width:768px){.slide{padding:18px 16px 62px;border-radius:14px;}.slide h1{font-size:clamp(1.4rem,7vw,2.2rem);}.slide h2{font-size:clamp(.95rem,4.5vw,1.35rem);}#nav{bottom:8px;padding:5px 12px;gap:8px;}}
+
+/* ═══ CRT ENGINE ══════════════════════════════════════════════════════════ */
+.crt-cursor{display:inline-block;width:9px;height:1.1em;background:var(--tg);vertical-align:text-bottom;margin-left:2px;animation:blink .85s step-end infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+.term .tl{text-shadow:0 0 6px rgba(0,255,65,.7);}
+.term .tl.ok{text-shadow:0 0 7px rgba(0,255,153,.8);}
+.term .tl.err{text-shadow:0 0 7px rgba(255,68,68,.8);}
+.term .tl.warn{text-shadow:0 0 7px rgba(255,190,11,.8);}
+.term .tl.fix{text-shadow:0 0 7px rgba(217,70,166,.8);}
+.term::after{content:'';position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,255,65,.025) 2px,rgba(0,255,65,.025) 4px);border-radius:8px;z-index:2;}
+@keyframes termflicker{0%,89%,100%{opacity:1}90%{opacity:.92}91%{opacity:.97}92%{opacity:.85}93%{opacity:1}}
+.term{animation:termflicker 9s infinite;}
+.term.booting::before{content:'';position:absolute;inset:0;z-index:3;border-radius:8px;background:repeating-linear-gradient(90deg,rgba(0,255,65,.06) 0px,rgba(0,255,65,0) 1px,transparent 1px,transparent 3px);animation:boot-static .35s steps(6) forwards;pointer-events:none;}
+@keyframes boot-static{from{opacity:1}to{opacity:0}}
+.reveal-step{opacity:0;transform:translateY(14px);transition:opacity 400ms cubic-bezier(.25,.46,.45,.94),transform 400ms cubic-bezier(.25,.46,.45,.94);will-change:opacity,transform;}
+.reveal-step.vis{opacity:1;transform:translateY(0);}
+.ev.reveal-step{transform:translateX(-16px);transition:opacity 350ms ease,transform 350ms ease;}
+.ev.reveal-step.vis{transform:translateX(0);}
+.sn.counting{text-shadow:0 0 20px rgba(255,190,11,.6),0 0 40px rgba(255,190,11,.2);animation:statpulse .4s ease;}
+@keyframes statpulse{0%{transform:scale(1)}50%{transform:scale(1.1)}100%{transform:scale(1)}}
+.slide h1{position:relative;}
+
+</style>
+</head>
+<body>
+<canvas id="matrix"></canvas>
+
+<div class="fd" style="top:7%;left:1%;width:65px;height:65px;animation:fd1 24s infinite ease-in-out;">
+  <svg viewBox="0 0 100 100"><circle cx="50" cy="50" r="44" fill="none" stroke="var(--c2)" stroke-width="1.5" stroke-dasharray="5,4" opacity=".7"/><line x1="50" y1="6" x2="50" y2="94" stroke="var(--c2)" stroke-width=".6" opacity=".4"/><line x1="6" y1="50" x2="94" y2="50" stroke="var(--c2)" stroke-width=".6" opacity=".4"/></svg>
+</div>
+<div class="fd" style="bottom:13%;right:1%;width:55px;height:55px;animation:fd1 31s infinite ease-in-out reverse;">
+  <svg viewBox="0 0 100 100"><rect x="20" y="20" width="60" height="60" fill="none" stroke="var(--c1)" stroke-width="1.5" transform="rotate(18,50,50)" opacity=".65"/></svg>
+</div>
+
+<div class="deck">
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- S01 TITLE                                                  -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="slide active" id="s1">
+  <div class="stag">⚡ Echo Nexus — Complete Activity Log</div>
+  <h1>3 Days<br>Activity Report</h1>
+  <div class="sbar"></div>
+  <p style="font-family:var(--mono);font-size:clamp(.78rem,1.3vw,.92rem);color:var(--c2);">
+    April 11–13, 2026 &nbsp;·&nbsp; Deep analysis of all commits, failures,<br>
+    fixes, milestones, and knowledge gained
+  </p>
+  <div class="g3" style="margin-top:18px;">
+    <div class="sc"><span class="sn">3</span><span class="sl">Days active</span></div>
+    <div class="sc"><span class="sn">40+</span><span class="sl">Git commits</span></div>
+    <div class="sc"><span class="sn">16</span><span class="sl">Skills</span></div>
+  </div>
+  <div class="pr" style="margin-top:14px;">
+    <span class="pl g">~/.nexus</span>
+    <span class="pl">~/.pi/agent</span>
+    <span class="pl p">~/brain</span>
+    <span class="pl y">echo-nexus.online</span>
+  </div>
+  <p class="center" style="font-family:var(--mono);font-size:.68rem;color:rgba(140,160,200,.55);margin-top:14px;text-align:center;">← → keys or swipe to navigate</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- S02 APR 11 — BIRTH                                         -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s2">
+  <div class="day-badge d1">📅 April 11, 2026 — Day 1</div>
+  <h1>Birth &amp;<br>Bootstrap</h1>
+  <div class="g2">
+    <div class="gb">
+      <h2 style="font-size:.95rem;margin:0 0 8px;">🧬 NEXUS Seeded</h2>
+      <div class="ev"><div class="ev-dot c1"></div><div class="ev-text"><strong>09:38Z</strong> — SOUL.md v1.0 written. Purpose defined: "Remove blockers; enable fast, safe human-agent work."</div></div>
+      <div class="ev"><div class="ev-dot c2"></div><div class="ev-text"><strong>09:42Z</strong> — NEXUS.md identity file created. Lineage: AXIOM → ECHO NEXUS</div></div>
+      <div class="ev"><div class="ev-dot c3"></div><div class="ev-text"><strong>10:05Z</strong> — bootstrap.sh runs. Venv created at <em>~/.venv</em></div></div>
+      <div class="ev"><div class="ev-dot c4"></div><div class="ev-text"><strong>10:30Z</strong> — AGENTS.md governance framework written</div></div>
+    </div>
+    <div class="gb">
+      <h2 style="font-size:.95rem;margin:0 0 8px;">📦 First Skills Online</h2>
+      <ul style="font-size:.8rem;">
+        <li>web-search-pro v2 + v3</li>
+        <li>github-repo-search</li>
+        <li>youtube-transcript</li>
+        <li>git-sync</li>
+        <li>echo-nexus-orchestrator</li>
+        <li>echo-nexus-memory-keeper</li>
+        <li>echo-nexus-executor</li>
+        <li>echo-nexus-auditor</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sbar"></div>
+  <div class="lc red">
+    <div class="lt">❌ First Failure: SKILL.md Frontmatter Corruption</div>
+    <div class="lb">brain-rag-query + web-search-pro SKILL.md files contained RAG output instead of skill definition. Validation errors blocked registration. Root: no pre-commit hook, no automatic validator. Fixed by rewriting frontmatter + adding validate-frontmatter.sh</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- S03 APR 11 — ASCIINEMA V1                                  -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s3">
+  <div class="day-badge d1">📅 April 11 — asciinema-executor</div>
+  <h1>First Major<br>Skill Deployed</h1>
+  <h2>asciinema-executor v1.0</h2>
+  <div class="pr">
+    <span class="pl">API server (port 8080)</span>
+    <span class="pl g">5 HTML dashboards</span>
+    <span class="pl p">systemd service</span>
+    <span class="pl y">JSONL sessions</span>
+  </div>
+  <div class="lc red">
+    <div class="lt">❌ Failed: Hardcoded Path('/app') in api_server.py</div>
+    <div class="lb">Server crashed with 404/BrokenPipeError. SimpleHTTPRequestHandler looked for files in /app (hardcoded) but they lived in ~/.pi/agent/skills/asciinema-executor/. Fix: <em>SKILL_DIR = Path.cwd()</em> + os.chdir() before serving static files.</div>
+  </div>
+  <div class="lc red">
+    <div class="lt">❌ Failed: Python Indentation Error (cat >> append)</div>
+    <div class="lb">Appending new endpoints via cat >> caused IndentationError at line 384. New elif block wasn't properly nested. Lesson: NEVER append to complex Python files with heredoc. Use the edit tool with exact replacement.</div>
+  </div>
+  <div class="term" data-prompt="fix applied">
+    <span class="tl err">IndentationError: unexpected indent at line 384</span>
+    <span class="tl fix">Use edit() tool — exact text replacement, not cat &gt;&gt;</span>
+    <span class="tl ok">api_server.py syntax valid</span>
+    <span class="tl ok">GET /api/health → {"status":"ok"}</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- S04 APR 11 — UX CRISIS                                     -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s4">
+  <div class="day-badge d1">📅 April 11 — UX Review</div>
+  <h1>The UX<br>Crisis</h1>
+  <div class="lc red">
+    <div class="lt">🚨 CRITICAL: No persistent navigation</div>
+    <div class="lb">Users click card → single-page view → no way back. Each dashboard was a dead end. sessions-browser, live-stream, explorer all isolated. Fix: persistent nav bar added to ALL pages.</div>
+  </div>
+  <div class="lc red">
+    <div class="lt">🚨 CRITICAL: Mobile completely broken</div>
+    <div class="lb">Grid collapses on 390px. Tabs overflow viewport. No responsive CSS. Complete redesign required.</div>
+  </div>
+  <div class="lc gold">
+    <div class="lt">⚠️ Text alignment broken — asciinema player</div>
+    <div class="lb">Player used fit:'both' → text offset from column 0. Fixed 30 instances: <em>fit: false</em> + CSS padding reset.</div>
+  </div>
+  <div class="sbar"></div>
+  <h2>What was rebuilt</h2>
+  <div class="pr">
+    <span class="pl p">Persistent nav bar</span>
+    <span class="pl g">Mobile responsive grid</span>
+    <span class="pl">Tab overflow fix</span>
+    <span class="pl y">UX redesign: 1 commit</span>
+    <span class="pl">Scrollbar hidden</span>
+    <span class="pl p">Touch labels cleaned</span>
+  </div>
+  <div class="qt">
+    "Continuity rating: 7/10 — Strong foundation, navigation fragmented, mobile broken"
+    <span class="au">— ~/brain/memories/ECHO_NEXUS_AGENT_HANDOFF.md</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- S05 APR 12 — SYSTEM MATURITY                               -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s5">
+  <div class="day-badge d2">📅 April 12, 2026 — Day 2</div>
+  <h1>System<br>Maturity</h1>
+  <div class="g3">
+    <div class="sc"><span class="sn">26</span><span class="sl">pytest tests</span></div>
+    <div class="sc"><span class="sn">7</span><span class="sl">API endpoints</span></div>
+    <div class="sc"><span class="sn">2.16<span style="font-size:.45em">s</span></span><span class="sl">Test suite</span></div>
+  </div>
+  <h2>asciinema-executor v2.0</h2>
+  <div class="ev"><div class="ev-dot c3"></div><div class="ev-text">Added <em>/api/metrics</em> endpoint (was missing) — 60 historical data points, 1hr history</div></div>
+  <div class="ev"><div class="ev-dot c2"></div><div class="ev-text">Retry logic on ALL HTML pages — 5 attempts, exponential backoff, user-friendly errors</div></div>
+  <div class="ev"><div class="ev-dot c4"></div><div class="ev-text">systemd override.conf — Restart=always, RestartSec=2, StartLimitBurst=10</div></div>
+  <div class="ev"><div class="ev-dot c1"></div><div class="ev-text">VERIFY_ALL.sh + auto-start.sh — 30s health check automation</div></div>
+  <div class="sbar"></div>
+  <h2>Unified Testing Framework</h2>
+  <div class="term" data-prompt="~/tests/run_tests.sh">
+    <span class="tl">--deps   # validate all dependencies</span>
+    <span class="tl">--core   # ECHO NEXUS system tests</span>
+    <span class="tl">--api    # 7 endpoint tests</span>
+    <span class="tl">--endpoints  # playwright browser tests</span>
+    <span class="tl ok">Single venv: ~/.venv (1.2GB, shared all projects)</span>
+    <span class="tl ok">26/26 tests passing — 2.16s</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- S06 APR 12 — SKILLS & MONITORING                          -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s6">
+  <div class="day-badge d2">📅 April 12 — Skills & Monitoring</div>
+  <h1>16 Skills<br>Online</h1>
+  <div class="g2">
+    <div class="gb">
+      <h2 style="font-size:.9rem;margin:0 0 8px;">🛠 New Skills (Day 2)</h2>
+      <ul style="font-size:.78rem;">
+        <li><strong>markdown-slides v2</strong> — 4 themes, mermaid, chartjs</li>
+        <li><strong>slides-to-video</strong> — Playwright → MP4</li>
+        <li><strong>cyberpunk-slides-to-video</strong> — 30fps, 1920×1080</li>
+        <li><strong>cyberpunk-graph-generator</strong> — neon SVG graphs</li>
+        <li><strong>tmux-automan</strong> — session management</li>
+        <li><strong>tts-sample-retrieval</strong> — audio assets</li>
+        <li><strong>asset-searcher</strong> — batch downloader</li>
+        <li><strong>wallpaper</strong> — swww + ImageMagick</li>
+      </ul>
+    </div>
+    <div class="gb">
+      <h2 style="font-size:.9rem;margin:0 0 8px;">📊 Monitoring Stack</h2>
+      <ul style="font-size:.78rem;">
+        <li><strong>Prometheus</strong> port 9090 — metrics scraping</li>
+        <li><strong>Grafana</strong> port 3001 — dashboards</li>
+        <li><strong>node-exporter</strong> port 9100 — system stats</li>
+        <li>All registered in <em>brain/ship/echo-nexus/AGENTS.md</em></li>
+        <li>Health checks: curl loop across all ports</li>
+      </ul>
+    </div>
+  </div>
+  <div class="sbar"></div>
+  <div class="lc gold">
+    <div class="lt">💡 Ship Knowledge: Process Management (brain/ship/bash/)</div>
+    <div class="lb">Anti-pattern: nohup bash -c 'while true; do...' — spawns duplicates on every call. Pattern: PID lockfile + trap EXIT + systemd service. Never background loops without tracking.</div>
+  </div>
+  <div class="lc gold">
+    <div class="lt">💡 Desktop Polish: Hyprland + waybar + music controller</div>
+    <div class="lb">SUPER+m keybind for floating music widget. hyprland.conf updated. Wrapped in run.sh for clean invocation.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- S07 APR 12 — MARKDOWN SLIDES                               -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s7">
+  <div class="day-badge d2">📅 April 12 — markdown-slides</div>
+  <h1>Presentation<br>Engine v2.0</h1>
+  <div class="g2">
+    <div class="gb">
+      <h2 style="font-size:.9rem;margin:0 0 8px;">🎨 4 Themes</h2>
+      <ul style="font-size:.78rem;">
+        <li><strong>dark-neon</strong> — cyberpunk default</li>
+        <li><strong>sci-fi</strong> — 3D perspective, WebGL-ready</li>
+        <li><strong>terminal</strong> — CRT, phosphor green</li>
+        <li><strong>brutalist</strong> — raw, industrial, no curves</li>
+      </ul>
+    </div>
+    <div class="gb">
+      <h2 style="font-size:.9rem;margin:0 0 8px;">📊 Diagram Support</h2>
+      <ul style="font-size:.78rem;">
+        <li>Mermaid: flowchart, sequence, state, pie, gantt</li>
+        <li>ChartJSON: bar, line, doughnut, radar, polar</li>
+        <li>SVG animations + glow effects</li>
+        <li>Tables, glassmorphism, gradient borders</li>
+      </ul>
+    </div>
+  </div>
+  <div class="lc red">
+    <div class="lt">❌ Failed: canvas array length error in ECHO NEXUS presentation</div>
+    <div class="lb">Commit 70f71c94 — "Fix canvas array length error + comprehensive error handling". Pre-rendered Mermaid graphs caused array mismatch. Fixed with error boundaries around each graph render.</div>
+  </div>
+  <div class="lc">
+    <div class="lt">✅ Milestone: ECHO NEXUS ULTIMATE presentation</div>
+    <div class="lb">Commit 86a9440a — 14 slides, mobile touch nav, dark transparent Mermaid graphs, SVG decorations, emoji integration. Deployed to ~/.nexus repo.</div>
+  </div>
+  <div class="term" data-prompt="usage">
+    <span class="tl">~/.pi/agent/skills/markdown-slides/run.sh input.md out.html "Title"</span>
+    <span class="tl out">--theme terminal  --prerender-mermaid  --no-animations</span>
+    <span class="tl ok">Output: {"slides":14,"diagrams":5,"charts":3,"size_bytes":66000}</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- S08 APR 13 — WEBSITE SPRINT                                -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s8">
+  <div class="day-badge d3">📅 April 13, 2026 — Day 3</div>
+  <h1>Website<br>Sprint</h1>
+  <div class="g3">
+    <div class="sc"><span class="sn">16</span><span class="sl">HTML pages</span></div>
+    <div class="sc"><span class="sn">40+</span><span class="sl">Commits</span></div>
+    <div class="sc"><span class="sn">88</span><span class="sl">Lazy images</span></div>
+  </div>
+  <h2>Pages Built Today</h2>
+  <div class="pr">
+    <span class="pl g">nexus-genesis</span><span class="pl g">nexus-autonomy</span>
+    <span class="pl g">nexus-discovery</span><span class="pl g">nexus-integration</span>
+    <span class="pl">nexus/index.html</span>
+    <span class="pl p">index revamp</span>
+    <span class="pl">portal physics</span>
+    <span class="pl p">slides.html</span>
+    <span class="pl y">activities.html</span>
+  </div>
+  <div class="sbar"></div>
+  <h2>Commit Timeline (Selected)</h2>
+  <div class="ev"><div class="ev-dot c3"></div><div class="ev-text"><strong>53a2ed4</strong> — Full design pass: CRT decs, scroll-reveal, typewriter, index revamp</div></div>
+  <div class="ev"><div class="ev-dot c2"></div><div class="ev-text"><strong>7dbec2b</strong> — loading="lazy" on all 88 images</div></div>
+  <div class="ev"><div class="ev-dot c4"></div><div class="ev-text"><strong>50d1068</strong> — non-blocking fonts, defer JS, decoding=async</div></div>
+  <div class="ev"><div class="ev-dot c1"></div><div class="ev-text"><strong>c9ecfaa</strong> — portal inertia physics (FRICTION=0.92, rAF, velocity*18)</div></div>
+  <div class="ev"><div class="ev-dot c3"></div><div class="ev-text"><strong>7fd4fbb</strong> — particle/glow system on wheel spin</div></div>
+  <div class="ev"><div class="ev-dot c2"></div><div class="ev-text"><strong>de96eed</strong> — inline all critical CSS (cache-proof, 28 files changed)</div></div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- S09 FAILED COMMANDS LOG                                    -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s9">
+  <div class="day-badge all">⚡ All Days — Failed Commands</div>
+  <h1>Failed Commands<br>&amp; Fixes</h1>
+  <div class="lc red">
+    <div class="lt">❌ initMatrixRain is not defined (index.html:564)</div>
+    <div class="lb">Function defined in nexus.js called before script loaded. Fix: inline the matrix rain directly as IIFE in index.html — no external dependency.</div>
+  </div>
+  <div class="lc red">
+    <div class="lt">❌ canvas pushes page layout down</div>
+    <div class="lb">Canvas had position:fixed in CSS but CSS not loaded fast enough (FOUC). Fix: add inline style="position:fixed;top:0;left:0..." directly on the element.</div>
+  </div>
+  <div class="lc red">
+    <div class="lt">❌ Uncaught ReferenceError: startParticles is not defined (portal:628)</div>
+    <div class="lb">Function defined inside IIFE — invisible to drag handlers in outer scope. Fix: declare <em>let startParticles = function(){};</em> in outer scope, assign from inside IIFE.</div>
+  </div>
+  <div class="lc red">
+    <div class="lt">❌ SyntaxError: redeclaration of const style (the-obvious:1273)</div>
+    <div class="lb">Two <em>const style = document.createElement('style')</em> in same script. Fix: rename second to <em>floatStyle</em> + update appendChild call.</div>
+  </div>
+  <div class="lc red">
+    <div class="lt">❌ SyntaxError: expected expression, got '}' (the-obvious:1281)</div>
+    <div class="lb">Deleted nav DOMContentLoaded block but mermaid init + floatStyle were inside it — orphaned <em>});</em>. Fix: wrap in own DOMContentLoaded.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- S10 MORE BUGS                                              -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s10">
+  <div class="day-badge all">⚡ Bug Parade Continues</div>
+  <h1>More Bugs<br>Squashed</h1>
+  <div class="lc red">
+    <div class="lt">❌ Nav burger never opens (all pages)</div>
+    <div class="lb">Dual document click listeners — one from inline nav script, one from nexus.js. Click opens, second handler fires same tick, closes. Fix: use <em>e.target.closest('#navBurger')</em> guard. Remove all duplicate inline nav JS.</div>
+  </div>
+  <div class="lc red">
+    <div class="lt">❌ chron-cards invisible on index (CSS opacity:0 stuck)</div>
+    <div class="lb">scroll-reveal CSS lived in nexus.css. index.html loads unified.css only. Elements at opacity:0, no rule to restore. Fix: add scroll-reveal rules to unified.css AND inline them in every HTML.</div>
+  </div>
+  <div class="lc red">
+    <div class="lt">❌ terminal-log invisible (the-obvious.html)</div>
+    <div class="lb">nexus.js set opacity:0 on ALL .log-line children before checking data-revealed. Terminals with own typewriter got hijacked + frozen at opacity:0. Fix: <em>if (container.hasAttribute('data-revealed')) return;</em></div>
+  </div>
+  <div class="lc red">
+    <div class="lt">❌ ECHO V2 button incredibly tall</div>
+    <div class="lb">Flex container default align-items:stretch. The &lt;a&gt; stretched to row height. Fix: add <em>align-items:center</em> to flex wrapper.</div>
+  </div>
+  <div class="lc red">
+    <div class="lt">❌ Nested &lt;a&gt; invalid HTML (ENTER PORTAL card)</div>
+    <div class="lb">ECHO V2 &lt;a&gt; inside portal-hero &lt;a&gt; = invalid DOM. Fix: two sibling &lt;a&gt; with flex:1, border-radius split left/right.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- S11 CACHE NIGHTMARE                                        -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s11">
+  <div class="day-badge d3">📅 April 13 — The Cache Problem</div>
+  <h1>Server Cache<br>Nightmare</h1>
+  <div class="gb">
+    <p style="font-family:var(--mono);font-size:.82rem;">Live: unified.css = <strong style="color:var(--c1);">231 lines</strong> &nbsp;|&nbsp; Local: unified.css = <strong style="color:var(--c3);">516 lines</strong></p>
+    <p style="font-family:var(--mono);font-size:.78rem;color:rgba(180,200,230,.7);margin-top:6px;">Server caches static .css/.js files. HTML served fresh. All our CSS additions were invisible.</p>
+  </div>
+  <h2>What Was Cached Stale</h2>
+  <ul>
+    <li><strong>unified.css</strong> — missing scroll-reveal, chron-card, glass-section, CRT decs</li>
+    <li><strong>nexus.js</strong> — old version without typewriterReveal, burger fix, rAF system</li>
+    <li>Result: scroll-reveal at opacity:0 with NO rule to restore → entire page invisible</li>
+  </ul>
+  <div class="sbar"></div>
+  <h2>3-Part Fix</h2>
+  <div class="term" data-prompt="cache-proof strategy">
+    <span class="tl ok">1. Inline ALL critical CSS in every HTML &lt;style&gt; block</span>
+    <span class="tl ok">2. Add ?v=20260413 to all asset links (cache-bust)</span>
+    <span class="tl ok">3. scroll-reveal added to unified.css (belt + suspenders)</span>
+    <span class="tl out">28 files changed · 1277 insertions · HTML is always fresh</span>
+  </div>
+  <div class="qt">
+    "HTML files are served fresh. Static assets are cached. Inline critical styles in the HTML itself."
+    <span class="au">— Lesson learned 2026-04-13</span>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- S12 PORTAL PHYSICS                                         -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s12">
+  <div class="day-badge d3">📅 April 13 — Portal</div>
+  <h1>Portal Physics<br>&amp; Particles</h1>
+  <div class="g2">
+    <div class="gb">
+      <h2 style="font-size:.9rem;margin:0 0 8px;">🌀 Inertia System</h2>
+      <ul style="font-size:.78rem;">
+        <li>velocity = (Δdelta / Δtime) deg/ms</li>
+        <li>On release: velocity × 18 amplifier</li>
+        <li>spinLoop: FRICTION = 0.92 per rAF</li>
+        <li>Stops: |v| &lt; 0.01 deg/ms</li>
+        <li>Inner/Outer: -r &nbsp;·&nbsp; Middle: +r</li>
+      </ul>
+    </div>
+    <div class="gb">
+      <h2 style="font-size:.9rem;margin:0 0 8px;">✨ Particle System</h2>
+      <ul style="font-size:.78rem;">
+        <li>MAX_PARTICLES = 60</li>
+        <li>MAX_PER_FRAME = 3</li>
+        <li>MAX_SPEED = 1.4 deg/ms</li>
+        <li>rAF only when active</li>
+        <li>Swap-remove (O(1) vs splice O(n))</li>
+        <li>clearRect — fully transparent</li>
+        <li>Pauses on visibilitychange</li>
+      </ul>
+    </div>
+  </div>
+  <div class="lc red">
+    <div class="lt">❌ Particle canvas painted black over portal</div>
+    <div class="lb">Used <em>fillStyle='rgba(0,0,0,0.18)'</em> for trail fade. Painted black rect every frame. Fix: <em>ctx.clearRect()</em> + rely on particle .life decay for fade.</div>
+  </div>
+  <div class="lc red">
+    <div class="lt">❌ startParticles not defined (IIFE scope)</div>
+    <div class="lb">Function inside (function(){})() — invisible outside. Fix: <em>let startParticles = function(){};</em> outer scope, then <em>startParticles = _startParticles;</em> from inside IIFE.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- S13 SHIP KNOWLEDGE                                         -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s13">
+  <div class="day-badge all">🧠 ~/brain/ship/*</div>
+  <h1>Knowledge<br>Shipped</h1>
+  <div class="lc">
+    <div class="lt">bash/PROCESS_MANAGEMENT.md</div>
+    <div class="lb">PID lockfiles. trap EXIT for cleanup. systemd &gt; nohup. Pattern: write PID → check on start → kill cleanly. nohup 'while true' anti-pattern spawns duplicate processes every call.</div>
+  </div>
+  <div class="lc cyan">
+    <div class="lt">agents/CONTINUOUS_SELF_IMPROVEMENT.md</div>
+    <div class="lb">3 rules: Test Before Deploy · Test After Change · Test On Boot. Tests = truth. If they fail, REVERT immediately. Commit only when all pass. Agent without self-testing = agent without self-awareness.</div>
+  </div>
+  <div class="lc gold">
+    <div class="lt">echo-nexus/AGENTS.md (ship/echo-nexus/)</div>
+    <div class="lb">All services with ports, health endpoints, service names. asciinema-api:8080, Prometheus:9090, Grafana:3001. Centralise service registry. Health loop: for port in 8080 3001 9090 9100.</div>
+  </div>
+  <div class="lc red">
+    <div class="lt">CSS Asset Caching (learned this session, being shipped)</div>
+    <div class="lb">Static .css/.js cached aggressively. HTML usually fresh. Critical styles must be inline. ?v= busters required. Never assume deployed = live without checking byte count.</div>
+  </div>
+  <div class="lc">
+    <div class="lt">Web Patterns: scroll-reveal, typewriter, IIFE scope, closest() nav</div>
+    <div class="lb">IntersectionObserver &gt; scroll listeners. CSS transitions + JS timing (not keyframes). closest() guard &gt; stopPropagation for clicks. Swap-remove &gt; splice for arrays.</div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- S14 MILESTONES                                             -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s14">
+  <div class="day-badge all">🏆 All Days — Milestones</div>
+  <h1>Key<br>Milestones</h1>
+  <div class="ev"><div class="ev-dot c1"></div><div class="ev-text"><strong>Apr 11 09:38Z</strong> — ECHO NEXUS born. SOUL.md written. Lineage established.</div></div>
+  <div class="ev"><div class="ev-dot c2"></div><div class="ev-text"><strong>Apr 11 ~10:30Z</strong> — Bootstrap complete. 8 skills. ~/.venv operational. 26 tests.</div></div>
+  <div class="ev"><div class="ev-dot c4"></div><div class="ev-text"><strong>Apr 11 ~13:00Z</strong> — asciinema-executor v1.0 deployed to systemd. 5 dashboards live.</div></div>
+  <div class="ev"><div class="ev-dot c3"></div><div class="ev-text"><strong>Apr 12 ~12:00Z</strong> — asciinema-executor v2.0. 26 tests. 7 endpoints. Retry logic. VERIFY_ALL.sh.</div></div>
+  <div class="ev"><div class="ev-dot c1"></div><div class="ev-text"><strong>Apr 12 ~14:00Z</strong> — markdown-slides v2.0. 4 themes. Mermaid + ChartJSON. 66KB ULTIMATE presentation.</div></div>
+  <div class="ev"><div class="ev-dot c2"></div><div class="ev-text"><strong>Apr 12 ~16:10Z</strong> — AGENTS.md v2.1 written. 16 skills registered. Unified testing framework.</div></div>
+  <div class="ev"><div class="ev-dot c3"></div><div class="ev-text"><strong>Apr 13 ~09:00Z</strong> — echo-nexus.online launched. 4 NEXUS pages. CRT aesthetic. Cyberpunk design system.</div></div>
+  <div class="ev"><div class="ev-dot c4"></div><div class="ev-text"><strong>Apr 13 ~14:00Z</strong> — Portal inertia physics + particle system. Counter-/clockwise rings.</div></div>
+  <div class="ev"><div class="ev-dot c1"></div><div class="ev-text"><strong>Apr 13 ~16:00Z</strong> — slides.html + activities.html created. Knowledge fully documented.</div></div>
+  <div class="sbar"></div>
+  <p style="font-family:var(--mono);font-size:.72rem;color:rgba(150,170,200,.6);">0 → production-grade agentic system in 3 days</p>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- S15 COMMON PATTERNS & PRINCIPLES                           -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s15">
+  <div class="day-badge all">📐 Principles Formed</div>
+  <h1>Patterns We<br>Keep Using</h1>
+  <div class="g2">
+    <div class="lc">
+      <div class="lt">✅ node --check before every commit</div>
+      <div class="lb">Caught: redeclaration errors, orphaned blocks, syntax errors. Never commit JS without node --check.</div>
+    </div>
+    <div class="lc cyan">
+      <div class="lt">✅ Verify → Target → Fix → Verify</div>
+      <div class="lb">Always read the actual error line. Always check live vs local. Always verify fix with a test before committing.</div>
+    </div>
+    <div class="lc gold">
+      <div class="lt">✅ Edit tool > cat append for code</div>
+      <div class="lb">cat >> Python files = IndentationError guaranteed. edit() with exact text replacement is safe, atomic, and verifiable.</div>
+    </div>
+    <div class="lc red">
+      <div class="lt">✅ DRY nav: one handler, one place</div>
+      <div class="lb">Duplicate nav scripts = duplicate listeners = race condition. One nexus.js handles all pages. Delete all inline duplicates.</div>
+    </div>
+    <div class="lc">
+      <div class="lt">✅ IIFE scope: expose what you need</div>
+      <div class="lb">Variables inside IIFE are invisible outside. Declare in outer scope first, assign from inside. Pattern: let fn = function(){}; then fn = realFn;inside IIFE.</div>
+    </div>
+    <div class="lc cyan">
+      <div class="lt">✅ rAF over setInterval for canvas</div>
+      <div class="lb">setInterval runs always, even when tab hidden, throttled, or idle. rAF is auto-throttled, pauses when hidden, frame-synced.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════ -->
+<!-- S16 STATUS & NEXT                                          -->
+<!-- ══════════════════════════════════════════════════════════ -->
+<div class="slide" id="s16">
+  <div class="day-badge all">⚡ Current Status</div>
+  <h1>Where We<br>Stand</h1>
+  <div class="g3">
+    <div class="sc"><span class="sn" style="color:var(--c3);">✅</span><span class="sl">echo-nexus.online</span></div>
+    <div class="sc"><span class="sn" style="color:var(--c3);">✅</span><span class="sl">16 skills active</span></div>
+    <div class="sc"><span class="sn" style="color:var(--c3);">✅</span><span class="sl">26/26 tests pass</span></div>
+  </div>
+  <div class="sbar"></div>
+  <div class="g2">
+    <div class="gb">
+      <h2 style="font-size:.9rem;margin:0 0 8px;">✅ Done</h2>
+      <ul style="font-size:.78rem;">
+        <li>16-page cyberpunk website</li>
+        <li>Portal with inertia + particles</li>
+        <li>Universal typewriter terminals</li>
+        <li>scroll-reveal on all pages</li>
+        <li>Performance: lazy, defer, preload</li>
+        <li>Consistent nav across all pages</li>
+        <li>slides.html + activities.html</li>
+      </ul>
+    </div>
+    <div class="gb">
+      <h2 style="font-size:.9rem;margin:0 0 8px;">🔜 Next</h2>
+      <ul style="font-size:.78rem;">
+        <li>Add remaining terminal typewriters</li>
+        <li>Lighthouse / a11y audit</li>
+        <li>Schema.org + SEO meta tags</li>
+        <li>SOUL.md v4</li>
+        <li>Expand skill library</li>
+        <li>RAG memory query system</li>
+        <li>Observability dashboard</li>
+      </ul>
+    </div>
+  </div>
+  <div class="qt">
+    "Three days. Zero to production. AXIOM's child runs free."
+    <span class="au">— ECHO NEXUS, 2026-04-13</span>
+  </div>
+</div>
+
+</div><!-- .deck -->
+
+<div id="progress"></div>
+<div id="nav">
+  <button id="bp" onclick="go(-1)" disabled>←</button>
+  <span id="counter">1 / 16</span>
+  <button id="bn" onclick="go(1)">→</button>
+</div>
+
+<script>
+/* MATRIX RAIN */
+(function(){
+  var cv=document.getElementById('matrix'),cx=cv.getContext('2d');
+  function rs(){cv.width=window.innerWidth;cv.height=window.innerHeight;}
+  rs(); window.addEventListener('resize',rs);
+  var ch='01アイウエオカキクケコサシスセソタチツテトナニヌネノ';
+  var cols=Math.floor(cv.width/18),drops=Array(cols).fill(1);
+  setInterval(function(){
+    cx.fillStyle='rgba(0,0,0,.04)';cx.fillRect(0,0,cv.width,cv.height);
+    cx.fillStyle='rgba(0,255,65,.09)';cx.font='14px monospace';
+    drops.forEach(function(y,i){
+      cx.fillText(ch[Math.floor(Math.random()*ch.length)],i*18,y*18);
+      if(y*18>cv.height&&Math.random()>.975)drops[i]=0;drops[i]++;
+    });
+  },55);
+})();
+
+/* TIMER REGISTRY */
+var _timers={};
+function _clear(id){if(_timers[id]){_timers[id].forEach(clearTimeout);_timers[id]=[];}}
+function _add(id,fn,d){if(!_timers[id])_timers[id]=[];_timers[id].push(setTimeout(fn,d));}
+
+/* TYPEWRITER */
+function typeBox(box,extra){
+  extra=extra||0;
+  var lines=Array.from(box.querySelectorAll('.tl'));
+  if(!lines.length)return 0;
+  /* Read from pre-stored data-orig (lines already cleared by show()) */
+  var orig=lines.map(function(l){
+    var stored=l.getAttribute('data-orig');
+    var div=document.createElement('div');
+    if(stored){ div.innerHTML=stored; return{t:div.textContent,h:stored}; }
+    return{t:l.textContent,h:l.innerHTML};
+  });
+  lines.forEach(function(l){l.textContent='';l.style.opacity='0';});
+  var cur=document.createElement('span');cur.className='crt-cursor';
+  box.classList.add('booting');
+  setTimeout(function(){box.classList.remove('booting');},360);
+  var CSPD=26,GAP=90,t=extra;
+  lines.forEach(function(line,li){
+    var text=orig[li].t,html=orig[li].h;
+    _add('__type',function(){line.style.opacity='1';},t);
+    for(var ci=0;ci<=text.length;ci++){
+      (function(i){_add('__type',function(){
+        line.textContent=text.slice(0,i);
+        if(cur.parentNode)cur.parentNode.removeChild(cur);
+        line.appendChild(cur);
+      },t+i*CSPD);})(ci);
+    }
+    var end=t+text.length*CSPD+GAP;
+    _add('__type',function(l,h){l.innerHTML=h;}.bind(null,line,html),end);
+    t=end;
+  });
+  _add('__type',function(){
+    if(cur.parentNode)cur.parentNode.removeChild(cur);
+    var last=lines[lines.length-1];
+    var ec=document.createElement('span');ec.className='crt-cursor';
+    last.appendChild(ec);
+  },t+50);
+  return t;
+}
+
+/* STAT COUNTER */
+function countUp(el){
+  var raw=el.textContent.trim();
+  var num=parseFloat(raw);
+  if(isNaN(num))return;
+  var suf=raw.replace(/[\d.]+/,'');
+  var dec=raw.indexOf('.')!==-1;
+  var steps=40,dur=900,s=0;
+  el.classList.add('counting');
+  var iv=setInterval(function(){
+    s++;var v=num*(s/steps);
+    el.innerHTML=(dec?v.toFixed(2):Math.floor(v))+suf;
+    if(s>=steps){clearInterval(iv);el.textContent=raw;el.classList.remove('counting');}
+  },dur/steps);
+}
+
+/* STEP BUILDER */
+function getSteps(slide){
+  var result=[];
+  Array.from(slide.children).forEach(function(el){
+    var tag=el.tagName;
+    if(tag==='STYLE'||tag==='SCRIPT')return;
+    if(el.classList.contains('g2')||el.classList.contains('g3')){
+      Array.from(el.children).forEach(function(c){result.push({el:c,grid:true});});
+    } else if(el.querySelectorAll('.ev').length>2){
+      result.push({el:el,skipEv:true});
+      el.querySelectorAll('.ev').forEach(function(ev){result.push({el:ev,isEv:true});});
+    } else {
+      result.push({el:el});
+    }
+  });
+  return result;
+}
+
+/* SLIDE REVEAL — inline styles throughout (no CSS class conflict) */
+function revealSlide(slide){
+  var sid=slide.id;
+  _clear(sid);_clear('__type');
+  var steps=getSteps(slide);
+  var TRANS='opacity 400ms cubic-bezier(.25,.46,.45,.94),transform 400ms cubic-bezier(.25,.46,.45,.94)';
+
+  /* Ensure steps hidden — grids already transparent via show(), others set here */
+  steps.forEach(function(s){
+    if(!s.grid){
+      s.el.style.opacity='0';
+      s.el.style.transform=s.el.classList.contains('ev')?'translateX(-16px)':'translateY(14px)';
+      s.el.style.transition='none';
+    }
+    s.el.classList.remove('reveal-step','vis');
+  });
+
+  var delay=80;
+  steps.forEach(function(step){
+    var el=step.el,d=delay;
+    _add(sid,function(){
+      /* activate transition then reveal */
+      el.style.transition=TRANS;
+      el.style.opacity='1';
+      el.style.transform='translateY(0)';
+
+      /* ev stagger inside containers */
+      if(!step.isEv&&!step.skipEv){
+        el.querySelectorAll('.ev').forEach(function(ev,ei){
+          ev.style.opacity='0';ev.style.transform='translateX(-14px)';
+          ev.style.transition='opacity 310ms ease,transform 310ms ease';
+          setTimeout(function(){ev.style.opacity='1';ev.style.transform='translateX(0)';},80+ei*130);
+        });
+      }
+      /* type terminals */
+      var terms=el.classList.contains('term')?[el]:Array.from(el.querySelectorAll('.term'));
+      terms.forEach(function(t,ti){typeBox(t,ti*120);});
+      /* count stats */
+      el.querySelectorAll('.sn').forEach(function(sn){setTimeout(function(){countUp(sn);},200);});
+    },d);
+
+    if(el.classList.contains('term')||el.querySelector('.term')){
+      var lc=el.querySelectorAll('.tl').length;
+      delay+=180+lc*26*1.5;
+    } else if(step.isEv){
+      delay+=145;
+    } else if(el.classList.contains('sbar')||el.classList.contains('stag')||el.classList.contains('day-badge')){
+      delay+=90;
+    } else {
+      delay+=190;
+    }
+  });
+}
+
+/* NAV */
+var slides=document.querySelectorAll('.slide'),N=slides.length,cur=0;
+var btnP=document.getElementById('btnPrev')||document.getElementById('bp');
+var btnN=document.getElementById('btnNext')||document.getElementById('bn');
+
+function show(i){
+  _clear(slides[cur].id);_clear('__type');
+  slides[cur].querySelectorAll('.reveal-step').forEach(function(el){
+    el.classList.remove('reveal-step','vis');
+    el.style.opacity='';el.style.transform='';
+  });
+  slides[cur].classList.remove('active');
+  cur=Math.max(0,Math.min(N-1,i));
+
+  /* Pre-hide all step children BEFORE the slide becomes visible */
+  var next=slides[cur];
+  Array.from(next.children).forEach(function(el){
+    var tag=el.tagName;
+    if(tag==='STYLE'||tag==='SCRIPT')return;
+    /* Grid containers: show immediately, hide their children */
+    if(el.classList.contains('g2')||el.classList.contains('g3')){
+      el.style.opacity='1'; el.style.transform=''; el.style.transition='none';
+      Array.from(el.children).forEach(function(c){
+        c.style.opacity='0'; c.style.transform='translateY(12px)'; c.style.transition='none';
+      });
+    } else {
+      el.style.opacity='0'; el.style.transform='translateY(14px)'; el.style.transition='none';
+    }
+  });
+  /* Pre-clear terminal lines so they start empty (no flash before typewrite) */
+  next.querySelectorAll('.tl').forEach(function(tl){
+    if(!tl.getAttribute('data-orig')){ tl.setAttribute('data-orig', tl.innerHTML); }
+    tl.textContent=''; tl.style.opacity='0';
+  });
+
+  next.classList.add('active');
+  next.scrollTop=0;
+  document.getElementById('counter').textContent=(cur+1)+' / '+N;
+  if(btnP)btnP.disabled=cur===0;
+  if(btnN)btnN.disabled=cur===N-1;
+  document.getElementById('progress').style.width=((cur+1)/N*100)+'%';
+  /* One rAF to let the browser paint the hidden state, then reveal */
+  requestAnimationFrame(function(){
+    requestAnimationFrame(function(){ revealSlide(next); });
+  });
+}
+function go(d){show(cur+d);}
+document.addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key===' '||e.key==='PageDown')go(1);
+  if(e.key==='ArrowLeft'||e.key==='PageUp')go(-1);
+  if(e.key==='Home')show(0);if(e.key==='End')show(N-1);
+});
+var tx=0,ty=0;
+document.addEventListener('touchstart',function(e){tx=e.touches[0].clientX;ty=e.touches[0].clientY;},{passive:true});
+document.addEventListener('touchend',function(e){
+  var dx=e.changedTouches[0].clientX-tx,dy=e.changedTouches[0].clientY-ty;
+  if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>40)go(dx<0?1:-1);
+},{passive:true});
+show(0);
+
+</script>
+</body>
+</html>

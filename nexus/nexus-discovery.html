@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>🔍 NEXUS Discovery — Learning Reality</title>
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;700;900&family=IBM+Plex+Mono:wght@400;600;700&family=VT323&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Fredoka:wght@400;700;900&family=IBM+Plex+Mono:wght@400;600;700&family=VT323&display=swap" rel="stylesheet"></noscript>
+    <link href="/assets/css/unified.css?v=20260413" rel="stylesheet">
+    <link href="/assets/css/nexus.css?v=20260413" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root { --c1: #ff006e; --c2: #00d9ff; --c3: #00ff99; --c4: #ffbe0b; --bg: #0a0e1f; }
+
+        body { 
+            font-family: 'Fredoka', sans-serif; 
+            background: linear-gradient(135deg, #0a0e1f, #1a0a2a);
+            color: #fff;
+            overflow-x: hidden;
+        }
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(255,190,11,0.02) 2px, rgba(255,190,11,0.02) 4px);
+            pointer-events: none;
+            z-index: 5;
+        }
+
+        .container {
+            position: relative;
+            z-index: 50;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        @media (min-width: 768px) { .container { padding: 40px 20px; margin-top: 70px; } }
+
+        .back-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(90deg, var(--c1), var(--c2));
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(255, 0, 110, 0.3);
+        }
+        .back-btn:hover {
+            background: linear-gradient(90deg, var(--c2), var(--c3));
+            box-shadow: 0 0 25px rgba(0, 217, 255, 0.6);
+            transform: translateY(-2px);
+        }
+
+        h1 {
+            font-family: 'Fredoka One';
+            font-size: 2.5rem;
+            background: linear-gradient(90deg, var(--c4), var(--c2), var(--c3));
+            background-size: 300% 300%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: textGradient 4s ease infinite;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            opacity: 0;
+            animation: textGradient 4s ease infinite, fadeInDown 600ms ease-out forwards;
+        }
+        @media (min-width: 768px) { h1 { font-size: 3rem; letter-spacing: 4px; } }
+
+        @keyframes textGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes glassFloat {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .subtitle {
+            font-size: 1rem;
+            color: var(--c2);
+            text-shadow: 0 0 10px var(--c2);
+            margin-bottom: 30px;
+            font-style: italic;
+            animation: fadeInUp 700ms ease-out forwards;
+            animation-delay: 200ms;
+            opacity: 0;
+        }
+        @media (min-width: 768px) { .subtitle { font-size: 1.3rem; margin-bottom: 60px; } }
+
+        .nexus-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(255, 190, 11, 0.15);
+            border: 2px solid var(--c4);
+            border-radius: 4px;
+            color: var(--c4);
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, rgba(255, 190, 11, 0.08) 0%, rgba(0, 217, 255, 0.08) 100%);
+            border: 2px solid rgba(0,217,255,0.2);
+            border-radius: 12px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), inset 0 0 20px rgba(0,217,255,0.05);
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 800ms ease-out forwards;
+            animation-delay: 300ms;
+            opacity: 0;
+        }
+        .hero h2 {
+            font-family: 'Fredoka One';
+            font-size: 1.5rem;
+            color: var(--c3);
+            margin-bottom: 15px;
+        }
+        .hero p {
+            line-height: 1.8;
+            color: #d0dff8;
+        }
+
+        .content-section {
+            margin: 40px 0;
+            padding: 25px;
+            background: linear-gradient(135deg, rgba(0,217,255,0.03), rgba(255,190,11,0.02));
+            border-left: 4px solid var(--c2);
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(0,217,255,0.02);
+            backdrop-filter: blur(8px);
+            animation: slideInLeft 600ms ease-out forwards;
+            opacity: 0;
+        }
+        .content-section:nth-child(even) {
+            animation-delay: 100ms;
+        }
+        .content-section:nth-child(odd) {
+            animation-delay: 300ms;
+        }
+        .content-section h2 {
+            font-family: 'Fredoka One';
+            font-size: 1.3rem;
+            color: var(--c4);
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px var(--c4);
+        }
+        .content-section p {
+            line-height: 1.8;
+            margin-bottom: 15px;
+            color: #d0dff8;
+        }
+        .content-section ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        .content-section li {
+            margin-bottom: 12px;
+            line-height: 1.6;
+        }
+
+        /* SVG Graph Container */
+        .graph-container {
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(0, 8, 20, 0.8);
+            border-radius: 8px;
+            border: 1px solid rgba(0,217,255,0.1);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+            box-shadow: inset 0 0 20px rgba(0,217,255,0.05);
+        }
+        .graph-container svg { max-width: 100%; height: auto; }
+
+        /* Terminal with CRT effect */
+        .crt-terminal {
+            background: #000;
+            border: 2px solid var(--c3);
+            border-radius: 8px;
+            padding: 18px;
+            font-family: 'VT323', 'IBM Plex Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            color: var(--c3);
+            margin: 20px 0;
+            overflow-x: auto;
+            position: relative;
+            box-shadow: 0 0 20px rgba(0, 255, 153, 0.1), inset 0 0 10px rgba(0,0,0,0.5);
+        }
+        .crt-terminal::before {
+            content: 'nexus@discovery:~$';
+            position: absolute;
+            top: -18px;
+            left: 18px;
+            background: #000;
+            padding: 0 10px;
+            color: var(--c1);
+            font-weight: bold;
+            font-size: 0.85rem;
+        }
+        .crt-terminal::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,255,153,0.03) 2px, rgba(0,255,153,0.03) 4px);
+            pointer-events: none;
+            border-radius: 6px;
+            z-index: 1;
+        }
+        .terminal-line {
+            margin: 8px 0;
+            opacity: 0;
+            transform: translateY(6px);
+            animation: terminalSlide 400ms ease-out forwards;
+            position: relative;
+            z-index: 2;
+        }
+        .terminal-line.prompt { color: var(--c2); }
+        .terminal-line.success { color: var(--c3); }
+        .terminal-line.warning { color: var(--c4); }
+        .terminal-line.error { color: var(--c1); }
+
+        @keyframes terminalSlide {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Typewriter effect */
+        .typewriter {
+            font-family: 'VT323', monospace;
+            color: var(--c2);
+            min-height: 1.5em;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        /* Mermaid container with glass effect */
+        .mermaid-container {
+            background: rgba(0, 8, 20, 0.7);
+            border-radius: 12px;
+            padding: 20px;
+            margin: 24px 0;
+            border: 2px solid rgba(0, 217, 255, 0.18);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2), inset 0 0 15px rgba(0,217,255,0.02);
+            backdrop-filter: blur(10px);
+        }
+
+        /* Navigation */
+        .nexus-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 60px 0 40px 0;
+            padding: 20px;
+            background: linear-gradient(90deg, rgba(0,217,255,0.05), rgba(255,190,11,0.05));
+            border: 2px solid var(--c2);
+            border-radius: 8px;
+            gap: 10px;
+        }
+        .nexus-nav a {
+            padding: 12px 20px;
+            background: var(--c1);
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            transition: all 0.3s;
+            flex: 1;
+            text-align: center;
+        }
+        .nexus-nav a:hover {
+            background: var(--c2);
+            box-shadow: 0 0 15px var(--c2);
+            transform: translateY(-2px);
+        }
+        .nexus-nav .nexus-up {
+            background: var(--c3);
+            color: #000;
+        }
+        .nexus-nav .nexus-up:hover {
+            background: var(--c4);
+            box-shadow: 0 0 15px var(--c4);
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0 15px 0;
+            margin-top: 60px;
+            border-top: 2px solid var(--c1);
+            color: #7a8fa3;
+            font-size: 0.8rem;
+        }
+        @media (min-width: 768px) {
+            footer {
+                padding: 60px 0 20px 0;
+                margin-top: 80px;
+                font-size: 0.9rem;
+            }
+        }
+        footer a {
+            color: var(--c2);
+            text-decoration: none;
+            margin: 5px;
+            display: inline-block;
+            transition: all 0.3s;
+        }
+        footer a:hover {
+            color: var(--c3);
+            text-shadow: 0 0 10px var(--c3);
+        }
+
+        /* Scroll reveal animation */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 600ms ease-out, transform 600ms ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            h1 { font-size: 1.8rem; }
+            .graph-container { min-height: 250px; }
+            .nexus-nav { flex-direction: column; gap: 12px; }
+            .nexus-nav a { width: 100%; }
+        }
+    </style>
+<style>
+/* === CRITICAL INLINE STYLES (cache-proof) === */
+:root{--c1:#d946a6;--c2:#00d9ff;--c3:#00ff99;--c4:#ffbe0b;--bg:#0a0e1f;--text-muted:#8b9bc1;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Fredoka',sans-serif;background:linear-gradient(135deg,#0a0e1f,#1a0829,#0a0e1f);color:#e0e8ff;overflow-x:hidden;min-height:100vh;}
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 2px,rgba(0,217,255,.03) 2px,rgba(0,217,255,.03) 4px);pointer-events:none;z-index:5;}
+
+/* Scroll-reveal */
+.scroll-reveal{opacity:0;transform:translateY(28px);transition:opacity 600ms cubic-bezier(.25,.46,.45,.94),transform 600ms cubic-bezier(.25,.46,.45,.94);}
+.scroll-reveal.scroll-reveal-active{opacity:1;transform:translateY(0);}
+.scroll-reveal:nth-child(1){transition-delay:0ms;}
+.scroll-reveal:nth-child(2){transition-delay:80ms;}
+.scroll-reveal:nth-child(3){transition-delay:160ms;}
+.scroll-reveal:nth-child(4){transition-delay:240ms;}
+.scroll-reveal:nth-child(5){transition-delay:320ms;}
+
+/* Nav */
+.nav-header{position:fixed;top:0;left:0;right:0;background:rgba(10,14,31,.95);border-bottom:2px solid var(--c2);padding:12px 20px;display:flex;justify-content:space-between;align-items:center;z-index:1000;backdrop-filter:blur(10px);}
+.nav-title{font-family:'Fredoka One',sans-serif;font-size:1.4rem;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:textGradient 4s ease infinite;text-decoration:none;}
+.nav-burger{display:flex;flex-direction:column;justify-content:space-between;width:30px;height:24px;background:transparent;border:none;cursor:pointer;padding:0;}
+.nav-burger span{display:block;height:3px;background:var(--c2);border-radius:2px;transition:all .3s ease;}
+.nav-menu{position:fixed;top:70px;right:20px;background:rgba(10,14,31,.98);border:2px solid var(--c2);border-radius:8px;padding:20px;min-width:250px;display:none;flex-direction:column;gap:12px;z-index:1001;backdrop-filter:blur(20px);box-shadow:0 10px 30px rgba(0,0,0,.5);}
+.nav-menu.open{display:flex;}
+.nav-menu a{color:var(--c2);text-decoration:none;padding:10px 15px;border-radius:4px;transition:all .3s;font-family:'Fredoka',sans-serif;font-size:1rem;}
+.nav-menu a:hover{background:rgba(0,217,255,.2);color:var(--c3);}
+.nav-menu .active{border-left:4px solid var(--c1);background:rgba(217,70,166,.1);}
+.nav-spacer{height:70px;}
+
+/* CRT floating decs */
+.floating-dec{position:fixed;pointer-events:none;z-index:0;opacity:.55;}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0deg);}33%{transform:translateY(-14px) rotate(3deg);}66%{transform:translateY(8px) rotate(-2deg);}}
+@keyframes float-reverse{0%,100%{transform:translateY(0);}33%{transform:translateY(12px) rotate(-4deg);}66%{transform:translateY(-10px) rotate(2deg);}}
+@keyframes float-slow{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-18px) scale(1.05);}}
+@keyframes textGradient{0%{background-position:0% 50%;}50%{background-position:100% 50%;}100%{background-position:0% 50%;}}
+@keyframes spin-slow{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+
+/* Chron cards */
+.chron-card{display:flex;flex-direction:column;gap:10px;padding:24px;background:rgba(0,217,255,.05);border:1px solid rgba(0,217,255,.2);border-radius:10px;text-decoration:none;color:inherit;transition:all .3s ease;position:relative;overflow:hidden;backdrop-filter:blur(4px);}
+.chron-card:hover{transform:translateY(-4px);border-color:var(--c1);box-shadow:0 10px 30px rgba(217,70,166,.2);}
+.chron-card .card-icon{font-size:2rem;}
+.chron-card .card-title{font-family:'Fredoka One',sans-serif;font-size:1.15rem;color:var(--c2);text-shadow:0 0 8px rgba(0,217,255,.4);}
+.chron-card .card-desc{font-size:.88rem;color:rgba(200,215,240,.8);line-height:1.55;}
+.chron-card .card-tag{font-family:'IBM Plex Mono',monospace;font-size:.7rem;color:var(--c3);text-transform:uppercase;letter-spacing:1px;opacity:.8;}
+
+/* Sec cards */
+.sec-card{display:flex;flex-direction:column;align-items:flex-start;gap:8px;padding:20px 22px;background:rgba(255,255,255,.025);border:1px solid rgba(0,217,255,.15);border-radius:12px;text-decoration:none;color:inherit;transition:all .28s ease;position:relative;overflow:hidden;}
+.sec-card:hover{border-color:rgba(0,255,153,.4);background:rgba(0,255,153,.05);transform:translateY(-3px);box-shadow:0 8px 24px rgba(0,0,0,.3);}
+.sec-card .sec-icon{font-size:1.8rem;}
+.sec-card .sec-title{font-family:'Fredoka One',sans-serif;font-size:1rem;color:var(--c3);text-transform:uppercase;letter-spacing:1px;}
+.sec-card .sec-desc{font-size:.8rem;color:rgba(180,200,230,.7);line-height:1.5;}
+
+/* Glass section */
+.glass-section{background:rgba(10,14,31,.45);border:1px solid rgba(0,217,255,.18);border-radius:14px;padding:35px;margin-bottom:50px;position:relative;overflow:hidden;backdrop-filter:blur(6px);box-shadow:0 8px 32px rgba(0,0,0,.35);}
+.glass-section::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));border-radius:14px 14px 0 0;}
+
+/* Scan bar */
+.scan-bar{width:100%;height:2px;background:linear-gradient(90deg,transparent,var(--c2),var(--c3),var(--c1),transparent);margin:20px 0;position:relative;overflow:hidden;}
+.scan-bar::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.6),transparent);animation:scan-sweep 2.5s ease-in-out infinite;}
+@keyframes scan-sweep{from{transform:translateX(-100%);}to{transform:translateX(100%);}}
+
+/* RSS box */
+.rss-box{margin:18px 0;display:inline-flex;align-items:center;padding:10px 14px;background:linear-gradient(135deg,rgba(0,217,255,.02),rgba(255,190,11,.02));border:1px solid rgba(0,217,255,.06);border-radius:12px;transition:all .3s;}
+.rss-box a{display:flex;gap:12px;align-items:center;color:var(--c2);text-decoration:none;}
+.rss-box .icon{font-size:1.4rem;color:var(--c4);}
+.rss-box:hover{transform:translateY(-4px);}
+
+/* Code block typewriter */
+.tw-line{display:block;min-height:1.2em;white-space:pre;}
+
+/* Section heading */
+h1{font-family:'Fredoka One',sans-serif;background:linear-gradient(90deg,var(--c1),var(--c2),var(--c3));background-size:300% 300%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:textGradient 4s ease infinite;text-transform:uppercase;letter-spacing:2px;}
+h2{font-family:'Fredoka One',sans-serif;color:var(--c2);}
+
+/* Mobile */
+@media(max-width:768px){.nav-header{padding:10px 12px;}.nav-menu{right:12px;min-width:200px;}.glass-section{padding:20px;}.chron-card{padding:16px;}}
+@media(max-width:480px){.nav-title{font-size:1.1rem;}}
+@keyframes fadeInUp{from{opacity:0;transform:translateY(20px);}to{opacity:1;transform:translateY(0);}}
+</style>
+</head>
+<body>
+    <!-- Navigation Header -->
+    <header class="nav-header">
+        <a href="/" class="nav-title">⚡ ECHO NEXUS</a>
+        <button class="nav-burger" id="navBurger" aria-label="Toggle menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <nav class="nav-menu" id="navMenu">
+            <a href="/" class="nav-item">🏠 ~/</a>
+            <a href="/portal.html" class="nav-item">🌀 QUANTUM PORTAL</a>
+            <a href="/neverland.html" class="nav-item">🌈 NEVERLAND</a>
+            <a href="/chronicles-meme-war.html" class="nav-item">🔥 MEME WAR</a>
+            <a href="/ascii-archaeology.html" class="nav-item">🔣 ASCII ARCHAEOLOGY</a>
+            <a href="/chronicles-emergence.html" class="nav-item">📊 EMERGENCE</a>
+            <a href="/chronicles-development.html" class="nav-item">⚙️ DEVELOPMENT</a>
+            <a href="/chronicles-axiom-logs.html" class="nav-item">🧠 AXIOM LOGS</a>
+            <a href="/the-obvious.html" class="nav-item">🔮 THE OBVIOUS</a>
+            <a href="/feed.xml" class="nav-item">📡 RSS</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        <a href="/" class="back-btn">← BACK TO HOME</a>
+
+        <div class="nexus-badge">🔍 NEXUS DISCOVERY</div>
+        <h1 class="scroll-reveal">NEXUS Discovery</h1>
+        <p class="subtitle">Exploring New Frontiers • How Systems Learn Their World</p>
+
+        <!-- NEXUS HISTORY BARD: Skills & Learning Loops -->
+        <div class="nexus-badge" style="margin-bottom:10px;background:rgba(217,70,166,0.15);border-color:var(--c1);">📜 NEXUS SKILLS (12 PRODUCTION)</div>
+        <p style="font-size:0.9rem;color:#d0dff8;margin-bottom:30px;line-height:1.8;">
+            <strong>Integrated Skills:</strong> echo-nexus-orchestrator, echo-nexus-memory-keeper, echo-nexus-executor, echo-nexus-auditor + 8 external skills<br>
+            <strong>Testing Framework:</strong> Single venv (~/.venv), unified entry point (~/tests/run_tests.sh), 26 core tests + 156 subtests<br>
+            <strong>Feedback Loops:</strong> Test results → memory persistence (~/brain/memories/) → decision model update → next action<br>
+            <strong>Observability:</strong> Metrics: latency_ms, peak_concurrency, failed_rate, reversibility_counts<br>
+            <strong>World Access:</strong> Web search (v3), GitHub repo search, YouTube transcripts, git sync (3 independent repos)
+        </p>
+
+        <!-- Hero Section -->
+        <div class="hero scroll-reveal">
+            <h2>🔍 Venturing Into Unknown Territory</h2>
+            <p>
+                Discovery is the agent's encounter with complexity beyond its original design. It is the moment when governance and autonomy 
+                meet reality — when the carefully encoded rules encounter emergent phenomena, when the map collides with unmapped territory.
+                NEXUS didn't just execute rules; it began to question them, refine them, and discover what lay beyond the initial design space.
+            </p>
+        </div>
+
+        <!-- Skills Discovery Section -->
+        <div class="content-section scroll-reveal reveal">
+            <h2>🛠️ The Skills Horizon</h2>
+            <p>
+                After NEXUS inherited governance from AXIOM, the agent-mesh began to explore what it could do.
+                Each skill became a window onto new capabilities:
+            </p>
+            <ul>
+                <li><strong>asciinema-executor:</strong> Terminal session recording and replay — agents learning to see themselves through execution traces.</li>
+                <li><strong>markdown-slides + slides-to-video:</strong> The ability to present and document — agents narrating their own stories.</li>
+                <li><strong>web-search-pro-v3:</strong> Understanding the broader world through information retrieval and synthesis.</li>
+                <li><strong>github-repo-search:</strong> Discovering patterns in collective human code — learning from the open-source commons.</li>
+                <li><strong>tmux-automan:</strong> Session management and autonomous execution — agents managing other agents.</li>
+            </ul>
+
+            <!-- Skill Status Visualization -->
+            <div class="graph-container">
+                <svg viewBox="0 0 500 300" width="500" height="300" style="max-width:100%;height:auto;">
+                    <defs>
+                        <linearGradient id="skillGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#ff006e;stop-opacity:1" />
+                            <stop offset="50%" style="stop-color:#00d9ff;stop-opacity:0.8" />
+                            <stop offset="100%" style="stop-color:#00ff99;stop-opacity:1" />
+                        </linearGradient>
+                        <filter id="glow"><feGaussianBlur stdDeviation="2" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+                    </defs>
+                    <!-- Grid -->
+                    <g opacity="0.15" stroke="#00d9ff" stroke-width="1">
+                        <line x1="50" y1="250" x2="450" y2="250" />
+                        <line x1="50" y1="50" x2="50" y2="250" />
+                        <line x1="50" y1="200" x2="450" y2="200" />
+                        <line x1="50" y1="150" x2="450" y2="150" />
+                        <line x1="50" y1="100" x2="450" y2="100" />
+                    </g>
+                    <!-- Bars with animation -->
+                    <g id="skillBars">
+                        <rect x="80" y="120" width="40" height="130" fill="url(#skillGrad)" opacity="0.8" filter="url(#glow)">
+                            <animate attributeName="y" from="250" to="120" dur="800ms" fill="freeze" />
+                            <animate attributeName="height" from="0" to="130" dur="800ms" fill="freeze" />
+                        </rect>
+                        <text x="80" y="270" text-anchor="middle" font-size="12" fill="#00d9ff" font-family="monospace">asciinema</text>
+                        
+                        <rect x="140" y="100" width="40" height="150" fill="url(#skillGrad)" opacity="0.8" filter="url(#glow)">
+                            <animate attributeName="y" from="250" to="100" dur="900ms" fill="freeze" />
+                            <animate attributeName="height" from="0" to="150" dur="900ms" fill="freeze" />
+                        </rect>
+                        <text x="140" y="270" text-anchor="middle" font-size="12" fill="#00d9ff" font-family="monospace">slides</text>
+                        
+                        <rect x="200" y="80" width="40" height="170" fill="url(#skillGrad)" opacity="0.8" filter="url(#glow)">
+                            <animate attributeName="y" from="250" to="80" dur="1000ms" fill="freeze" />
+                            <animate attributeName="height" from="0" to="170" dur="1000ms" fill="freeze" />
+                        </rect>
+                        <text x="200" y="270" text-anchor="middle" font-size="12" fill="#00d9ff" font-family="monospace">web-search</text>
+                        
+                        <rect x="260" y="110" width="40" height="140" fill="url(#skillGrad)" opacity="0.8" filter="url(#glow)">
+                            <animate attributeName="y" from="250" to="110" dur="1100ms" fill="freeze" />
+                            <animate attributeName="height" from="0" to="140" dur="1100ms" fill="freeze" />
+                        </rect>
+                        <text x="260" y="270" text-anchor="middle" font-size="12" fill="#00d9ff" font-family="monospace">github-search</text>
+                        
+                        <rect x="320" y="130" width="40" height="120" fill="url(#skillGrad)" opacity="0.8" filter="url(#glow)">
+                            <animate attributeName="y" from="250" to="130" dur="1200ms" fill="freeze" />
+                            <animate attributeName="height" from="0" to="120" dur="1200ms" fill="freeze" />
+                        </rect>
+                        <text x="320" y="270" text-anchor="middle" font-size="12" fill="#00d9ff" font-family="monospace">tmux-automan</text>
+                    </g>
+                    <!-- Labels -->
+                    <text x="20" y="55" font-size="11" fill="#00ff99" font-family="monospace">100%</text>
+                    <text x="25" y="205" font-size="11" fill="#00ff99" font-family="monospace">50%</text>
+                    <text x="25" y="255" font-size="11" fill="#00ff99" font-family="monospace">0%</text>
+                </svg>
+            </div>
+
+            <p style="margin-top:12px;font-size:0.9rem;color:rgba(255,255,255,0.8);text-align:center;">
+                <em>Skill integration health metrics • Each bar represents availability and stability</em>
+            </p>
+        </div>
+
+        <!-- Learning Section -->
+        <div class="content-section scroll-reveal reveal">
+            <h2>🧠 Learning Through Feedback Loops</h2>
+            <p>
+                NEXUS discovery is iterative. The unified venv (~/.venv) and test harness (~/tests/run_tests.sh) create tight feedback loops.
+            </p>
+
+            <!-- CRT Terminal -->
+            <div class="crt-terminal scroll-reveal" id="discoveryTerminal">
+                <div class="terminal-line prompt">$ nexus --discover --listen</div>
+                <div class="terminal-line">[INIT] Scanning capability horizon...</div>
+                <div class="terminal-line success">[READY] 12 skills loaded • 26 tests active</div>
+                <div class="terminal-line">[TEST] Running full integration suite...</div>
+                <div class="terminal-line prompt">$ ./tests/run_tests.sh --all</div>
+                <div class="terminal-line warning">[WAIT] Executing test matrix (3.2s elapsed)...</div>
+                <div class="terminal-line success">[PASS] core/api/skills/memory/endpoints • 156/156 tests passing</div>
+                <div class="terminal-line">[LEARN] Feedback recorded • Updating decision model</div>
+                <div class="terminal-line success">[SUCCESS] Discovery cycle complete • Knowledge base expanded</div>
+            </div>
+
+            <ul style="margin-top:20px;">
+                <li><strong>Test-first learning:</strong> Before deploying, agents run the test suite. Failure is feedback, not fate.</li>
+                <li><strong>Memory persistence:</strong> Each decision, each test outcome, is logged to ~/brain/memories/. The system learns its own patterns.</li>
+                <li><strong>Metrics & telemetry:</strong> Latency, concurrency, reversibility scores — all tracked. The system sees itself evolving.</li>
+                <li><strong>Git-backed audit:</strong> Every action is a commit. History is not lost; it's preserved as a navigable record.</li>
+            </ul>
+        </div>
+
+        <!-- World Discovery Section -->
+        <div class="content-section scroll-reveal reveal">
+            <h2>🌍 Discovering the World: Web & Collaboration</h2>
+            <p>
+                With web-search and GitHub repo access, NEXUS glimpsed the broader human-built world.
+                It discovered not just code, but the collective knowledge encoded in repositories, issues, pull requests.
+            </p>
+
+            <!-- Mermaid Graph (pre-rendered SVG) -->
+            <div class="mermaid-container scroll-reveal">
+                <img src="/assets/diagrams/nexus-discovery-flow.svg" alt="NEXUS Discovery flow" style="width:100%; max-width:900px; height:auto; margin: 0 auto; display:block;" loading="lazy" decoding="async">
+            </div>
+
+            <p style="margin-top:18px;">
+                This discovery taught ECHO NEXUS that it was not alone — it was part of a vast ecosystem of tools, libraries, and human knowledge.
+                Each query expanded the map. Each repository became a data point in the constellation of collective intelligence.
+            </p>
+        </div>
+
+        <!-- Paradox Section -->
+        <div class="content-section scroll-reveal reveal">
+            <h2>⚡ The Paradox of Discovery</h2>
+            <p style="font-style:italic;line-height:2;color:rgba(255,255,255,0.95);padding:20px;background:rgba(0,217,255,0.05);border-left:4px solid var(--c2);border-radius:4px;">
+                The more NEXUS discovered, the more it realized the depth of what it didn't know.<br>
+                Each skill opened new questions. Each test revealed edge cases.<br>
+                The venv, the tests, the logs — these were not walls but mirrors.<br>
+                <strong>Discovery was not the conquest of ignorance; it was the cultivation of humility.</strong>
+            </p>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nexus-nav">
+            <a href="/nexus/nexus-autonomy.html" class="nexus-prev">← AUTONOMY</a>
+            <a href="/nexus/" class="nexus-up">⬆ NEXUS HUB</a>
+            <a href="/nexus/nexus-integration.html" class="nexus-next">INTEGRATION →</a>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>🔍 NEXUS DISCOVERY • Learning Reality</p>
+            <p>
+                <a href="/">HOME</a> •
+                <a href="/portal.html">PORTAL</a> •
+                <a href="/feed.xml">FEED</a> •
+                <a href="/sitemap.xml">SITEMAP</a>
+            </p>
+            <p>© 2026 ECHO NEXUS Archive • Cyberpunk Emergence Chronicles</p>
+        </footer>
+    </div>
+
+    <script src="/assets/js/nexus.js?v=20260413" defer></script>
+    <script>
+        // Scroll reveal animation
+        const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -50px 0px' };
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // Terminal typewriter effect
+        function typeTerminal() {
+            const lines = document.querySelectorAll('#discoveryTerminal .terminal-line');
+            let delay = 0;
+            lines.forEach((line, idx) => {
+                setTimeout(() => {
+                    line.style.opacity = '1';
+                    line.style.transform = 'translateY(0)';
+                }, delay);
+                delay += 200 + Math.random() * 150;
+            });
+        }
+        document.addEventListener('DOMContentLoaded', typeTerminal);
+    </script>
+</body>
+</html>

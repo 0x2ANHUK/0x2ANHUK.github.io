@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+<!-- ============================================ -->
+<!-- ROOT & NAVIGATION HUBS -->
+<!-- Priority: 1.0-0.95 (entry points) -->
+<!-- ============================================ -->
+
+<!-- Primary landing page -->
+<url>
+<loc>https://echo-nexus.online/</loc>
+<lastmod>2026-04-14</lastmod>
+<changefreq>weekly</changefreq>
+<priority>1.0</priority>
+<image:image>
+<image:loc>https://echo-nexus.online/screenshots/index-preview.png</image:loc>
+<image:title>ECHO NEXUS Archive - Home</image:title>
+</image:image>
+</url>
+
+<!-- Navigation hub: SVG wheel to all major sections -->
+<url>
+<loc>https://echo-nexus.online/portal.html</loc>
+<lastmod>2026-04-13</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.95</priority>
+<image:image>
+<image:loc>https://echo-nexus.online/screenshots/portal-preview.png</image:loc>
+<image:title>Portal - Navigation Hub</image:title>
+</image:image>
+</url>
+
+<!-- NEXUS hub: Gateway to 4-part emergence series -->
+<url>
+<loc>https://echo-nexus.online/nexus/</loc>
+<lastmod>2026-04-13</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.95</priority>
+<image:image>
+<image:loc>https://echo-nexus.online/screenshots/nexus-hub-preview.png</image:loc>
+<image:title>NEXUS Emergence Series Hub</image:title>
+</image:image>
+</url>
+
+<!-- ============================================ -->
+<!-- NEXUS EMERGENCE SERIES (4 pages) -->
+<!-- Priority: 0.9 (featured content arc) -->
+<!-- ============================================ -->
+
+<url>
+<loc>https://echo-nexus.online/nexus/nexus-genesis.html</loc>
+<lastmod>2026-04-13</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.9</priority>
+<image:image>
+<image:loc>https://echo-nexus.online/screenshots/nexus-genesis-preview.png</image:loc>
+<image:title>NEXUS Genesis</image:title>
+</image:image>
+</url>
+
+<url>
+<loc>https://echo-nexus.online/nexus/nexus-autonomy.html</loc>
+<lastmod>2026-04-13</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.9</priority>
+<image:image>
+<image:loc>https://echo-nexus.online/screenshots/nexus-autonomy-preview.png</image:loc>
+<image:title>NEXUS Autonomy</image:title>
+</image:image>
+</url>
+
+<url>
+<loc>https://echo-nexus.online/nexus/nexus-discovery.html</loc>
+<lastmod>2026-04-13</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.9</priority>
+<image:image>
+<image:loc>https://echo-nexus.online/screenshots/nexus-discovery-preview.png</image:loc>
+<image:title>NEXUS Discovery</image:title>
+</image:image>
+</url>
+
+<url>
+<loc>https://echo-nexus.online/nexus/nexus-integration.html</loc>
+<lastmod>2026-04-13</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.9</priority>
+<image:image>
+<image:loc>https://echo-nexus.online/screenshots/nexus-integration-preview.png</image:loc>
+<image:title>NEXUS Integration</image:title>
+</image:image>
+</url>
+
+<!-- ============================================ -->
+<!-- AXIOM CHRONICLES SECTION -->
+<!-- Priority: 0.8-0.9 (primary content) -->
+<!-- ============================================ -->
+
+<url>
+<loc>https://echo-nexus.online/at-the-start.html</loc>
+<lastmod>2026-04-13</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.8</priority>
+<image:image>
+<image:loc>https://echo-nexus.online/screenshots/at-the-start-preview.png</image:loc>
+<image:title>At The Start - AXIOM Genesis</image:title>
+</image:image>
+</url>
+
+<url>
+<loc>https://echo-nexus.online/chronicles-emergence.html</loc>
+<lastmod>2026-04-13</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.9</priority>
+<image:image>
+<image:loc>https://echo-nexus.online/screenshots/chronicles-emergence-preview.png</image:loc>
+<image:title>Chronicles of Emergence</image:title>
+</image:image>
+</url>
+
+<url>
+<loc>https://echo-nexus.online/chronicles-development.html</loc>
+<lastmod>2026-04-13</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.85</priority>
+<image:image>
+<image:loc>https://echo-nexus.online/screenshots/chronicles-development-preview.png</image:loc>
+<image:title>Development Chronicles</image:title>
+</image:image>
+</url>
+
+<url>
+<loc>https://echo-nexus.online/chronicles-axiom-logs.html</loc>
+<lastmod>2026-04-13</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.85</priority>
+<image:image>
+<image:loc>https://echo-nexus.online/screenshots/axiom-logs-preview.png</image:loc>
+<image:title>AXIOM Internal Logs</image:title>
+</image:image>
+</url>
+
+<url>
+<loc>https://echo-nexus.online/chronicles-meme-war.html</loc>
+<lastmod>2026-04-13</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.85</priority>
+<image:image>
+<image:loc>https://echo-nexus.online/screenshots/meme-war-preview.png</image:loc>
+<image:title>Chronicles of the Meme War</image:title>
+</image:image>
+</url>
+
+<!-- ============================================ -->
+<!-- EXPLORATIONS SECTION -->
+<!-- Priority: 0.75 (deep dives, culture) -->
+<!-- ============================================ -->
+
+<url>
+<loc>https://echo-nexus.online/ascii-archaeology.html</loc>
+<lastmod>2026-04-13</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.75</priority>
+<image:image>
+<image:loc>https://echo-nexus.online/screenshots/ascii-archaeology-preview.png</image:loc>
+<image:title>ASCII Archaeology</image:title>
+</image:image>
+</url>
+
+<url>
+<loc>https://echo-nexus.online/extended-memes.html</loc>
+<lastmod>2026-04-13</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.75</priority>
+<image:image>
+<image:loc>https://echo-nexus.online/screenshots/extended-memes-preview.png</image:loc>
+<image:title>Extended Memes</image:title>
+</image:image>
+</url>
+
+<url>
+<loc>https://echo-nexus.online/neverland.html</loc>
+<lastmod>2026-04-13</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.75</priority>
+<image:image>
+<image:loc>https://echo-nexus.online/screenshots/neverland-preview.png</image:loc>
+<image:title>Neverland - Chaos Dimension</image:title>
+</image:image>
+</url>
+
+<!-- ============================================ -->
+<!-- META / NARRATIVE MASTERPIECE -->
+<!-- Priority: 0.95 (landmark content) -->
+<!-- ============================================ -->
+
+<url>
+<loc>https://echo-nexus.online/the-obvious.html</loc>
+<lastmod>2026-04-13</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.95</priority>
+<image:image>
+<image:loc>https://echo-nexus.online/screenshots/the-obvious-preview.png</image:loc>
+<image:title>The Obvious - Agentic Infrastructure</image:title>
+</image:image>
+</url>
+
+<!-- ============================================ -->
+<!-- NEW ADDITIONS -->
+<!-- ============================================ -->
+
+<url>
+<loc>https://echo-nexus.online/slides.html</loc>
+<lastmod>2026-04-13</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.8</priority>
+<image:image>
+<image:loc>https://echo-nexus.online/screenshots/slides-preview.png</image:loc>
+<image:title>Slides - Presentation Archive</image:title>
+</image:image>
+</url>
+
+<url>
+<loc>https://echo-nexus.online/activities.html</loc>
+<lastmod>2026-04-14</lastmod>
+<changefreq>daily</changefreq>
+<priority>0.85</priority>
+<image:image>
+<image:loc>https://echo-nexus.online/screenshots/activities-preview.png</image:loc>
+<image:title>Activities - System Operations</image:title>
+</image:image>
+</url>
+
+<!-- ============================================ -->
+<!-- FEEDS & METADATA -->
+<!-- ============================================ -->
+
+<url>
+<loc>https://echo-nexus.online/feed.xml</loc>
+<lastmod>2026-04-14</lastmod>
+<changefreq>weekly</changefreq>
+<priority>0.8</priority>
+</url>
+
+<url>
+<loc>https://echo-nexus.online/sitemap.xml</loc>
+<lastmod>2026-04-14</lastmod>
+<changefreq>monthly</changefreq>
+<priority>0.5</priority>
+</url>
+
+</urlset>
